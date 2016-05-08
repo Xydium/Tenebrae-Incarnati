@@ -23,7 +23,7 @@ public class TenebraeIncarnati extends Game
 		RectRenderer rr = new RectRenderer(new Vector2(0.5625f, 1.0f), background);
 		rr.setShader(texshader);
 		screen.addComponent(rr);
-		screen.getTransform().rotateBy((float) (Math.PI * 0.5));
+//		screen.getTransform().rotateBy((float) (Math.PI * 0.5));
 		add(screen);
 	}
 	
