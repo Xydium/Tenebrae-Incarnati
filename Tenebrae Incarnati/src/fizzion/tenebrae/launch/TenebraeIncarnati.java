@@ -20,7 +20,7 @@ public class TenebraeIncarnati extends Game
 		background = new Texture("backgrounds/prototype_build.png");
 		texshader = new Shader("basic-shader");
 		GameObject screen = new GameObject();
-		RectRenderer rr = new RectRenderer(new Vector2(0.5625f, 1.0f), background);
+		RectRenderer rr = new RectRenderer(new Vector2(1.0f, 0.5625f), background);
 		rr.setShader(texshader);
 		screen.addComponent(rr);
 		add(screen);
