@@ -3,6 +3,10 @@ uniform sampler2D currentTexture;
 //uniform sampler2D distortionMapTexture;
 
 uniform float time;
+
+uniform float frequency;
+uniform float amplitude;
+
 //uniform float distortionFactor;
 //uniform float riseFactor;
 
@@ -22,7 +26,8 @@ float clamp(float a, float min, float max)
 void main()
 {
 	vec2 aux = vec2(1.0 - texCoord.y, texCoord.x);
-	aux.x = clamp(sin(30 * aux.y + 3 * time) * 0.02 + aux.x, 0, 1);
+	aux.x = clamp(sin(30 * aux.y + frequency * time) * amplitude + aux.x, 0, 1);
+	aux.y = clamp(sin(30 * aux.x + frequency * time) * amplitude + aux.y, 0, 1);
 	
 	gl_FragColor = texture2D(currentTexture, aux);
 }
