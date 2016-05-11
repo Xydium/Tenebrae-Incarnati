@@ -8,14 +8,13 @@ import engine.math.Vector2;
 import engine.rendering.Color;
 import engine.rendering.Shader;
 import engine.rendering.Texture;
-import engine.utility.Log;
 import engine.utility.Util;
 
 public class MainMenu extends Scene 
 {
-
+	
 	private Texture atmo, platform, obetext, skull, title;
-	private Shader texShader, disShader, colorShader;
+	private Shader texShader, disShader, colorShader, flickerShader;
 	
 	private float i;
 	
@@ -31,12 +30,14 @@ public class MainMenu extends Scene
 		disShader = new Shader("distort-shader");
 		colorShader = new Shader("color-shader");
 		colorShader.setUniform("color", new Color(0f, 0f, 0f, 0f));
+		flickerShader = new Shader("color-shader");
 		
 		final RectRenderer atmoRect = new RectRenderer(Util.pixelDToGL(new Vector2(1024f, 576f)), atmo);
 		final RectRenderer platformRect = new RectRenderer(Util.pixelDToGL(new Vector2(1024f, 576f)), platform);
 		final RectRenderer obetextRect = new RectRenderer(Util.pixelDToGL(new Vector2(1024f, 576f)), obetext);
 		final RectRenderer skullRect = new RectRenderer(Util.pixelDToGL(new Vector2(1024f, 576f)), skull);
 		final RectRenderer titleRect = new RectRenderer(Util.pixelDToGL(new Vector2(1024f, 576f)), title);
+		final RectRenderer flickerRect = new RectRenderer(Util.pixelDToGL(new Vector2(1024f, 576f)), atmo);
 		
 		atmoRect.setShader(disShader);
 		platformRect.setShader(texShader);
@@ -44,14 +45,15 @@ public class MainMenu extends Scene
 		obetextRect.setTag("obetext");
 		skullRect.setShader(texShader);
 		titleRect.setShader(disShader);
+		flickerRect.setShader(flickerShader);
 		
-		atmoRect.setUniformConfig(new UniformConfig() 
+		atmoRect.setUniformConfig(new UniformConfig()
 		{
 			public void setUniforms()
 			{
 				atmoRect.getShader().setUniform("time", i);
-				atmoRect.getShader().setUniform("frequency", 5.0f);
-				atmoRect.getShader().setUniform("amplitude", 0.03f);
+				atmoRect.getShader().setUniform("frequency", 20.0f);
+				atmoRect.getShader().setUniform("amplitude", 0.007f);
 			}
 		});
 		
@@ -77,7 +79,17 @@ public class MainMenu extends Scene
 			}
 		});
 		
-		getRootObject().addAllComponents(atmoRect, platformRect, obetextRect, skullRect, titleRect);
+		flickerRect.setUniformConfig(new UniformConfig() 
+		{
+			public void setUniforms()
+			{
+				flickerRect.getShader().setUniform("color", new Color(0f, 0f, 0f, Math.random() < 0.05 ? 0.1f : 0f));
+			}
+		});
+		//memes were here
+		//^^ - CDesiscrub
+		
+		getRootObject().addAllComponents(atmoRect, platformRect, obetextRect, skullRect, titleRect, flickerRect);
 	}
 
 	public void input()
