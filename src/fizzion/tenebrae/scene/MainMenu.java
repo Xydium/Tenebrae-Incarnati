@@ -106,7 +106,6 @@ public class MainMenu extends Scene
 	public void update()
 	{
 		i += 0.02;
-		//Herobrine
 	}
 	
 	public void deactivate()
