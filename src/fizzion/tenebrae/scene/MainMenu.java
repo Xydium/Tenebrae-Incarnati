@@ -86,8 +86,6 @@ public class MainMenu extends Scene
 				flickerRect.getShader().setUniform("color", new Color(0f, 0f, 0f, Math.random() < 0.05 ? 0.1f : 0f));
 			}
 		});
-		//memes were here
-		//^^ - CDesiscrub
 		
 		getRootObject().addAllComponents(atmoRect, platformRect, obetextRect, skullRect, titleRect, flickerRect);
 	}
