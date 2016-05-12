@@ -3,6 +3,7 @@ package fizzion.tenebrae.scene;
 import engine.audio.GlobalAudio;
 import engine.components.RectRenderer;
 import engine.components.RectRenderer.UniformConfig;
+import engine.core.GameObject;
 import engine.core.Scene;
 import engine.math.Vector2;
 import engine.rendering.Color;
@@ -23,6 +24,13 @@ public class MainMenu extends Scene
 	
 	public void activate()
 	{
+		GameObject background = new GameObject();
+		background.setTag("background");
+		GameObject obeliskText = new GameObject();
+		obeliskText.setTag("obeliskText");
+		GameObject skullStick = new GameObject();
+		skullStick.setTag("skullStick");
+		
 		atmo = new Texture("backgrounds/menu_background_atmo.png");
 		platform = new Texture("backgrounds/menu_background_fore.png");
 		obetext = new Texture("backgrounds/menu_background_obetext.png");
@@ -38,19 +46,19 @@ public class MainMenu extends Scene
 		clearShader.setUniform("color", new Color(0f, 0f, 0f, 0f));
 		flickerShader = new Shader("color-shader");
 		
-		final RectRenderer atmoRect = new RectRenderer(Util.pixelDToGL(new Vector2(1024f, 576f)), atmo);
-		final RectRenderer platformRect = new RectRenderer(Util.pixelDToGL(new Vector2(1024f, 576f)), platform);
-		final RectRenderer obetextRect = new RectRenderer(Util.pixelDToGL(new Vector2(1024f, 576f)), obetext);
-		final RectRenderer skullRect = new RectRenderer(Util.pixelDToGL(new Vector2(1024f, 576f)), skull);
-		final RectRenderer titleRect = new RectRenderer(Util.pixelDToGL(new Vector2(1024f, 576f)), title);
-		final RectRenderer flickerRect = new RectRenderer(Util.pixelDToGL(new Vector2(1024f, 576f)), atmo);
+		RectRenderer atmoRect = new RectRenderer(Util.pixelDToGL(new Vector2(1024f, 576f)), atmo);
+		RectRenderer platformRect = new RectRenderer(Util.pixelDToGL(new Vector2(1024f, 576f)), platform);
+		RectRenderer obetextRect = new RectRenderer(Util.pixelDToGL(new Vector2(1024f, 576f)), obetext);
+		RectRenderer skullRect = new RectRenderer(Util.pixelDToGL(new Vector2(1024f, 576f)), skull);
+		RectRenderer titleRect = new RectRenderer(Util.pixelDToGL(new Vector2(1024f, 576f)), title);
+		RectRenderer flickerRect = new RectRenderer(Util.pixelDToGL(new Vector2(1024f, 576f)), atmo);
 		
 		play = new ClickZone(360, 150, 300, 110);
 		
 		atmoRect.setShader(disShader);
 		platformRect.setShader(texShader);
 		obetextRect.setShader(disShader);
-		obetextRect.setTag("obetext");
+		obetextRect.setTag("obetextRect");
 		skullRect.setShader(texShader);
 		titleRect.setShader(disShader);
 		flickerRect.setShader(flickerShader);
@@ -98,13 +106,17 @@ public class MainMenu extends Scene
 			}
 		});
 		
-		getRootObject().addAllComponents(atmoRect, platformRect, obetextRect, skullRect, titleRect, flickerRect, play);
+		background.addAllComponents(atmoRect, platformRect, flickerRect, titleRect);
+		obeliskText.addAllComponents(obetextRect, play);
+		skullStick.addAllComponents(skullRect);
+		
+		getRootObject().addAllChildren(background, obeliskText, skullStick);
 	}
 	
 	public void update()
 	{
 		i += 0.02;
-		((RectRenderer) getRootObject().getComponentWithTag("obetext")).setShader(play.isHovered() ? disShader : clearShader);
+		((RectRenderer) getRootObject().getChildWithTag("obeliskText").getComponentWithTag("obetextRect")).setShader(play.isHovered() ? disShader : clearShader);
 		if(play.isClicked())
 		{
 			System.exit(0);
