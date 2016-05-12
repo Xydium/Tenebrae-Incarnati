@@ -4,14 +4,34 @@ import engine.core.GameComponent;
 import engine.core.Input;
 import engine.math.Vector2;
 
+/**
+ * A clickable area with methods for determining if
+ * the mouse is currently within that area and if it
+ * has been clicked.
+ * 
+ * @author Tim Hornick
+ */
 public class ClickZone extends GameComponent 
 {
 
-	private int topLeftX, topLeftY, bottomRightX, bottomRightY;
+	private int topLeftX; 
+	private int	topLeftY;
+	private int bottomRightX; 
+	private int bottomRightY;
 	
 	private boolean hovered;
 	private boolean clicked;
 	
+	/**
+	 * Constructs a rectangular area starting at the corner
+	 * represented by x,y and stretching to the corner
+	 * at x + width, y + height.
+	 * 
+	 * @param x
+	 * @param y
+	 * @param width
+	 * @param height
+	 */
 	public ClickZone(float x, float y, float width, float height)
 	{
 		this.topLeftX = (int) x;
@@ -32,11 +52,17 @@ public class ClickZone extends GameComponent
 		return m.getX() >= topLeftX && m.getY() >= topLeftY && m.getX() <= bottomRightX && m.getY() <= bottomRightY;
 	}
 	
+	/**
+	 * @return if the mouse is in the click zone
+	 */
 	public boolean isHovered()
 	{
 		return hovered;
 	}
 	
+	/**
+	 * @return if the mouse is in the click zone and clicked
+	 */
 	public boolean isClicked()
 	{
 		return clicked;

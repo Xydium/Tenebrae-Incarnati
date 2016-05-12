@@ -3,7 +3,6 @@ package fizzion.tenebrae.scene;
 import engine.audio.GlobalAudio;
 import engine.components.RectRenderer;
 import engine.components.RectRenderer.UniformConfig;
-import engine.core.Input;
 import engine.core.Scene;
 import engine.math.Vector2;
 import engine.rendering.Color;
@@ -16,7 +15,7 @@ public class MainMenu extends Scene
 {
 	
 	private Texture atmo, platform, obetext, skull, title;
-	private Shader texShader, disShader, colorShader, flickerShader;
+	private Shader texShader, disShader, clearShader, flickerShader;
 	
 	private ClickZone play;
 	
@@ -35,8 +34,8 @@ public class MainMenu extends Scene
 		
 		texShader = new Shader("basic-shader");
 		disShader = new Shader("distort-shader");
-		colorShader = new Shader("color-shader");
-		colorShader.setUniform("color", new Color(0f, 0f, 0f, 0f));
+		clearShader = new Shader("color-shader");
+		clearShader.setUniform("color", new Color(0f, 0f, 0f, 0f));
 		flickerShader = new Shader("color-shader");
 		
 		final RectRenderer atmoRect = new RectRenderer(Util.pixelDToGL(new Vector2(1024f, 576f)), atmo);
@@ -56,45 +55,45 @@ public class MainMenu extends Scene
 		titleRect.setShader(disShader);
 		flickerRect.setShader(flickerShader);
 		
-		atmoRect.setUniformConfig(new UniformConfig() 
+		atmoRect.setUniformConfig(new UniformConfig()
 		{ 
-			public void setUniforms() 
+			public void setUniforms(Shader s) 
 			{
-				atmoRect.getShader().setUniform("time", i);
-				atmoRect.getShader().setUniform("frequency", 20.0f);
-				atmoRect.getShader().setUniform("amplitude", 0.007f);
+				s.setUniform("time", i);
+				s.setUniform("frequency", 20.0f);
+				s.setUniform("amplitude", 0.007f);
 			}
 		});
 		
 		obetextRect.setUniformConfig(new UniformConfig() 
 		{ 
-			public void setUniforms() 
+			public void setUniforms(Shader s) 
 			{
-				if(obetextRect.getShader().getFileName().equals("distort-shader")) 
+				if(s.getFileName().equals("distort-shader")) 
 				{
-					obetextRect.getShader().setUniform("time", -i / 2);
-					obetextRect.getShader().setUniform("frequency", -10.0f);
-					obetextRect.getShader().setUniform("amplitude", -0.0007f);
+					s.setUniform("time", -i / 2);
+					s.setUniform("frequency", -10.0f);
+					s.setUniform("amplitude", -0.0007f);
 				}
 			}
 		});
 		
 		titleRect.setUniformConfig(new UniformConfig() 
 		{ 
-			public void setUniforms() 
+			public void setUniforms(Shader s) 
 			{
-				titleRect.getShader().setUniform("time", i);
-				titleRect.getShader().setUniform("frequency", 1.0f);
-				titleRect.getShader().setUniform("amplitude", 0.01f);
+				s.setUniform("time", i);
+				s.setUniform("frequency", 1.0f);
+				s.setUniform("amplitude", 0.01f);
 			}
 		});
 		
 		flickerRect.setUniformConfig(new UniformConfig() 
 		{
 			private boolean flickerOn = true;
-			public void setUniforms() 
+			public void setUniforms(Shader s) 
 			{
-				flickerRect.getShader().setUniform("color", new Color(0f, 0f, 0f, flickerOn ? 0.2f : 0f));
+				s.setUniform("color", new Color(0f, 0f, 0f, flickerOn ? 0.2f : 0f));
 				if(Math.random() < 0.05) flickerOn = !flickerOn;
 			}
 		});
@@ -105,14 +104,7 @@ public class MainMenu extends Scene
 	public void update()
 	{
 		i += 0.02;
-		if(play.isHovered()) 
-		{
-			((RectRenderer) getRootObject().getComponentWithTag("obetext")).setShader(disShader);
-		}
-		else
-		{
-			((RectRenderer) getRootObject().getComponentWithTag("obetext")).setShader(colorShader);
-		}
+		((RectRenderer) getRootObject().getComponentWithTag("obetext")).setShader(play.isHovered() ? disShader : clearShader);
 		if(play.isClicked())
 		{
 			System.exit(0);
@@ -122,7 +114,7 @@ public class MainMenu extends Scene
 	public void deactivate()
 	{
 		atmo = platform = obetext = skull = title = null;
-		texShader = disShader = colorShader = null;
+		texShader = disShader = clearShader = null;
 	}
 	
 }

@@ -30,9 +30,9 @@ public class DebugSplash extends Scene
 		
 		veilRect.setUniformConfig(new UniformConfig() 
 		{
-			public void setUniforms() 
+			public void setUniforms(Shader s) 
 			{
-				veilRect.getShader().setUniform("color", new Color(0.0f, 0.0f, 0.0f, calculateAlpha()));
+				s.setUniform("color", new Color(0.0f, 0.0f, 0.0f, calculateAlpha()));
 			}
 		});
 		
