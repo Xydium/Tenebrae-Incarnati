@@ -21,7 +21,7 @@ public class Main extends Game
 		flags = new WindowFlags("Tenebrae Incarnati", 512 * 2, 288 * 2);
 		flags.setLogLevel(LogLevel.INTERNAL);
 		flags.setConsoleEnabled(true);
-		
+		//This is a comment
 		Application app = new Application(new Main(), 60.0, flags);
 		app.start();
 	}
