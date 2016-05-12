@@ -10,12 +10,15 @@ import engine.rendering.Color;
 import engine.rendering.Shader;
 import engine.rendering.Texture;
 import engine.utility.Util;
+import fizzion.tenebrae.ui.ClickZone;
 
 public class MainMenu extends Scene 
 {
 	
 	private Texture atmo, platform, obetext, skull, title;
 	private Shader texShader, disShader, colorShader, flickerShader;
+	
+	private ClickZone play;
 	
 	private float i;
 	
@@ -42,6 +45,8 @@ public class MainMenu extends Scene
 		final RectRenderer skullRect = new RectRenderer(Util.pixelDToGL(new Vector2(1024f, 576f)), skull);
 		final RectRenderer titleRect = new RectRenderer(Util.pixelDToGL(new Vector2(1024f, 576f)), title);
 		final RectRenderer flickerRect = new RectRenderer(Util.pixelDToGL(new Vector2(1024f, 576f)), atmo);
+		
+		play = new ClickZone(360, 150, 300, 110);
 		
 		atmoRect.setShader(disShader);
 		platformRect.setShader(texShader);
@@ -94,13 +99,13 @@ public class MainMenu extends Scene
 			}
 		});
 		
-		getRootObject().addAllComponents(atmoRect, platformRect, obetextRect, skullRect, titleRect, flickerRect);
+		getRootObject().addAllComponents(atmoRect, platformRect, obetextRect, skullRect, titleRect, flickerRect, play);
 	}
-
-	public void input()
+	
+	public void update()
 	{
-		Vector2 mp = Input.getMousePosition();
-		if(mp.getX() > 360 && mp.getY() < 660 && mp.getY() > 150 && mp.getY() < 260) 
+		i += 0.02;
+		if(play.isHovered()) 
 		{
 			((RectRenderer) getRootObject().getComponentWithTag("obetext")).setShader(disShader);
 		}
@@ -108,11 +113,10 @@ public class MainMenu extends Scene
 		{
 			((RectRenderer) getRootObject().getComponentWithTag("obetext")).setShader(colorShader);
 		}
-	}
-	
-	public void update()
-	{
-		i += 0.02;
+		if(play.isClicked())
+		{
+			System.exit(0);
+		}
 	}
 	
 	public void deactivate()
