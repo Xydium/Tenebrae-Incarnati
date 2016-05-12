@@ -1,5 +1,6 @@
 package fizzion.tenebrae.scene;
 
+import engine.audio.GlobalAudio;
 import engine.components.RectRenderer;
 import engine.components.RectRenderer.UniformConfig;
 import engine.core.Input;
@@ -26,6 +27,9 @@ public class MainMenu extends Scene
 		skull = new Texture("backgrounds/menu_background_skull.png");
 		title = new Texture("backgrounds/menu_background_title.png");
 		
+		GlobalAudio.addMusic("menu", "assets/music/menu_loop.wav");
+		GlobalAudio.loopMusic("menu", 0.25);
+		
 		texShader = new Shader("basic-shader");
 		disShader = new Shader("distort-shader");
 		colorShader = new Shader("color-shader");
@@ -47,9 +51,9 @@ public class MainMenu extends Scene
 		titleRect.setShader(disShader);
 		flickerRect.setShader(flickerShader);
 		
-		atmoRect.setUniformConfig(new UniformConfig()
-		{
-			public void setUniforms()
+		atmoRect.setUniformConfig(new UniformConfig() 
+		{ 
+			public void setUniforms() 
 			{
 				atmoRect.getShader().setUniform("time", i);
 				atmoRect.getShader().setUniform("frequency", 20.0f);
@@ -58,10 +62,11 @@ public class MainMenu extends Scene
 		});
 		
 		obetextRect.setUniformConfig(new UniformConfig() 
-		{
-			public void setUniforms()
+		{ 
+			public void setUniforms() 
 			{
-				if(obetextRect.getShader().getFileName().equals("distort-shader")) {
+				if(obetextRect.getShader().getFileName().equals("distort-shader")) 
+				{
 					obetextRect.getShader().setUniform("time", -i / 2);
 					obetextRect.getShader().setUniform("frequency", -10.0f);
 					obetextRect.getShader().setUniform("amplitude", -0.0007f);
@@ -70,8 +75,8 @@ public class MainMenu extends Scene
 		});
 		
 		titleRect.setUniformConfig(new UniformConfig() 
-		{
-			public void setUniforms()
+		{ 
+			public void setUniforms() 
 			{
 				titleRect.getShader().setUniform("time", i);
 				titleRect.getShader().setUniform("frequency", 1.0f);
@@ -81,9 +86,11 @@ public class MainMenu extends Scene
 		
 		flickerRect.setUniformConfig(new UniformConfig() 
 		{
-			public void setUniforms()
+			private boolean flickerOn = true;
+			public void setUniforms() 
 			{
-				flickerRect.getShader().setUniform("color", new Color(0f, 0f, 0f, Math.random() < 0.05 ? 0.1f : 0f));
+				flickerRect.getShader().setUniform("color", new Color(0f, 0f, 0f, flickerOn ? 0.2f : 0f));
+				if(Math.random() < 0.05) flickerOn = !flickerOn;
 			}
 		});
 		
