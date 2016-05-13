@@ -68,4 +68,20 @@ public class ClickZone extends GameComponent
 		return clicked;
 	}
 	
+	public int getX() {
+		return topLeftX;
+	}
+
+	public int getY() {
+		return topLeftY;
+	}
+
+	public int getWidth() {
+		return bottomRightX - getX();
+	}
+
+	public int getHeight() {
+		return bottomRightY - getY();
+	}
+	
 }
