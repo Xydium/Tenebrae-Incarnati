@@ -123,7 +123,7 @@ public class MainMenu extends Scene
 		getRootObject().addAllChildren(background, obeliskText, skullStick);
 		
 		//Load and play menu track
-		GlobalAudio.addMusic("menu", "assets/music/menu_loop.wav");
+		GlobalAudio.addMusic("menu", "assets/music/menu_loop_2.wav");
 		GlobalAudio.loopMusic("menu", 0.25);
 	}
 	
