@@ -1,0 +1,14 @@
+# Dungeon layout
+
+# Width and height of the rooms in tiles
+w 16
+h 9
+
+# Room Links, in the order of
+# r UP DOWN LEFT RIGHT
+# Put $ to represent no link
+# The first room number is 0
+# Room links. start with r
+
+r 1 $ $ $
+r $ 0 $ $
