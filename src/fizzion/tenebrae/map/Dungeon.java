@@ -46,22 +46,18 @@ public class Dungeon extends Scene
 		if(Input.getKeyDown(Input.KEY_LEFT) && currentRoom.getLeft() != null)
 		{
 			setCurrentRoom(currentRoom.getLeft());
-			Log.info("LEFT");
 		}
 		else if(Input.getKeyDown(Input.KEY_RIGHT) && currentRoom.getRight() != null)
 		{
 			setCurrentRoom(currentRoom.getRight());
-			Log.info("RIGHT");
 		}
 		else if(Input.getKeyDown(Input.KEY_UP) && currentRoom.getAbove() != null)
 		{
 			setCurrentRoom(currentRoom.getAbove());
-			Log.info("UP");
 		}
 		else if(Input.getKeyDown(Input.KEY_DOWN) && currentRoom.getBelow() != null)
 		{
 			setCurrentRoom(currentRoom.getBelow());
-			Log.info("DOWN");
 		}
 		
 		if(Input.getKeyDown(Input.KEY_ESCAPE))
@@ -89,6 +85,7 @@ public class Dungeon extends Scene
 	{
 		this.currentRoom = room;
 		roomRenderer.setTexture(room.getRoomTexture());
+		Log.info("" + currentRoom.getRoomTexture().getID());
 	}
 	
 	public Room getCurrentRoom()

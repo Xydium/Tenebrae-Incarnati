@@ -10,5 +10,18 @@ h 9
 # The first room number is 0
 # Room links. start with r
 
-r 1 $ $ $
+r 1 2 $ 3
 r $ 0 $ $
+r 0 $ $ $
+r 4 $ 0 $
+r $ 3 $ 5
+#one below points to 7
+r 6 $ 4 $
+#one below points to 11
+r $ 5 $ $
+#r 5 $ $ 8
+#r $ 9 7 $
+#r 8 $ 10 $
+#r $ $ $ 9
+#r $ $ 6 12
+#r $ $ 11 $
