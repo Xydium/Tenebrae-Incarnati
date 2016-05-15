@@ -51,7 +51,7 @@ public class MainMenu extends Scene
 			RectRenderer flickerRect = new RectRenderer(Util.pixelDToGL(new Vector2(1024f, 576f)), atmo);
 			RectRenderer titleRect = new RectRenderer(Util.pixelDToGL(new Vector2(1024f, 576f)), title);
 			
-			Shader textureShader = new Shader("basic-shader");
+			Shader textureShader = new Shader("texture-shader");
 			Shader distortionShader = new Shader("distort-shader");
 			Shader flickerShader = new Shader("color-shader");
 			
@@ -159,7 +159,7 @@ public class MainMenu extends Scene
 		{
 			setTag("skull");
 			Texture skull = new Texture("backgrounds/menu_background_skull.png");
-			Shader textureShader = new Shader("basic-shader");
+			Shader textureShader = new Shader("texture-shader");
 			RectRenderer skullRect = new RectRenderer(Util.pixelDToGL(new Vector2(1024f, 576f)), skull);
 			skullRect.setShader(textureShader);
 			addComponent(skullRect);

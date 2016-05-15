@@ -20,7 +20,7 @@ public class Button extends GameObject
 		this.callback = c;
 		this.clickZone = new ClickZone(x, y, width, height);
 		RectRenderer renderer = new RectRenderer(Util.pixelDToGL(new Vector2(width, height)), texture);
-		renderer.setShader(new Shader("basic-shader"));
+		renderer.setShader(new Shader("texture-shader"));
 		renderer.setAllowLighting(false);
 		addAllComponents(renderer, clickZone);
 		Vector2 position = new Vector2();
