@@ -3,6 +3,7 @@ package fizzion.tenebrae.launch;
 import engine.core.Application;
 import engine.core.Game;
 import engine.rendering.WindowFlags;
+import engine.utility.Log;
 import engine.utility.Log.LogLevel;
 import fizzion.tenebrae.scene.MainMenu;
 
