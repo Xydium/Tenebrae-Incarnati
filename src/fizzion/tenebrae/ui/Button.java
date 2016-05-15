@@ -25,7 +25,7 @@ public class Button extends GameObject
 		addAllComponents(renderer, clickZone);
 		Vector2 position = new Vector2();
 		position.setX(x + width / 2);
-		position.setY(y + width / (width / height));
+		position.setY(y + height);
 		Util.pixelCToGL(position);
 		getTransform().setPosition(position);
 	}
