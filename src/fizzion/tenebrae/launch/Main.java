@@ -20,8 +20,8 @@ public class Main extends Game
 	public static void main(String[] args)
 	{
 		flags = new WindowFlags("Tenebrae Incarnati", 512 * 2, 288 * 2);
-		flags.setLogLevel(LogLevel.INTERNAL);
-		flags.setConsoleEnabled(true);
+		Log.setLogLevel(LogLevel.INTERNAL);
+		Log.setWindowEnabled(true);
 		Application app = new Application(new Main(), 60.0, flags);
 		app.start();
 	}
