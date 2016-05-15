@@ -21,7 +21,7 @@ public class DebugSplash extends Scene
 		GameObject splash = new Splash();
 		GameObject veil = new Veil();
 		
-		getRootObject().addAllChildren(splash);
+		getRootObject().addAllChildren(splash, veil);
 		startTime = Time.getTime();
 	}
 	
@@ -40,6 +40,7 @@ public class DebugSplash extends Scene
 			Texture splash = new Texture("backgrounds/prototype_build.png");
 			Shader textureShader = new Shader("basic-shader");
 			RectRenderer splashRect = new RectRenderer(Util.pixelDToGL(new Vector2(1024f, 576f)), splash);
+			splashRect.setAllowLighting(false);
 			splashRect.setShader(textureShader);
 			addComponent(splashRect);
 		}	
@@ -51,6 +52,7 @@ public class DebugSplash extends Scene
 		{
 			Shader colorShader = new Shader("color-shader");
 			RectRenderer veilRect = new RectRenderer(Util.pixelDToGL(new Vector2(1024f, 576f)), null);
+			veilRect.setAllowLighting(false);
 			veilRect.setShader(colorShader);
 			veilRect.setUniformConfig(new UniformConfig() 
 			{
@@ -59,6 +61,7 @@ public class DebugSplash extends Scene
 					s.setUniform("color", new Color(0.0f, 0.0f, 0.0f, calculateAlpha()));
 				}
 			});
+			addComponent(veilRect);
 		}
 		
 		private float calculateAlpha() 
