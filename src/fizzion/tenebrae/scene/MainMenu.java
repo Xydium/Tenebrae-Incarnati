@@ -197,7 +197,7 @@ public class MainMenu extends Scene
 			((RectRenderer) getComponentWithTag("eyesRect")).setShader(quit.isHovered() ? distortionShader : clearShader);
 			if(quit.isClicked())
 			{
-				System.exit(0);
+				getApplication().stop();
 			}
 		}
 		

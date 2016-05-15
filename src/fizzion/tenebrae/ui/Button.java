@@ -19,12 +19,13 @@ public class Button extends GameObject
 	{
 		this.callback = c;
 		this.clickZone = new ClickZone(x, y, width, height);
-		RectRenderer renderer = new RectRenderer(Util.pixelDToGL(new Vector2(clickZone.getWidth(), clickZone.getHeight())), texture);
+		RectRenderer renderer = new RectRenderer(Util.pixelDToGL(new Vector2(width, height)), texture);
 		renderer.setShader(new Shader("basic-shader"));
+		renderer.setAllowLighting(false);
 		addAllComponents(renderer, clickZone);
 		Vector2 position = new Vector2();
-		position.setX(clickZone.getX() + clickZone.getWidth() / 2);
-		position.setY(clickZone.getY() + clickZone.getHeight() / 2);
+		position.setX(x + width / 2);
+		position.setY(y + width / (width / height));
 		Util.pixelCToGL(position);
 		getTransform().setPosition(position);
 	}

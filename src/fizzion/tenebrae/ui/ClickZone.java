@@ -14,10 +14,10 @@ import engine.math.Vector2;
 public class ClickZone extends GameComponent 
 {
 
-	private int topLeftX; 
-	private int	topLeftY;
-	private int bottomRightX; 
-	private int bottomRightY;
+	private int bottomLeftX; 
+	private int	bottomLeftY;
+	private int topRightX; 
+	private int topRightY;
 	
 	private boolean hovered;
 	private boolean clicked;
@@ -34,10 +34,10 @@ public class ClickZone extends GameComponent
 	 */
 	public ClickZone(float x, float y, float width, float height)
 	{
-		this.topLeftX = (int) x;
-		this.topLeftY = (int) y;
-		this.bottomRightX = (int) (x + width);
-		this.bottomRightY = (int) (y + height);
+		this.bottomLeftX = (int) x;
+		this.bottomLeftY = (int) y;
+		this.topRightX = (int) (x + width);
+		this.topRightY = (int) (y + height);
 	}
 	
 	public void input()
@@ -49,7 +49,7 @@ public class ClickZone extends GameComponent
 	private boolean isMouseInside()
 	{
 		Vector2 m = Input.getMousePosition();
-		return m.getX() >= topLeftX && m.getY() >= topLeftY && m.getX() <= bottomRightX && m.getY() <= bottomRightY;
+		return m.getX() >= bottomLeftX && m.getY() >= bottomLeftY && m.getX() <= topRightX && m.getY() <= topRightY;
 	}
 	
 	/**
@@ -69,19 +69,19 @@ public class ClickZone extends GameComponent
 	}
 	
 	public int getX() {
-		return topLeftX;
+		return bottomLeftX;
 	}
 
 	public int getY() {
-		return topLeftY;
+		return bottomLeftY;
 	}
 
 	public int getWidth() {
-		return bottomRightX - getX();
+		return topRightX - getX();
 	}
 
 	public int getHeight() {
-		return bottomRightY - getY();
+		return topRightY - getY();
 	}
 	
 }
