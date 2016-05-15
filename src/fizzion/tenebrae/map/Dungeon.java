@@ -5,9 +5,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import engine.components.RectRenderer;
+import engine.core.GameObject;
+import engine.core.Scene;
+import engine.math.Vector2;
 import engine.utility.Log;
 
-public class Dungeon 
+public class Dungeon extends Scene
 {
 	public static final int TILE_SIZE_PIXELS = 32;
 	
@@ -20,10 +24,17 @@ public class Dungeon
 	private int width;
 	private int height;
 	
+	private RectRenderer roomRenderer;
+	
 	public Dungeon(String name)
 	{
 		this.name = name;
 		loadDungeon();
+		
+		GameObject rrObj = new GameObject();
+		roomRenderer = new RectRenderer(new Vector2(1, 1), currentRoom.getRoomTexture());
+		rrObj.addComponent(roomRenderer);
+		add(rrObj);
 	}
 	
 	public String getName()

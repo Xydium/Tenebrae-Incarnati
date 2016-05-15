@@ -9,6 +9,8 @@ public class ObjectLoader
 		switch (num)
 		{
 			case 0:
+				return null;
+			case 1:
 				return new TileCollider(x, y, maxX, maxY);
 			default:
 				return null;
