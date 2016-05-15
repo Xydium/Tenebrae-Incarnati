@@ -16,11 +16,18 @@ public class DungeonSelect extends Scene
 	
 	private enum DungeonSelection
 	{
-		CASTLE,
-		DESERT,
-		UNDERWATER,
-		SKY,
-		DREAM;
+		CASTLE("castle"),
+		DESERT("desert"),
+		UNDERWATER("underwater"),
+		SKY("sky"),
+		DREAM("dream");
+		
+		public String tag;
+		
+		private DungeonSelection(String tag)
+		{
+			this.tag = tag;
+		}
 	}
 	
 	public void activate()
@@ -51,7 +58,7 @@ public class DungeonSelect extends Scene
 			public void unhovered() {}
 			public void clicked() 
 			{
-				getApplication().getGame().setScene(new MainMenu());
+				getApplication().getGame().setScene(new Dungeon(currentSelection.tag));
 			}
 		};
 		Button selectButton = new Button(1024 - 384, 15, 384, 96, select, selectCall);
@@ -72,11 +79,6 @@ public class DungeonSelect extends Scene
 		public void clicked() {
 			currentSelection = DungeonSelection.values()[i];
 			Log.info(currentSelection.name());
-			
-			if (currentSelection == DungeonSelection.CASTLE)
-			{
-				getApplication().getGame().setScene(new Dungeon("castle"));
-			}
 		}
 	}
 	
