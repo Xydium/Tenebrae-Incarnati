@@ -9,6 +9,7 @@ import engine.components.RectRenderer;
 import engine.core.GameObject;
 import engine.core.Scene;
 import engine.math.Vector2;
+import engine.rendering.Window;
 import engine.utility.Log;
 
 public class Dungeon extends Scene
@@ -30,9 +31,12 @@ public class Dungeon extends Scene
 	{
 		this.name = name;
 		loadDungeon();
-		
+	}
+	
+	public void activate()
+	{
 		GameObject rrObj = new GameObject();
-		roomRenderer = new RectRenderer(new Vector2(1, 1), currentRoom.getRoomTexture());
+		roomRenderer = new RectRenderer(new Vector2(1, 1 / (float)Window.getAspectRatio()), currentRoom.getRoomTexture());
 		rrObj.addComponent(roomRenderer);
 		add(rrObj);
 	}

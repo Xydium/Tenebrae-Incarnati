@@ -5,6 +5,7 @@ import engine.math.Vector2;
 import engine.rendering.Texture;
 import engine.utility.Log;
 import engine.utility.Util;
+import fizzion.tenebrae.map.Dungeon;
 import fizzion.tenebrae.ui.Button;
 import fizzion.tenebrae.ui.Button.ButtonCallback;
 
@@ -71,6 +72,11 @@ public class DungeonSelect extends Scene
 		public void clicked() {
 			currentSelection = DungeonSelection.values()[i];
 			Log.info(currentSelection.name());
+			
+			if (currentSelection == DungeonSelection.CASTLE)
+			{
+				getApplication().getGame().setScene(new Dungeon("castle"));
+			}
 		}
 	}
 	
