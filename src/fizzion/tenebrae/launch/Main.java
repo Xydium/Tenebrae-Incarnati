@@ -5,7 +5,7 @@ import engine.core.Game;
 import engine.rendering.WindowFlags;
 import engine.utility.Log;
 import engine.utility.Log.LogLevel;
-import fizzion.tenebrae.scene.DebugSplash;
+import fizzion.tenebrae.scene.MainMenu;
 
 public class Main extends Game
 {
@@ -14,7 +14,7 @@ public class Main extends Game
 	
 	public void start()
 	{
-		setScene(new DebugSplash());
+		setScene(new MainMenu());
 	}
 	
 	public static void main(String[] args)

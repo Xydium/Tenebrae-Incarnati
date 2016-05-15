@@ -1,26 +1,35 @@
 package fizzion.tenebrae.scene;
 
 import engine.core.Scene;
+import engine.math.Vector2;
 import engine.rendering.Texture;
+import engine.utility.Log;
+import engine.utility.Util;
 import fizzion.tenebrae.ui.Button;
 import fizzion.tenebrae.ui.Button.ButtonCallback;
 
 public class DungeonSelect extends Scene 
 {
 
+	private DungeonSelection currentSelection;
+	
+	private enum DungeonSelection
+	{
+		CASTLE,
+		DESERT,
+		UNDERWATER,
+		SKY,
+		DREAM;
+	}
+	
 	public void activate()
 	{
-		Texture castle = new Texture("ui/select_castle_icon.png");
-		ButtonCallback choose = new ButtonCallback() {
-			public void hovered() {}
-			public void unhovered() {}
-			public void clicked() 
-			{
-			}
-		};
 		final int startX = 32;
 		for(int i = 0; i < 5; i++) {
-			Button b = new Button(startX + i * 192, 576 - (int) (96 * 1.5f), 192, 192, castle, choose);
+			Texture castle = new Texture("ui/select_castle_icon.png");
+			ButtonCallback choose = new SelectionCallback(i);
+			Button b = new Button(startX + i * 192, 288 - 96, 192, 192, castle, choose);
+			b.getTransform().setPosition(Util.pixelCToGL(new Vector2(startX * 4 + i * 192, 576)));
 			getRootObject().addChild(b);
 		}
 		
@@ -46,6 +55,23 @@ public class DungeonSelect extends Scene
 		};
 		Button selectButton = new Button(1024 - 384, 15, 384, 96, select, selectCall);
 		getRootObject().addChild(selectButton);
+	}
+	
+	private class SelectionCallback implements ButtonCallback
+	{
+		private int i;
+		
+		public SelectionCallback(int i)
+		{
+			this.i = i;
+		}
+		
+		public void hovered() {}
+		public void unhovered() {}
+		public void clicked() {
+			currentSelection = DungeonSelection.values()[i];
+			Log.info(currentSelection.name());
+		}
 	}
 	
 }
