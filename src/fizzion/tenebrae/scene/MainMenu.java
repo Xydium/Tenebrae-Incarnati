@@ -141,7 +141,7 @@ public class MainMenu extends Scene
 			((RectRenderer) getComponentWithTag("obetextRect")).setShader(play.isHovered() ? distortionShader : clearShader);
 			if(play.isClicked())
 			{
-				System.exit(0);
+				getApplication().getGame().setScene(new DungeonSelect());
 			}
 		}
 		

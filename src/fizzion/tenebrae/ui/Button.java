@@ -15,14 +15,18 @@ public class Button extends GameObject
 	
 	private boolean lastHovered;
 	
-	public Button(ButtonCallback callback, ClickZone clickZone, Texture texture, Shader shader)
+	public Button(int x, int y, int width, int height, Texture texture, ButtonCallback c)
 	{
-		this.callback = callback;
-		this.clickZone = clickZone;
+		this.callback = c;
+		this.clickZone = new ClickZone(x, y, width, height);
 		RectRenderer renderer = new RectRenderer(Util.pixelDToGL(new Vector2(clickZone.getWidth(), clickZone.getHeight())), texture);
-		renderer.setShader(shader);
+		renderer.setShader(new Shader("basic-shader"));
 		addAllComponents(renderer, clickZone);
-		getTransform().setGlobalPosition(Util.pixelCToGL(new Vector2(clickZone.getX() + clickZone.getWidth() / 2, clickZone.getY() + clickZone.getHeight() / 2)));
+		Vector2 position = new Vector2();
+		position.setX(clickZone.getX() + clickZone.getWidth() / 2);
+		position.setY(clickZone.getY() + clickZone.getHeight() / 2);
+		Util.pixelCToGL(position);
+		getTransform().setPosition(position);
 	}
 	
 	public void update()
