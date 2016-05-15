@@ -7,10 +7,12 @@ import java.util.ArrayList;
 
 import engine.components.RectRenderer;
 import engine.core.GameObject;
+import engine.core.Input;
 import engine.core.Scene;
 import engine.math.Vector2;
 import engine.rendering.Window;
 import engine.utility.Log;
+import fizzion.tenebrae.scene.DungeonSelect;
 
 public class Dungeon extends Scene
 {
@@ -39,6 +41,35 @@ public class Dungeon extends Scene
 		add(rrObj);
 	}
 	
+	public void input()
+	{
+		if(Input.getKeyDown(Input.KEY_LEFT) && currentRoom.getLeft() != null)
+		{
+			setCurrentRoom(currentRoom.getLeft());
+			Log.info("LEFT");
+		}
+		else if(Input.getKeyDown(Input.KEY_RIGHT) && currentRoom.getRight() != null)
+		{
+			setCurrentRoom(currentRoom.getRight());
+			Log.info("RIGHT");
+		}
+		else if(Input.getKeyDown(Input.KEY_UP) && currentRoom.getAbove() != null)
+		{
+			setCurrentRoom(currentRoom.getAbove());
+			Log.info("UP");
+		}
+		else if(Input.getKeyDown(Input.KEY_DOWN) && currentRoom.getBelow() != null)
+		{
+			setCurrentRoom(currentRoom.getBelow());
+			Log.info("DOWN");
+		}
+		
+		if(Input.getKeyDown(Input.KEY_ESCAPE))
+		{
+			getApplication().getGame().setScene(new DungeonSelect());
+		}
+	}
+	
 	public String getName()
 	{
 		return name;
@@ -57,6 +88,7 @@ public class Dungeon extends Scene
 	public void setCurrentRoom(Room room)
 	{
 		this.currentRoom = room;
+		roomRenderer.setTexture(room.getRoomTexture());
 	}
 	
 	public Room getCurrentRoom()
@@ -134,7 +166,7 @@ public class Dungeon extends Scene
 			{
 				Room r = roomList.get(i);
 				LinkSet ls = linkList.get(i);
-
+				
 				r.setAbove(ls.above == -1 ? null : roomList.get(ls.above));
 				r.setBelow(ls.below == -1 ? null : roomList.get(ls.below));
 				r.setLeft(ls.left == -1 ? null : roomList.get(ls.left));
@@ -149,7 +181,7 @@ public class Dungeon extends Scene
 		}
 		catch (IOException e)
 		{
-			e.printStackTrace();
+			Log.error(e);
 		}
 	}
 }

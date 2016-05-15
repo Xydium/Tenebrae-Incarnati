@@ -1,5 +1,6 @@
 package fizzion.tenebrae.scene;
 
+import engine.audio.GlobalAudio;
 import engine.core.Scene;
 import engine.math.Vector2;
 import engine.rendering.Texture;
@@ -32,6 +33,8 @@ public class DungeonSelect extends Scene
 	
 	public void activate()
 	{
+		GlobalAudio.playMusic("menu");
+		currentSelection = DungeonSelection.CASTLE;
 		final int startX = 32;
 		for(int i = 0; i < 5; i++) {
 			Texture castle = new Texture("ui/select_castle_icon.png");
@@ -58,6 +61,7 @@ public class DungeonSelect extends Scene
 			public void unhovered() {}
 			public void clicked() 
 			{
+				GlobalAudio.stopMusic("menu");
 				getApplication().getGame().setScene(new Dungeon(currentSelection.tag));
 			}
 		};
