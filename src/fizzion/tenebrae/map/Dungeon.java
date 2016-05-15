@@ -16,8 +16,6 @@ public class Dungeon extends Scene
 {
 	public static final int TILE_SIZE_PIXELS = 32;
 	
-	private Tileset tileset;
-	
 	private Room[] rooms;
 	private Room currentRoom;
 	
@@ -54,11 +52,6 @@ public class Dungeon extends Scene
 	public int getHeight()
 	{
 		return height;
-	}
-	
-	public Tileset getTileset()
-	{
-		return tileset;
 	}
 	
 	public void setCurrentRoom(Room room)
@@ -135,7 +128,6 @@ public class Dungeon extends Scene
 				}
 			}
 
-			tileset = new Tileset(name, Dungeon.TILE_SIZE_PIXELS, width);
 			rooms = new Room[roomList.size()];
 
 			for (int i = 0; i < roomList.size(); i++)

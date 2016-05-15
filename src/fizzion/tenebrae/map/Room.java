@@ -97,8 +97,8 @@ public class Room
 				{
 					pixel = pixels[y * roomMap.getWidth() + x];
 					
-					BufferedImage floorImage = dungeon.getTileset().getBufferedImageAt((pixel >> 16) & 0xFF);
-					BufferedImage decorImage = dungeon.getTileset().getBufferedImageAt((pixel >> 8) & 0xFF);
+					BufferedImage floorImage = Texture.loadBufferedImage(createTextureName((pixel >> 16) & 0xFF));
+					BufferedImage decorImage = Texture.loadBufferedImage(createTextureName((pixel >> 8) & 0xFF));
 
 					floorImage.getGraphics().drawImage(decorImage, 0, 0, null);
 					texImage.getGraphics().drawImage(floorImage, x * Dungeon.TILE_SIZE_PIXELS,
@@ -114,5 +114,22 @@ public class Room
 		{
 			e.printStackTrace();
 		}
+	}
+	
+	private String createTextureName(int texNum)
+	{
+		String texName = "tiles/";
+		
+		if (texNum < 100)
+		{
+			texName += "0";
+		}
+		
+		if (texNum < 10)
+		{
+			texName += "0";
+		}
+		
+		return texName + texNum + ".png";
 	}
 }
