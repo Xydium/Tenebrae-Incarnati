@@ -21,7 +21,8 @@ public class TileCollider extends GameObject
 		
 		getTransform().setPosition(nx, ny);
 		
-		Vector2 size = new Vector2(1.f / (maxX / 2.f), 1.f / (maxY / 2.f));
+		//Vector2 size = new Vector2(1.f / (maxX / 2.f), 1.f / (maxY / 2.f));
+		Vector2 size = new Vector2(64, 64);
 		
 		addComponent(new AABBCollider(size));
 		
