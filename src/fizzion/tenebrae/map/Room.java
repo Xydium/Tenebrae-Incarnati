@@ -2,6 +2,8 @@ package fizzion.tenebrae.map;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 
@@ -19,11 +21,12 @@ public class Room
 	private Room right;
 	
 	private Texture roomTexture;
-	private GameObject[][] tileObjects;
+	private ArrayList<GameObject> tileObjects;
 	
 	public Room(Dungeon dungeon)
 	{
 		this.dungeon = dungeon;
+		tileObjects = new ArrayList<GameObject>();
 	}
 	
 	public Room getAbove()
@@ -71,9 +74,9 @@ public class Room
 		return roomTexture;
 	}
 	
-	public GameObject getTileObject(int x, int y)
+	public ArrayList<GameObject> getTileObjects()
 	{
-		return tileObjects[x][y];
+		return tileObjects;
 	}
 	
 	public void genTexture(int roomNumber)
@@ -88,23 +91,45 @@ public class Room
 
 			BufferedImage texImage = new BufferedImage(roomMap.getWidth() * Dungeon.TILE_SIZE_PIXELS,
 				roomMap.getHeight() * Dungeon.TILE_SIZE_PIXELS, BufferedImage.TYPE_INT_ARGB);
-
-			tileObjects = new GameObject[roomMap.getWidth()][roomMap.getHeight()];
+			
+			int r, g;
+			BufferedImage floorImage, decorImage;
+			HashMap<Integer, BufferedImage> loadedTextures = new HashMap<Integer, BufferedImage>();
 			
 			for (int y = 0; y < roomMap.getHeight(); y++)
 			{
 				for (int x = 0; x < roomMap.getWidth(); x++)
 				{
 					pixel = pixels[y * roomMap.getWidth() + x];
+					r = (pixel >> 16) & 0xFF;
+					g = (pixel >> 8) & 0xFF;
 					
-					BufferedImage floorImage = Texture.loadBufferedImage(createTextureName((pixel >> 16) & 0xFF));
-					BufferedImage decorImage = Texture.loadBufferedImage(createTextureName((pixel >> 8) & 0xFF));
+					floorImage = loadedTextures.get(r);
+					
+					if (floorImage == null)
+					{
+						floorImage = Texture.loadBufferedImage(createTextureName(r));
+						loadedTextures.put(r, floorImage);
+					}
+					
+					decorImage = loadedTextures.get(g);
+					
+					if (decorImage == null)
+					{
+						decorImage = Texture.loadBufferedImage(createTextureName(g));
+						loadedTextures.put(g, decorImage);
+					}
 
 					floorImage.getGraphics().drawImage(decorImage, 0, 0, null);
 					texImage.getGraphics().drawImage(floorImage, x * Dungeon.TILE_SIZE_PIXELS,
 						y * Dungeon.TILE_SIZE_PIXELS, null);
 					
-					tileObjects[x][y] = ObjectLoader.load(pixel & 0xFF, x, y, roomMap.getWidth(), roomMap.getHeight());
+					GameObject obj = ObjectLoader.load(pixel & 0xFF, x, y, roomMap.getWidth(), roomMap.getHeight());
+					
+					if (obj != null)
+					{
+						tileObjects.add(obj);
+					}
 				}
 			}
 			
