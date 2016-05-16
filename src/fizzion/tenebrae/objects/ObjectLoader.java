@@ -10,10 +10,8 @@ public class ObjectLoader
 		{
 			case 0:
 				return null;
-			case 1:
-				return new TileCollider(x, y, maxX, maxY);
 			default:
-				return null;
+				return new TileCollider(x, y, maxX, maxY);
 		}
 	}
 }

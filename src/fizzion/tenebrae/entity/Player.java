@@ -1,10 +1,13 @@
 package fizzion.tenebrae.entity;
 
 import engine.components.RectRenderer;
+import engine.components.RectRenderer.UniformConfig;
 import engine.core.GameObject;
 import engine.core.Input;
 import engine.math.Vector2;
+import engine.physics.AABBCollider;
 import engine.rendering.Color;
+import engine.rendering.Rectangle;
 import engine.rendering.Shader;
 import engine.rendering.Texture;
 import engine.utility.Log;
@@ -14,6 +17,7 @@ public class Player extends GameObject
 {
 
 	private Vector2 velocity;
+	private AABBCollider c;
 	
 	public Player()
 	{
@@ -21,9 +25,14 @@ public class Player extends GameObject
 		RectRenderer player = new RectRenderer(Util.pixelDToGL(new Vector2(64f, 64f)), t);
 		player.setAllowLighting(false);
 		Shader s = new Shader("color-shader");
-		s.setUniform("color", new Color(1.0f, 0.0f, 0.0f, 1.0f));
 		player.setShader(s);
-		addComponent(player);
+		player.setUniformConfig(new UniformConfig() {
+			public void setUniforms(Shader s) {
+				s.setUniform("color", new Color(1.0f, 0.0f, 0.0f, 1.0f));
+			}
+		});
+		c = new AABBCollider(new Rectangle(new Vector2(64f, 64f)));
+		addAllComponents(player, c);
 	}
 	
 	public void input()
