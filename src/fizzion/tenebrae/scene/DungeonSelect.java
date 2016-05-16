@@ -1,19 +1,22 @@
 package fizzion.tenebrae.scene;
 
+import java.util.HashMap;
+
 import engine.audio.GlobalAudio;
 import engine.core.Scene;
 import engine.math.Vector2;
 import engine.rendering.Texture;
 import engine.utility.Log;
 import engine.utility.Util;
+import fizzion.tenebrae.launch.TenebraeIncarnati;
 import fizzion.tenebrae.map.Dungeon;
 import fizzion.tenebrae.ui.Button;
 import fizzion.tenebrae.ui.Button.ButtonCallback;
 
 public class DungeonSelect extends Scene 
 {
-
 	private DungeonSelection currentSelection;
+	private HashMap<DungeonSelection, Dungeon> loadedDungeons;
 	
 	private enum DungeonSelection
 	{
@@ -31,8 +34,10 @@ public class DungeonSelect extends Scene
 		}
 	}
 	
-	public void activate()
+	public void load()
 	{
+		loadedDungeons = new HashMap<DungeonSelection, Dungeon>();
+		
 		GlobalAudio.playMusic("menu");
 		currentSelection = DungeonSelection.CASTLE;
 		final int startX = 32;
@@ -50,7 +55,8 @@ public class DungeonSelect extends Scene
 			public void unhovered() {}
 			public void clicked() 
 			{
-				getApplication().getGame().setScene(new MainMenu());
+				TenebraeIncarnati ti = (TenebraeIncarnati)getApplication().getGame();
+				ti.setScene(ti.getScene("MainMenu"));
 			}
 		};
 		Button backButton = new Button(15, 15, 384, 96, back, backCall);
@@ -62,11 +68,25 @@ public class DungeonSelect extends Scene
 			public void clicked() 
 			{
 				GlobalAudio.stopMusic("menu");
-				getApplication().getGame().setScene(new Dungeon(currentSelection.tag));
+				loadDungeon(currentSelection);
 			}
 		};
 		Button selectButton = new Button(1024 - 384, 15, 384, 96, select, selectCall);
 		getRootObject().addChild(selectButton);
+	}
+	
+	private void loadDungeon(DungeonSelection dSel)
+	{
+		Dungeon dungeon = loadedDungeons.get(dSel);
+		
+		if (dungeon == null)
+		{
+			dungeon = new Dungeon(dSel.tag);
+			loadedDungeons.put(dSel, dungeon);
+		}
+		
+		TenebraeIncarnati ti = (TenebraeIncarnati)getApplication().getGame();
+		ti.setScene(dungeon);
 	}
 	
 	private class SelectionCallback implements ButtonCallback

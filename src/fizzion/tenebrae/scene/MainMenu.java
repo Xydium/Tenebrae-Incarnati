@@ -4,7 +4,6 @@ import engine.audio.GlobalAudio;
 import engine.components.RectRenderer;
 import engine.components.RectRenderer.UniformConfig;
 import engine.core.GameObject;
-import engine.core.Input;
 import engine.core.Scene;
 import engine.math.Vector2;
 import engine.rendering.Color;
@@ -12,6 +11,7 @@ import engine.rendering.Shader;
 import engine.rendering.Texture;
 import engine.utility.Log;
 import engine.utility.Util;
+import fizzion.tenebrae.launch.TenebraeIncarnati;
 import fizzion.tenebrae.ui.ClickZone;
 
 public class MainMenu extends Scene 
@@ -19,7 +19,7 @@ public class MainMenu extends Scene
 	
 	private float shaderTime;
 	
-	public void activate()
+	public void load()
 	{
 		GameObject background = new Background();
 		GameObject obeliskText = new ObeliskText();
@@ -29,6 +29,8 @@ public class MainMenu extends Scene
 		
 		GlobalAudio.addMusic("menu", "assets/music/menu_loop_2.wav");
 		GlobalAudio.loopMusic("menu", 0.25);
+		
+		Log.info("" + getRootObject().getChildren().size());
 	}
 	
 	public void update()
@@ -141,7 +143,8 @@ public class MainMenu extends Scene
 			((RectRenderer) getComponentWithTag("obetextRect")).setShader(play.isHovered() ? distortionShader : clearShader);
 			if(play.isClicked())
 			{
-				getApplication().getGame().setScene(new DungeonSelect());
+				TenebraeIncarnati ti = (TenebraeIncarnati)getApplication().getGame();
+				ti.setScene(ti.getScene("DungeonSelect"));
 			}
 		}
 		

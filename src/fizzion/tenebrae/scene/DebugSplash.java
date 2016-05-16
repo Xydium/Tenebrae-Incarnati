@@ -16,7 +16,7 @@ public class DebugSplash extends Scene
 	
 	private double startTime;
 	
-	public void activate()
+	public void load()
 	{
 		GameObject splash = new Splash();
 		GameObject veil = new Veil();
