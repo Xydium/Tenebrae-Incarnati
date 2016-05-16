@@ -1,8 +1,13 @@
 package fizzion.tenebrae.objects;
 
+import engine.components.RectRenderer;
+import engine.components.RectRenderer.UniformConfig;
 import engine.core.GameObject;
 import engine.math.Vector2;
 import engine.physics.AABBCollider;
+import engine.rendering.Color;
+import engine.rendering.Shader;
+import engine.rendering.Texture;
 
 public class TileCollider extends GameObject
 {
@@ -16,6 +21,23 @@ public class TileCollider extends GameObject
 		
 		getTransform().setPosition(nx, ny);
 		
-		addComponent(new AABBCollider(new Vector2(1.f / (maxX / 2.f), 1.f / (maxY / 2.f))));
+		Vector2 size = new Vector2(1.f / (maxX / 2.f), 1.f / (maxY / 2.f));
+		
+		addComponent(new AABBCollider(size));
+		
+		RectRenderer rr = new RectRenderer(size, new Texture("tiles/000.png"));
+		rr.setShader(new Shader("color-shader"));
+		
+		rr.setUniformConfig(new UniformConfig()
+		{
+
+			@Override
+			public void setUniforms(Shader s) {
+				s.setUniform("color", new Color(0, 0, 1, 1));
+			}
+			
+		});
+		
+		addComponent(rr);
 	}
 }
