@@ -41,6 +41,12 @@ public class Dungeon extends Scene
 		GameObject rrObj = new GameObject();
 		roomRenderer = new RectRenderer(new Vector2(1, 1 / (float)Window.getAspectRatio()), currentRoom.getRoomTexture());
 		rrObj.addComponent(roomRenderer);
+		
+		for (Room r : rooms)
+		{
+			addAll((GameObject[])r.getTileObjects().toArray());
+		}
+		
 		player = new Player();
 		addAll(rrObj, player);
 	}
