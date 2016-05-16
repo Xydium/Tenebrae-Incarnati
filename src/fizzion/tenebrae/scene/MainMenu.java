@@ -87,7 +87,7 @@ public class MainMenu extends Scene
 				private boolean flickerOn = true;
 				public void setUniforms(Shader s) 
 				{
-					s.setUniform("color", new Color(0f, 0f, 0f, flickerOn ? 0.2f : 0f));
+					s.setUniform("color", new Color(0f, 0f, 0f, flickerOn ? 0.1f : 0f));
 					if(Math.random() < 0.05) flickerOn = !flickerOn;
 				}
 			});

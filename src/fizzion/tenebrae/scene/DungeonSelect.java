@@ -75,6 +75,11 @@ public class DungeonSelect extends Scene
 		getRootObject().addChild(selectButton);
 	}
 	
+	public void activate()
+	{
+		currentSelection = DungeonSelection.CASTLE;
+	}
+	
 	private void loadDungeon(DungeonSelection dSel)
 	{
 		Dungeon dungeon = loadedDungeons.get(dSel);

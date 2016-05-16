@@ -12,6 +12,7 @@ import engine.core.Scene;
 import engine.math.Vector2;
 import engine.rendering.Window;
 import engine.utility.Log;
+import fizzion.tenebrae.entity.Player;
 import fizzion.tenebrae.launch.TenebraeIncarnati;
 
 public class Dungeon extends Scene
@@ -27,6 +28,8 @@ public class Dungeon extends Scene
 	
 	private RectRenderer roomRenderer;
 	
+	private Player player;
+	
 	public Dungeon(String name)
 	{
 		this.name = name;
@@ -38,11 +41,19 @@ public class Dungeon extends Scene
 		GameObject rrObj = new GameObject();
 		roomRenderer = new RectRenderer(new Vector2(1, 1 / (float)Window.getAspectRatio()), currentRoom.getRoomTexture());
 		rrObj.addComponent(roomRenderer);
-		add(rrObj);
+		player = new Player();
+		addAll(rrObj, player);
+	}
+	
+	public void activate()
+	{
+		setCurrentRoom(rooms[0]);
+		player.getTransform().setPosition(0, 0);
 	}
 	
 	public void input()
 	{
+		/*
 		if(Input.getKeyDown(Input.KEY_LEFT) && currentRoom.getLeft() != null)
 		{
 			setCurrentRoom(currentRoom.getLeft());
@@ -59,7 +70,7 @@ public class Dungeon extends Scene
 		{
 			setCurrentRoom(currentRoom.getBelow());
 		}
-		
+		*/
 		if(Input.getKeyDown(Input.KEY_ESCAPE))
 		{
 			TenebraeIncarnati ti = (TenebraeIncarnati)getApplication().getGame();
