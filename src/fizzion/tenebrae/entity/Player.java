@@ -62,8 +62,6 @@ public class Player extends GameObject
 	public void update()
 	{
 		getTransform().translateBy(velocity);
-		Log.debug(getTransform().getPosition().toString());
-		Log.debug(velocity.toString());
 	}
 	
 }
