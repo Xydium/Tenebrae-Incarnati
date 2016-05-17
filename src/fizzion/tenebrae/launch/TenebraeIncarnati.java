@@ -48,14 +48,20 @@ public class TenebraeIncarnati extends Game
 	
 	public void input()
 	{
-		if(Input.getKeyDown(Input.KEY_ESCAPE))
+		if (Input.getKeyDown(Input.KEY_ESCAPE))
 		{
 			String name = getApplication().getGame().getScene().getClass().getSimpleName();
-			if(name.equals("MainMenu")) {
+			
+			if(name.equals("MainMenu"))
+			{
 				getApplication().stop();
-			} else if(name.equals("DungeonSelect")) {
+			}
+			else if(name.equals("DungeonSelect"))
+			{
 				setScene(getScene("MainMenu"));
-			} else if(name.equals("Dungeon")) {
+			}
+			else if(name.equals("Dungeon"))
+			{
 				setScene(getScene("DungeonSelect"));
 			}
 		}

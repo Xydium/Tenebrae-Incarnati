@@ -3,7 +3,7 @@ package fizzion.tenebrae.objects;
 import engine.components.RectRenderer;
 import engine.components.RectRenderer.UniformConfig;
 import engine.core.GameObject;
-import engine.math.Vector2;
+import engine.math.Vector2i;
 import engine.physics.AABBCollider;
 import engine.rendering.Color;
 import engine.rendering.Shader;
@@ -21,7 +21,7 @@ public class TileCollider extends GameObject
 		
 		getTransform().setPosition(nx, ny);
 		
-		Vector2 size = new Vector2(1.f / (maxX / 2.f), 1.f / (maxY / 2.f));
+		Vector2i size = new Vector2i(1.f / (maxX / 2.f), 1.f / (maxY / 2.f));
 		
 		addComponent(new AABBCollider(size));
 		

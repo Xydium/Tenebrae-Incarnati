@@ -4,23 +4,23 @@ import engine.components.RectRenderer;
 import engine.components.RectRenderer.UniformConfig;
 import engine.core.GameObject;
 import engine.core.Input;
-import engine.math.Vector2;
+import engine.math.Vector2f;
+import engine.math.Vector2i;
 import engine.physics.AABBCollider;
 import engine.rendering.Color;
 import engine.rendering.Shader;
 import engine.rendering.Texture;
-import engine.utility.Util;
 
 public class Player extends GameObject
 {
 
-	private Vector2 velocity;
+	private Vector2f velocity;
 	private AABBCollider c;
 	
 	public Player()
 	{
 		Texture t = new Texture("tiles/001.png");
-		RectRenderer player = new RectRenderer(Util.pixelDToGL(new Vector2(64f, 64f)), t);
+		RectRenderer player = new RectRenderer(new Vector2i(64, 64), t);
 		player.setAllowLighting(false);
 		Shader s = new Shader("color-shader");
 		player.setShader(s);
@@ -35,7 +35,7 @@ public class Player extends GameObject
 	
 	public void input()
 	{
-		velocity = new Vector2(0, 0);
+		velocity = new Vector2f(0, 0);
 		
 		if(Input.getKey(Input.KEY_LEFT))
 		{
@@ -63,7 +63,7 @@ public class Player extends GameObject
 	
 	public void update()
 	{
-		getTransform().translateBy(velocity);
+		getTransform().translateBy(new Vector2i(velocity));
 	}
 	
 }

@@ -4,12 +4,11 @@ import engine.components.RectRenderer;
 import engine.components.RectRenderer.UniformConfig;
 import engine.core.GameObject;
 import engine.core.Scene;
-import engine.math.Vector2;
+import engine.math.Vector2i;
 import engine.rendering.Color;
 import engine.rendering.Shader;
 import engine.rendering.Texture;
 import engine.utility.Time;
-import engine.utility.Util;
 
 public class DebugSplash extends Scene 
 {
@@ -39,7 +38,7 @@ public class DebugSplash extends Scene
 		{
 			Texture splash = new Texture("backgrounds/prototype_build.png");
 			Shader textureShader = new Shader("basic-shader");
-			RectRenderer splashRect = new RectRenderer(Util.pixelDToGL(new Vector2(1024f, 576f)), splash);
+			RectRenderer splashRect = new RectRenderer(new Vector2i(1024, 576), splash);
 			splashRect.setAllowLighting(false);
 			splashRect.setShader(textureShader);
 			addComponent(splashRect);
@@ -51,7 +50,7 @@ public class DebugSplash extends Scene
 		public Veil()
 		{
 			Shader colorShader = new Shader("color-shader");
-			RectRenderer veilRect = new RectRenderer(Util.pixelDToGL(new Vector2(1024f, 576f)), null);
+			RectRenderer veilRect = new RectRenderer(new Vector2i(1024f, 576f), null);
 			veilRect.setAllowLighting(false);
 			veilRect.setShader(colorShader);
 			veilRect.setUniformConfig(new UniformConfig() 
