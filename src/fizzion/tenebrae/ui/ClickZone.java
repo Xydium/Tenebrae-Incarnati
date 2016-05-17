@@ -2,7 +2,7 @@ package fizzion.tenebrae.ui;
 
 import engine.core.GameComponent;
 import engine.core.Input;
-import engine.math.Vector2;
+import engine.math.Vector2i;
 
 /**
  * A clickable area with methods for determining if
@@ -48,7 +48,7 @@ public class ClickZone extends GameComponent
 	
 	private boolean isMouseInside()
 	{
-		Vector2 m = Input.getMousePosition();
+		Vector2i m = Input.getMousePosition();
 		return m.getX() >= bottomLeftX && m.getY() >= bottomLeftY && m.getX() <= topRightX && m.getY() <= topRightY;
 	}
 	

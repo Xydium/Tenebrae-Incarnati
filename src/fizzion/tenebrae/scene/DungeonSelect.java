@@ -4,10 +4,9 @@ import java.util.HashMap;
 
 import engine.audio.GlobalAudio;
 import engine.core.Scene;
-import engine.math.Vector2;
+import engine.math.Vector2i;
 import engine.rendering.Texture;
 import engine.utility.Log;
-import engine.utility.Util;
 import fizzion.tenebrae.launch.TenebraeIncarnati;
 import fizzion.tenebrae.map.Dungeon;
 import fizzion.tenebrae.ui.Button;
@@ -45,7 +44,7 @@ public class DungeonSelect extends Scene
 			Texture castle = new Texture("ui/select_castle_icon.png");
 			ButtonCallback choose = new SelectionCallback(i);
 			Button b = new Button(startX + i * 192, 288 - 96, 192, 192, castle, choose);
-			b.getTransform().setPosition(Util.pixelCToGL(new Vector2(startX * 4 + i * 192, 576)));
+			b.getTransform().setPosition(new Vector2i(startX * 4 + i * 192, 576));
 			getRootObject().addChild(b);
 		}
 		

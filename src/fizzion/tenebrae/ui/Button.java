@@ -2,10 +2,9 @@ package fizzion.tenebrae.ui;
 
 import engine.components.RectRenderer;
 import engine.core.GameObject;
-import engine.math.Vector2;
+import engine.math.Vector2i;
 import engine.rendering.Shader;
 import engine.rendering.Texture;
-import engine.utility.Util;
 
 public class Button extends GameObject
 {
@@ -19,15 +18,11 @@ public class Button extends GameObject
 	{
 		this.callback = c;
 		this.clickZone = new ClickZone(x, y, width, height);
-		RectRenderer renderer = new RectRenderer(Util.pixelDToGL(new Vector2(width, height)), texture);
+		RectRenderer renderer = new RectRenderer(new Vector2i(width, height), texture);
 		renderer.setShader(new Shader("texture-shader"));
 		renderer.setAllowLighting(false);
 		addAllComponents(renderer, clickZone);
-		Vector2 position = new Vector2();
-		position.setX(x + width / 2);
-		position.setY(y + height);
-		Util.pixelCToGL(position);
-		getTransform().setPosition(position);
+		getTransform().setPosition(x, y);
 	}
 	
 	public void update()

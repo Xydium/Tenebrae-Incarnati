@@ -9,7 +9,7 @@ import engine.components.RectRenderer;
 import engine.core.GameObject;
 import engine.core.Input;
 import engine.core.Scene;
-import engine.math.Vector2;
+import engine.math.Vector2i;
 import engine.rendering.Window;
 import engine.utility.Log;
 import fizzion.tenebrae.entity.Player;
@@ -39,7 +39,7 @@ public class Dungeon extends Scene
 	public void load()
 	{
 		GameObject rrObj = new GameObject();
-		roomRenderer = new RectRenderer(new Vector2(1, 1 / (float)Window.getAspectRatio()), currentRoom.getRoomTexture());
+		roomRenderer = new RectRenderer(new Vector2i(Window.getWidth(), Window.getHeight()), currentRoom.getRoomTexture());
 		rrObj.addComponent(roomRenderer);
 		
 		for (Room r : rooms)

@@ -5,12 +5,10 @@ import engine.components.RectRenderer;
 import engine.components.RectRenderer.UniformConfig;
 import engine.core.GameObject;
 import engine.core.Scene;
-import engine.math.Vector2;
+import engine.math.Vector2i;
 import engine.rendering.Color;
 import engine.rendering.Shader;
 import engine.rendering.Texture;
-import engine.utility.Log;
-import engine.utility.Util;
 import fizzion.tenebrae.launch.TenebraeIncarnati;
 import fizzion.tenebrae.ui.ClickZone;
 
@@ -22,15 +20,17 @@ public class MainMenu extends Scene
 	public void load()
 	{
 		GameObject background = new Background();
-		GameObject obeliskText = new ObeliskText();
-		GameObject skull = new Skull();
+		//GameObject obeliskText = new ObeliskText();
+		//GameObject skull = new Skull();
 		
-		getRootObject().addAllChildren(background, obeliskText, skull);
+		GameObject go = new GameObject();
+		go.addComponent(new RectRenderer(new Vector2i(200, 200), new Texture("tiles/001.png")));
+		add(go);
+		
+		//getRootObject().addAllChildren(background, obeliskText, skull);
 		
 		GlobalAudio.addMusic("menu", "assets/music/menu_loop_2.wav");
 		GlobalAudio.loopMusic("menu", 0.25);
-		
-		Log.info("" + getRootObject().getChildren().size());
 	}
 	
 	public void update()
@@ -48,10 +48,10 @@ public class MainMenu extends Scene
 			Texture platform = new Texture("backgrounds/menu_background_fore.png");
 			Texture title = new Texture("backgrounds/menu_background_title.png");
 			
-			RectRenderer atmoRect = new RectRenderer(Util.pixelDToGL(new Vector2(1024f, 576f)), atmo);
-			RectRenderer platformRect = new RectRenderer(Util.pixelDToGL(new Vector2(1024f, 576f)), platform);
-			RectRenderer flickerRect = new RectRenderer(Util.pixelDToGL(new Vector2(1024f, 576f)), atmo);
-			RectRenderer titleRect = new RectRenderer(Util.pixelDToGL(new Vector2(1024f, 576f)), title);
+			RectRenderer atmoRect = new RectRenderer(new Vector2i(1024, 576), atmo);
+			RectRenderer platformRect = new RectRenderer(new Vector2i(1024, 576), platform);
+			RectRenderer flickerRect = new RectRenderer(new Vector2i(1024, 576), atmo);
+			RectRenderer titleRect = new RectRenderer(new Vector2i(1024, 576), title);
 			
 			Shader textureShader = new Shader("texture-shader");
 			Shader distortionShader = new Shader("distort-shader");
@@ -110,7 +110,7 @@ public class MainMenu extends Scene
 			
 			Texture obetext = new Texture("backgrounds/menu_background_obetext.png");
 			
-			RectRenderer obetextRect = new RectRenderer(Util.pixelDToGL(new Vector2(1024f, 576f)), obetext);
+			RectRenderer obetextRect = new RectRenderer(new Vector2i(1024, 576), obetext);
 			obetextRect.setTag("obetextRect");
 			
 			clearShader = new Shader("color-shader");
@@ -163,7 +163,7 @@ public class MainMenu extends Scene
 			setTag("skull");
 			Texture skull = new Texture("backgrounds/menu_background_skull.png");
 			Shader textureShader = new Shader("texture-shader");
-			RectRenderer skullRect = new RectRenderer(Util.pixelDToGL(new Vector2(1024f, 576f)), skull);
+			RectRenderer skullRect = new RectRenderer(new Vector2i(1024, 576), skull);
 			skullRect.setShader(textureShader);
 			addComponent(skullRect);
 			
@@ -171,7 +171,7 @@ public class MainMenu extends Scene
 			distortionShader = new Shader("distort-shader");
 			clearShader = new Shader("color-shader");
 			clearShader.setUniform("color", new Color(0, 0, 0, 0));
-			RectRenderer eyesRect = new RectRenderer(Util.pixelDToGL(new Vector2(1024f, 576f)), eyes);
+			RectRenderer eyesRect = new RectRenderer(new Vector2i(1024f, 576f), eyes);
 			eyesRect.setTag("eyesRect");
 			eyesRect.setShader(clearShader);
 			
