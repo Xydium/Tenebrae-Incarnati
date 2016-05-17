@@ -6,11 +6,12 @@ import engine.audio.GlobalAudio;
 import engine.core.Scene;
 import engine.math.Vector2i;
 import engine.rendering.Texture;
+import engine.rendering.Window;
 import engine.utility.Log;
 import fizzion.tenebrae.launch.TenebraeIncarnati;
 import fizzion.tenebrae.map.Dungeon;
 import fizzion.tenebrae.ui.Button;
-import fizzion.tenebrae.ui.Button.ButtonCallback;
+import fizzion.tenebrae.ui.ClickZoneListener;
 
 public class DungeonSelect extends Scene 
 {
@@ -40,37 +41,58 @@ public class DungeonSelect extends Scene
 		GlobalAudio.playMusic("menu");
 		currentSelection = DungeonSelection.CASTLE;
 		final int startX = 32;
-		for(int i = 0; i < 5; i++) {
+		for (int i = 0; i < 5; i++) {
 			Texture castle = new Texture("ui/select_castle_icon.png");
-			ButtonCallback choose = new SelectionCallback(i);
-			Button b = new Button(startX + i * 192, 288 - 96, 192, 192, castle, choose);
-			b.getTransform().setPosition(new Vector2i(startX * 4 + i * 192, 576));
+			ClickZoneListener choose = new SelectionListener(i);
+			Button b = new Button(startX + i * 192, Window.getHeight() / 2 - 192 / 2 - 30, 192, 192, castle);
+			b.addListener(choose);
+			//.getTransform().setPosition(new Vector2i(startX * 4 + i * 192, 576));
 			getRootObject().addChild(b);
 		}
 		
 		Texture back = new Texture("ui/select_back_to_menu.png");
-		ButtonCallback backCall = new ButtonCallback() {
-			public void hovered() {}
-			public void unhovered() {}
-			public void clicked() 
-			{
+		ClickZoneListener backCall = new ClickZoneListener() {
+			@Override
+			public void onMouseEnter() {
+				// TODO Auto-generated method stub
+				
+			}
+			@Override
+			public void onMouseLeave() {
+				// TODO Auto-generated method stub
+				
+			}
+			@Override
+			public void onMouseClicked() {
+				// TODO Auto-generated method stub
 				TenebraeIncarnati ti = (TenebraeIncarnati)getApplication().getGame();
 				ti.setScene(ti.getScene("MainMenu"));
 			}
 		};
-		Button backButton = new Button(15, 15, 384, 96, back, backCall);
+		Button backButton = new Button(15, Window.getHeight() - 15 - 96, 384, 96, back);
+		backButton.addListener(backCall);
 		getRootObject().addChild(backButton);
 		Texture select = new Texture("ui/select_choose_dungeon.png");
-		ButtonCallback selectCall = new ButtonCallback() {
-			public void hovered() {}
-			public void unhovered() {}
-			public void clicked() 
-			{
+		ClickZoneListener selectCall = new ClickZoneListener() {
+			@Override
+			public void onMouseEnter() {
+				// TODO Auto-generated method stub
+				
+			}
+			@Override
+			public void onMouseLeave() {
+				// TODO Auto-generated method stub
+				
+			}
+			@Override
+			public void onMouseClicked() {
 				GlobalAudio.stopMusic("menu");
 				loadDungeon(currentSelection);
 			}
 		};
-		Button selectButton = new Button(1024 - 384, 15, 384, 96, select, selectCall);
+		Button selectButton = new Button(1024 - 384, Window.getHeight() - 15 - 96, 384, 96, select);
+		selectButton.addListener(selectCall);
+		
 		getRootObject().addChild(selectButton);
 	}
 	
@@ -93,18 +115,29 @@ public class DungeonSelect extends Scene
 		ti.setScene(dungeon);
 	}
 	
-	private class SelectionCallback implements ButtonCallback
+	private class SelectionListener implements ClickZoneListener
 	{
 		private int i;
 		
-		public SelectionCallback(int i)
+		public SelectionListener(int i)
 		{
 			this.i = i;
 		}
-		
-		public void hovered() {}
-		public void unhovered() {}
-		public void clicked() {
+
+		@Override
+		public void onMouseEnter() {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onMouseLeave() {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onMouseClicked() {
 			currentSelection = DungeonSelection.values()[i];
 			Log.info(currentSelection.name());
 		}

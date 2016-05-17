@@ -1,5 +1,7 @@
 package fizzion.tenebrae.ui;
 
+import java.util.ArrayList;
+
 import engine.core.GameComponent;
 import engine.core.Input;
 import engine.math.Vector2i;
@@ -9,79 +11,80 @@ import engine.math.Vector2i;
  * the mouse is currently within that area and if it
  * has been clicked.
  * 
+ * @author Lenny Litvak
  * @author Tim Hornick
  */
 public class ClickZone extends GameComponent 
 {
-
-	private int bottomLeftX; 
-	private int	bottomLeftY;
-	private int topRightX; 
-	private int topRightY;
+	private ArrayList<ClickZoneListener> czListeners;
 	
-	private boolean hovered;
+	private Vector2i size;
+	
+	private boolean lastInside;
+	private boolean inside;
 	private boolean clicked;
 	
 	/**
-	 * Constructs a rectangular area starting at the corner
-	 * represented by x,y and stretching to the corner
-	 * at x + width, y + height.
+	 * Creates a click size with the given width and height
+	 * in pixels
 	 * 
-	 * @param x
-	 * @param y
 	 * @param width
 	 * @param height
 	 */
-	public ClickZone(float x, float y, float width, float height)
+	public ClickZone(float width, float height)
 	{
-		this.bottomLeftX = (int) x;
-		this.bottomLeftY = (int) y;
-		this.topRightX = (int) (x + width);
-		this.topRightY = (int) (y + height);
+		size = new Vector2i(width, height);
+		czListeners = new ArrayList<ClickZoneListener>();
+		lastInside = false;
+		inside = false;
+		clicked = false;
 	}
 	
 	public void input()
 	{
-		hovered = isMouseInside();
-		clicked = hovered && Input.getMouseDown(Input.MOUSE_LEFT);
+		inside = isMouseInside();
+		clicked = inside && Input.getMouseDown(Input.MOUSE_LEFT);
+	}
+	
+	public void update()
+	{
+		for (ClickZoneListener czl : czListeners)
+		{
+			if (clicked)
+			{
+				czl.onMouseClicked();
+			}
+			
+			if (!lastInside && inside)
+			{
+				czl.onMouseEnter();
+			}
+			else if (lastInside && !inside)
+			{
+				czl.onMouseLeave();
+			}
+		}
+		
+		lastInside = inside;
+	}
+	
+	public void addListener(ClickZoneListener czl)
+	{
+		czListeners.add(czl);
 	}
 	
 	private boolean isMouseInside()
 	{
 		Vector2i m = Input.getMousePosition();
-		return m.getX() >= bottomLeftX && m.getY() >= bottomLeftY && m.getX() <= topRightX && m.getY() <= topRightY;
+		Vector2i pos = getTransform().getGlobalPosition();
+		
+		return m.getX() >= pos.getX() && m.getY() >= pos.getY()
+						&& m.getX() <= pos.getX() + size.getX()
+						&& m.getY() <= pos.getY() + size.getY();
 	}
 	
-	/**
-	 * @return if the mouse is in the click zone
-	 */
-	public boolean isHovered()
+	public Vector2i getSize()
 	{
-		return hovered;
+		return size;
 	}
-	
-	/**
-	 * @return if the mouse is in the click zone and clicked
-	 */
-	public boolean isClicked()
-	{
-		return clicked;
-	}
-	
-	public int getX() {
-		return bottomLeftX;
-	}
-
-	public int getY() {
-		return bottomLeftY;
-	}
-
-	public int getWidth() {
-		return topRightX - getX();
-	}
-
-	public int getHeight() {
-		return topRightY - getY();
-	}
-	
 }

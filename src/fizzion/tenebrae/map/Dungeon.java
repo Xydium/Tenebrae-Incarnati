@@ -44,7 +44,7 @@ public class Dungeon extends Scene
 		
 		for (Room r : rooms)
 		{
-			addAll((GameObject[])r.getTileObjects().toArray());
+			//addAll((GameObject[])r.getTileObjects().toArray());
 		}
 		
 		player = new Player();
