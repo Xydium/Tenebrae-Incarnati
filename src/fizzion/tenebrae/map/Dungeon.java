@@ -61,30 +61,8 @@ public class Dungeon extends Scene
 	}
 	
 	public void input()
-	{
-		/*
-		if(Input.getKeyDown(Input.KEY_LEFT) && currentRoom.getLeft() != null)
-		{
-			setCurrentRoom(currentRoom.getLeft());
-		}
-		else if(Input.getKeyDown(Input.KEY_RIGHT) && currentRoom.getRight() != null)
-		{
-			setCurrentRoom(currentRoom.getRight());
-		}
-		else if(Input.getKeyDown(Input.KEY_UP) && currentRoom.getAbove() != null)
-		{
-			setCurrentRoom(currentRoom.getAbove());
-		}
-		else if(Input.getKeyDown(Input.KEY_DOWN) && currentRoom.getBelow() != null)
-		{
-			setCurrentRoom(currentRoom.getBelow());
-		}
-		*/
-		if(Input.getKeyDown(Input.KEY_ESCAPE))
-		{
-			TenebraeIncarnati ti = (TenebraeIncarnati)getApplication().getGame();
-			ti.setScene(ti.getScene("DungeonSelect"));
-		}
+	{	
+		
 	}
 	
 	public String getName()

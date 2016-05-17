@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import engine.core.Application;
 import engine.core.Game;
+import engine.core.Input;
 import engine.core.Scene;
 import engine.rendering.WindowFlags;
 import engine.utility.Log;
@@ -42,6 +43,21 @@ public class TenebraeIncarnati extends Game
 		{
 			Log.error(e);
 			e.printStackTrace();
+		}
+	}
+	
+	public void input()
+	{
+		if(Input.getKeyDown(Input.KEY_ESCAPE))
+		{
+			String name = getApplication().getGame().getScene().getClass().getSimpleName();
+			if(name.equals("MainMenu")) {
+				getApplication().stop();
+			} else if(name.equals("DungeonSelect")) {
+				setScene(getScene("MainMenu"));
+			} else if(name.equals("Dungeon")) {
+				setScene(getScene("DungeonSelect"));
+			}
 		}
 	}
 	
