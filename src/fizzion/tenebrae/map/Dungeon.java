@@ -7,13 +7,11 @@ import java.util.ArrayList;
 
 import engine.components.RectRenderer;
 import engine.core.GameObject;
-import engine.core.Input;
 import engine.core.Scene;
 import engine.math.Vector2i;
 import engine.rendering.Window;
 import engine.utility.Log;
 import fizzion.tenebrae.entity.Player;
-import fizzion.tenebrae.launch.TenebraeIncarnati;
 
 public class Dungeon extends Scene
 {
@@ -44,7 +42,10 @@ public class Dungeon extends Scene
 		
 		for (Room r : rooms)
 		{
-			//addAll((GameObject[])r.getTileObjects().toArray());
+			for(GameObject o : r.getTileObjects())
+			{
+				add(o);
+			}
 		}
 		
 		player = new Player();
@@ -58,30 +59,8 @@ public class Dungeon extends Scene
 	}
 	
 	public void input()
-	{
-		/*
-		if(Input.getKeyDown(Input.KEY_LEFT) && currentRoom.getLeft() != null)
-		{
-			setCurrentRoom(currentRoom.getLeft());
-		}
-		else if(Input.getKeyDown(Input.KEY_RIGHT) && currentRoom.getRight() != null)
-		{
-			setCurrentRoom(currentRoom.getRight());
-		}
-		else if(Input.getKeyDown(Input.KEY_UP) && currentRoom.getAbove() != null)
-		{
-			setCurrentRoom(currentRoom.getAbove());
-		}
-		else if(Input.getKeyDown(Input.KEY_DOWN) && currentRoom.getBelow() != null)
-		{
-			setCurrentRoom(currentRoom.getBelow());
-		}
-		*/
-		if(Input.getKeyDown(Input.KEY_ESCAPE))
-		{
-			TenebraeIncarnati ti = (TenebraeIncarnati)getApplication().getGame();
-			ti.setScene(ti.getScene("DungeonSelect"));
-		}
+	{	
+		
 	}
 	
 	public String getName()

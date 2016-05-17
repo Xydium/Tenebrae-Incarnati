@@ -29,8 +29,8 @@ public class Player extends GameObject
 				s.setUniform("color", new Color(1.0f, 0.0f, 0.0f, 1.0f));
 			}
 		});
-		c = new AABBCollider(new Vector2i(64, 64));
-		addAllComponents(player, c);
+		//c = new AABBCollider(new Rectangle(new Vector2(64f, 64f)));
+		addAllComponents(player);
 	}
 	
 	public void input()
@@ -54,7 +54,11 @@ public class Player extends GameObject
 			velocity.setY(-0.05f);
 		}
 		
-		velocity = velocity.mul(0.1f);
+		if(velocity.getX() != 0 && velocity.getY() != 0) {
+			velocity = velocity.mul(0.07f);
+		} else {
+			velocity = velocity.mul(0.1f);
+		}
 	}
 	
 	public void update()
