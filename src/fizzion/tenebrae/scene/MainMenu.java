@@ -134,7 +134,6 @@ public class MainMenu extends Scene
 			addComponent(obetextRect);
 			
 			play = new Button(360, 310, 300, 110);
-			//play.getTransform().setPosition(360, 150);
 			
 			play.addListener(new ClickZoneListener()
 			{

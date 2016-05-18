@@ -14,7 +14,7 @@ import engine.rendering.Texture;
 public class Player extends GameObject
 {
 
-	private Vector2f velocity;
+	private Vector2i velocity;
 	private AABBCollider c;
 	
 	public Player()
@@ -29,41 +29,37 @@ public class Player extends GameObject
 				s.setUniform("color", new Color(1.0f, 0.0f, 0.0f, 1.0f));
 			}
 		});
-		//c = new AABBCollider(new Rectangle(new Vector2(64f, 64f)));
-		addAllComponents(player);
+		c = new AABBCollider(new Vector2i(64, 64));
+		addAllComponents(player, c);
+		getTransform().setGlobalPosition(512f, 288f);
+		velocity = new Vector2i();
 	}
 	
 	public void input()
-	{
-		velocity = new Vector2f(0, 0);
+	{	
+		velocity.setX(0); velocity.setY(0);
 		
 		if(Input.getKey(Input.KEY_LEFT))
 		{
-			velocity.setX(-0.05f);
+			velocity.setX(-5);
 		}
 		else if(Input.getKey(Input.KEY_RIGHT))
 		{
-			velocity.setX(0.05f);
+			velocity.setX(5);
 		}
 		if(Input.getKey(Input.KEY_UP))
 		{
-			velocity.setY(0.05f);
+			velocity.setY(-5);
 		}
 		else if(Input.getKey(Input.KEY_DOWN))
 		{
-			velocity.setY(-0.05f);
-		}
-		
-		if(velocity.getX() != 0 && velocity.getY() != 0) {
-			velocity = velocity.mul(0.07f);
-		} else {
-			velocity = velocity.mul(0.1f);
+			velocity.setY(5);
 		}
 	}
 	
 	public void update()
 	{
-		getTransform().translateBy(new Vector2i(velocity));
+		getTransform().translateBy(velocity);
 	}
 	
 }

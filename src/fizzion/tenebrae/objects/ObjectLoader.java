@@ -8,10 +8,10 @@ public class ObjectLoader
 	{
 		switch (num)
 		{
-			case 255:
-				return new TileCollider(x, y, maxX, maxY);
-			default:
+			case 0:
 				return null;
+			default:
+				return new TileCollider(x, y, maxX, maxY);
 		}
 	}
 }
