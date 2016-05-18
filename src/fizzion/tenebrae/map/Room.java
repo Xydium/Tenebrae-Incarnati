@@ -8,8 +8,11 @@ import java.util.HashMap;
 import javax.imageio.ImageIO;
 
 import engine.core.GameObject;
+import engine.physics.AABBCollider;
 import engine.rendering.Texture;
+import fizzion.tenebrae.entity.Entity;
 import fizzion.tenebrae.objects.ObjectLoader;
+import fizzion.tenebrae.objects.TileCollider;
 
 public class Room
 {
@@ -22,11 +25,13 @@ public class Room
 	
 	private Texture roomTexture;
 	private ArrayList<GameObject> tileObjects;
+	private ArrayList<AABBCollider> colliders;
 	
 	public Room(Dungeon dungeon)
 	{
 		this.dungeon = dungeon;
 		tileObjects = new ArrayList<GameObject>();
+		colliders = new ArrayList<AABBCollider>();
 	}
 	
 	public Room getAbove()
@@ -79,6 +84,17 @@ public class Room
 		return tileObjects;
 	}
 	
+	public void resolveCollisions(Entity entity)
+	{
+		for (AABBCollider c : colliders)
+		{
+			if (c.collidesWith(entity.getCollider()))
+			{
+				entity.getCollider().resolveCollision(c);
+			}
+		}
+	}
+	
 	public void genTexture(int roomNumber)
 	{
 		try
@@ -124,11 +140,17 @@ public class Room
 					texImage.getGraphics().drawImage(floorImage, x * Dungeon.TILE_SIZE_PIXELS,
 						y * Dungeon.TILE_SIZE_PIXELS, null);
 					
-					GameObject obj = ObjectLoader.load(pixel & 0xFF, x, y, roomMap.getWidth(), roomMap.getHeight());
+					GameObject obj = ObjectLoader.load(pixel & 0xFF, x * 64, y * 64);
 					
 					if (obj != null)
 					{
 						tileObjects.add(obj);
+						
+						if (obj instanceof TileCollider)
+						{
+							//TODO: sort via 2d array to cut down possible colliders?
+							colliders.add(((TileCollider)obj).getCollider());
+						}
 					}
 				}
 			}

@@ -40,6 +40,9 @@ public class Dungeon extends Scene
 		roomRenderer = new RectRenderer(new Vector2i(Window.getWidth(), Window.getHeight()), currentRoom.getRoomTexture());
 		rrObj.addComponent(roomRenderer);
 		
+		player = new Player();
+		addAll(rrObj, player);
+		
 		for (Room r : rooms)
 		{
 			for(GameObject o : r.getTileObjects())
@@ -47,15 +50,12 @@ public class Dungeon extends Scene
 				add(o);
 			}
 		}
-		
-		player = new Player();
-		addAll(rrObj, player);
 	}
 	
 	public void activate()
 	{
 		setCurrentRoom(rooms[0]);
-		player.getTransform().setPosition(0, 0);
+		player.getTransform().setPosition(Window.getWidth() / 2 - 32, Window.getHeight() / 2 - 32);
 	}
 	
 	public void input()

@@ -11,21 +11,16 @@ import engine.rendering.Texture;
 
 public class TileCollider extends GameObject
 {
-	public TileCollider(int x, int y, int maxX, int maxY)
+	private AABBCollider collider;
+	
+	public TileCollider(int x, int y)
 	{
-		float halfWidth = (float)maxX / 2;
-		float halfHeight = (float)maxY / 2;
+		getTransform().setPosition(x, y);
 		
-		float nx = (x - halfWidth) / halfWidth;
-		float ny = (y - halfHeight) / halfHeight;
+		collider = new AABBCollider(new Vector2i(64, 64));
+		addComponent(collider);
 		
-		getTransform().setPosition(nx, ny);
-		
-		Vector2i size = new Vector2i(1.f / (maxX / 2.f), 1.f / (maxY / 2.f));
-		
-		addComponent(new AABBCollider(size));
-		
-		RectRenderer rr = new RectRenderer(size, new Texture("tiles/000.png"));
+		RectRenderer rr = new RectRenderer(new Vector2i(64, 64), new Texture("tiles/000.png"));
 		rr.setShader(new Shader("color-shader"));
 		
 		rr.setUniformConfig(new UniformConfig()
@@ -39,5 +34,10 @@ public class TileCollider extends GameObject
 		});
 		
 		addComponent(rr);
+	}
+	
+	public AABBCollider getCollider()
+	{
+		return collider;
 	}
 }
