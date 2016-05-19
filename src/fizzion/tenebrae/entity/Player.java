@@ -3,6 +3,7 @@ package fizzion.tenebrae.entity;
 import engine.components.RectRenderer;
 import engine.components.RectRenderer.UniformConfig;
 import engine.core.Input;
+import engine.core.InputMap;
 import engine.math.Vector2i;
 import engine.physics.AABBCollider;
 import engine.rendering.Color;
@@ -13,6 +14,8 @@ public class Player extends Entity
 {
 
 	private Vector2i velocity;
+	
+	private InputMap input;
 	
 	public Player()
 	{
@@ -34,34 +37,62 @@ public class Player extends Entity
 		setCollider(c);
 		addAllComponents(player, c);
 		velocity = new Vector2i();
+		
+		input = new InputMap();
+		input.addKey("move_left", Input.KEY_LEFT, Input.KEY_A);
+		input.addKey("move_right", Input.KEY_RIGHT, Input.KEY_D);
+		input.addKey("move_up", Input.KEY_UP, Input.KEY_W);
+		input.addKey("move_down", Input.KEY_DOWN, Input.KEY_S);
 	}
 	
 	public void input()
-	{	
-		velocity.setX(0);
-		velocity.setY(0);
-		
-		if(Input.getKey(Input.KEY_LEFT) || Input.getKey(Input.KEY_A))
-		{
-			velocity.setX(-5);
-		}
-		else if(Input.getKey(Input.KEY_RIGHT) || Input.getKey(Input.KEY_D))
-		{
-			velocity.setX(5);
-		}
-		if(Input.getKey(Input.KEY_UP) || Input.getKey(Input.KEY_W))
-		{
-			velocity.setY(-5);
-		}
-		else if(Input.getKey(Input.KEY_DOWN) || Input.getKey(Input.KEY_S))
-		{
-			velocity.setY(5);
-		}
+	{
+		readMovement();
 	}
 	
 	public void update()
 	{
 		getTransform().translateBy(velocity);
+	}
+	
+	private boolean left, right, up, down, stillLeft, stillRight, stillUp, stillDown;
+	private void readMovement()
+	{
+		left = input.getKeyDown("move_left");
+		right = input.getKeyDown("move_right");
+		up = input.getKeyDown("move_up");
+		down = input.getKeyDown("move_down");
+		
+		stillLeft = input.getKey("move_left");
+		stillRight = input.getKey("move_right");
+		stillUp = input.getKey("move_up");
+		stillDown = input.getKey("move_down");
+		
+		if(left || (stillLeft && !stillRight))
+		{
+			velocity.setX(-5);
+		}
+		if(right || (stillRight && !stillLeft))
+		{
+			velocity.setX(5);
+		}
+		if(!stillLeft && !stillRight)
+		{
+			velocity.setX(0);
+		}
+		
+		if(up || (stillUp && !stillDown))
+		{
+			velocity.setY(-5);
+		}
+		if(down || (stillDown && !stillUp))
+		{
+			velocity.setY(5);
+		}
+		if(!stillUp && !stillDown) 
+		{
+			velocity.setY(0);
+		}
 	}
 	
 }

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import engine.core.Application;
 import engine.core.Game;
 import engine.core.Input;
+import engine.core.InputMap;
 import engine.core.Scene;
 import engine.rendering.WindowFlags;
 import engine.utility.Log;
