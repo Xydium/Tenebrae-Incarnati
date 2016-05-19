@@ -10,6 +10,7 @@ import javax.imageio.ImageIO;
 import engine.core.GameObject;
 import engine.physics.AABBCollider;
 import engine.rendering.Texture;
+import fizzion.tenebrae.entity.Enemy;
 import fizzion.tenebrae.entity.Entity;
 import fizzion.tenebrae.objects.ObjectLoader;
 import fizzion.tenebrae.objects.TileCollider;
@@ -26,12 +27,14 @@ public class Room
 	private Texture roomTexture;
 	private ArrayList<GameObject> tileObjects;
 	private ArrayList<AABBCollider> colliders;
+	private ArrayList<Enemy> enemies;
 	
 	public Room(Dungeon dungeon)
 	{
 		this.dungeon = dungeon;
 		tileObjects = new ArrayList<GameObject>();
 		colliders = new ArrayList<AABBCollider>();
+		enemies = new ArrayList<Enemy>();
 	}
 	
 	public Room getAbove()
@@ -93,6 +96,16 @@ public class Room
 				entity.getCollider().resolveCollision(c);
 			}
 		}
+	}
+	
+	public void addEnemy(Enemy enemy)
+	{
+		enemies.add(enemy);
+	}
+	
+	public ArrayList<Enemy> getEnemies()
+	{
+		return enemies;
 	}
 	
 	public void genTexture(int roomNumber)

@@ -1,6 +1,8 @@
 package fizzion.tenebrae.objects;
 
 import engine.core.GameObject;
+import fizzion.tenebrae.entity.Enemy;
+import fizzion.tenebrae.entity.TestEnemy;
 
 public class ObjectLoader
 {
@@ -13,5 +15,15 @@ public class ObjectLoader
 			default:
 				return new TileCollider(x, y);
 		}
+	}
+	
+	public static Enemy loadEnemy(String name, int x, int y)
+	{
+		if (name.equals("TestEnemy"))
+		{
+			return new TestEnemy(x, y);
+		}
+		
+		return null;
 	}
 }

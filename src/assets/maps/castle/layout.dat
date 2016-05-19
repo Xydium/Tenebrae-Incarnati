@@ -11,6 +11,7 @@ h 9
 # Room links. start with r
 
 r 1 2 $ 3
+e TestEnemy 100 100
 r $ 0 $ $
 r 0 $ $ $
 r 4 $ 0 $

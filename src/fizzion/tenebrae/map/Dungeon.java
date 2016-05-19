@@ -12,7 +12,9 @@ import engine.math.Vector2i;
 import engine.physics.AABBCollider;
 import engine.rendering.Window;
 import engine.utility.Log;
+import fizzion.tenebrae.entity.Enemy;
 import fizzion.tenebrae.entity.Player;
+import fizzion.tenebrae.objects.ObjectLoader;
 
 public class Dungeon extends Scene
 {
@@ -46,9 +48,14 @@ public class Dungeon extends Scene
 		
 		for (Room r : rooms)
 		{
-			for(GameObject o : r.getTileObjects())
+			for (GameObject o : r.getTileObjects())
 			{
 				add(o);
+			}
+			
+			for (Enemy e : r.getEnemies())
+			{
+				add(e);
 			}
 		}
 	}
@@ -62,6 +69,14 @@ public class Dungeon extends Scene
 	public void lateUpdate()
 	{
 		currentRoom.resolveCollisions(player);
+		
+		for (Enemy e : currentRoom.getEnemies())
+		{
+			if (player.getCollider().collidesWith(e.getCollider()))
+			{
+				//player.getCollider().resolveCollision(e.getCollider());
+			}
+		}
 		
 		Vector2i pos = player.getTransform().getGlobalPosition();
 		AABBCollider col = (AABBCollider)player.getCollider();
@@ -157,7 +172,8 @@ public class Dungeon extends Scene
 			+ name + "/layout.dat")));
 		
 		String line;
-
+		Room workingRoom = null;
+		
 		try
 		{
 			ArrayList<Room> roomList = new ArrayList<Room>();
@@ -182,8 +198,16 @@ public class Dungeon extends Scene
 				}
 				else if (line.charAt(0) == 'r')
 				{
-					roomList.add(new Room(this));
+					workingRoom = new Room(this);
+					roomList.add(workingRoom);
 					linkList.add(new LinkSet(line.substring(2)));
+				}
+				else if (line.charAt(0) == 'e')
+				{
+					if (workingRoom != null)
+					{
+						addEnemy(workingRoom, line.substring(2));
+					}
 				}
 			}
 
@@ -209,6 +233,24 @@ public class Dungeon extends Scene
 		catch (IOException e)
 		{
 			Log.error(e);
+		}
+	}
+	
+	private void addEnemy(Room room, String line)
+	{
+		String[] vals = line.split("\\s");
+		
+		if (vals.length != 3)
+		{
+			System.out.println("no right values");
+			return;
+		}
+		
+		Enemy e = ObjectLoader.loadEnemy(vals[0], Integer.parseInt(vals[1]), Integer.parseInt(vals[2]));
+		
+		if (e != null)
+		{
+			room.addEnemy(e);
 		}
 	}
 }
