@@ -1,13 +1,21 @@
 package fizzion.tenebrae.scene;
 
+import java.awt.Font;
 import java.util.HashMap;
 
 import engine.audio.GlobalAudio;
+import engine.components.RectRenderer;
+import engine.components.RectRenderer.UniformConfig;
+import engine.core.GameObject;
 import engine.core.Scene;
 import engine.math.Vector2i;
+import engine.rendering.Color;
+import engine.rendering.Message;
+import engine.rendering.Shader;
 import engine.rendering.Texture;
 import engine.rendering.Window;
 import engine.utility.Log;
+import engine.utility.Time;
 import fizzion.tenebrae.launch.TenebraeIncarnati;
 import fizzion.tenebrae.map.Dungeon;
 import fizzion.tenebrae.ui.Button;
@@ -38,6 +46,20 @@ public class DungeonSelect extends Scene
 	{
 		loadedDungeons = new HashMap<DungeonSelection, Dungeon>();
 		
+		RectRenderer background = new RectRenderer(new Vector2i(1024, 576));
+		Shader s = new Shader("sinc-shader");
+		s.setUniform("color", new Color(.75f, .3f, 1, 1f));
+		background.setUniformConfig(new UniformConfig() {
+			public void setUniforms(Shader s)
+			{
+				s.setUniform("deg", (int) Time.getTime() % 360);
+			}
+		});
+		background.setShader(s);
+		
+		GameObject go = new GameObject();
+		go.addComponent(background);
+		
 		GlobalAudio.playMusic("menu");
 		currentSelection = DungeonSelection.CASTLE;
 		final int startX = 32;
@@ -46,7 +68,6 @@ public class DungeonSelect extends Scene
 			ClickZoneListener choose = new SelectionListener(i);
 			Button b = new Button(startX + i * 192, Window.getHeight() / 2 - 192 / 2 - 30, 192, 192, castle);
 			b.addListener(choose);
-			//.getTransform().setPosition(new Vector2i(startX * 4 + i * 192, 576));
 			getRootObject().addChild(b);
 		}
 		
@@ -93,7 +114,9 @@ public class DungeonSelect extends Scene
 		Button selectButton = new Button(1024 - 384, Window.getHeight() - 15 - 96, 384, 96, select);
 		selectButton.addListener(selectCall);
 		
-		getRootObject().addChild(selectButton);
+		Message title = new Message("D U N G E O N       S E L E C T", new Font("Papyrus", Font.PLAIN, 72), new Color(.85f, .4f, 1, 1f), new Vector2i(30, 10));
+
+		getRootObject().addAllChildren(go, selectButton, title);
 	}
 	
 	public void activate()
