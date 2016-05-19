@@ -63,6 +63,11 @@ public class Dungeon extends Scene
 		
 	}
 	
+	public void lateUpdate()
+	{
+		currentRoom.resolveCollisions(player);
+	}
+	
 	public String getName()
 	{
 		return name;
