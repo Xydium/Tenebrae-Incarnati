@@ -9,6 +9,7 @@ import engine.physics.AABBCollider;
 import engine.rendering.Color;
 import engine.rendering.Shader;
 import engine.rendering.Texture;
+import fizzion.tenebrae.map.Dungeon;
 
 public class Player extends Entity
 {
@@ -17,9 +18,9 @@ public class Player extends Entity
 	
 	private InputMap input;
 	
-	public Player()
+	public Player(Dungeon dungeon)
 	{
-		super(100);
+		super(100, dungeon);
 		
 		Texture t = new Texture("tiles/001.png");
 		

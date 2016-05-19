@@ -43,7 +43,7 @@ public class Dungeon extends Scene
 		roomRenderer = new RectRenderer(new Vector2i(Window.getWidth(), Window.getHeight()), currentRoom.getRoomTexture());
 		rrObj.addComponent(roomRenderer);
 		
-		player = new Player();
+		player = new Player(this);
 		addAll(rrObj, player);
 		
 		for (Room r : rooms)
@@ -74,7 +74,7 @@ public class Dungeon extends Scene
 		{
 			if (player.getCollider().collidesWith(e.getCollider()))
 			{
-				//player.getCollider().resolveCollision(e.getCollider());
+				player.getCollider().resolveCollision(e.getCollider());
 			}
 		}
 		
@@ -141,6 +141,11 @@ public class Dungeon extends Scene
 	public Room[] getRooms()
 	{
 		return rooms;
+	}
+	
+	public Player getPlayer()
+	{
+		return player;
 	}
 	
 	private class LinkSet
@@ -246,7 +251,7 @@ public class Dungeon extends Scene
 			return;
 		}
 		
-		Enemy e = ObjectLoader.loadEnemy(vals[0], Integer.parseInt(vals[1]), Integer.parseInt(vals[2]));
+		Enemy e = ObjectLoader.loadEnemy(vals[0], Integer.parseInt(vals[1]), Integer.parseInt(vals[2]), this);
 		
 		if (e != null)
 		{

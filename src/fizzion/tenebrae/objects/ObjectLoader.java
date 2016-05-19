@@ -3,6 +3,7 @@ package fizzion.tenebrae.objects;
 import engine.core.GameObject;
 import fizzion.tenebrae.entity.Enemy;
 import fizzion.tenebrae.entity.TestEnemy;
+import fizzion.tenebrae.map.Dungeon;
 
 public class ObjectLoader
 {
@@ -17,11 +18,11 @@ public class ObjectLoader
 		}
 	}
 	
-	public static Enemy loadEnemy(String name, int x, int y)
+	public static Enemy loadEnemy(String name, int x, int y, Dungeon dungeon)
 	{
 		if (name.equals("TestEnemy"))
 		{
-			return new TestEnemy(x, y);
+			return new TestEnemy(x, y, dungeon);
 		}
 		
 		return null;

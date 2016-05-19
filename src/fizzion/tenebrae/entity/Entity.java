@@ -2,6 +2,7 @@ package fizzion.tenebrae.entity;
 
 import engine.core.GameObject;
 import engine.physics.Collider;
+import fizzion.tenebrae.map.Dungeon;
 
 public abstract class Entity extends GameObject
 {
@@ -10,11 +11,14 @@ public abstract class Entity extends GameObject
 	
 	private Collider collider;
 	
-	public Entity(float health)
+	private Dungeon dungeon;
+	
+	public Entity(float health, Dungeon dungeon)
 	{
 		this.health = health;
 		this.maxHealth = health;
 		this.collider = null;
+		this.dungeon = dungeon;
 	}
 	
 	public void setHealth(float health)
@@ -45,5 +49,10 @@ public abstract class Entity extends GameObject
 	public Collider getCollider()
 	{
 		return collider;
+	}
+	
+	public Dungeon getDungeon()
+	{
+		return dungeon;
 	}
 }

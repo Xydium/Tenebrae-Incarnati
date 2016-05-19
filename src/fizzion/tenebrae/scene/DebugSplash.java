@@ -37,7 +37,7 @@ public class DebugSplash extends Scene
 		public Splash()
 		{
 			Texture splash = new Texture("backgrounds/prototype_build.png");
-			Shader textureShader = new Shader("basic-shader");
+			Shader textureShader = new Shader("texture-shader");
 			RectRenderer splashRect = new RectRenderer(new Vector2i(1024, 576), splash);
 			splashRect.setAllowLighting(false);
 			splashRect.setShader(textureShader);
