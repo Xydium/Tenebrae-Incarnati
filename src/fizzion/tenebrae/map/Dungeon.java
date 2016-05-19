@@ -9,6 +9,7 @@ import engine.components.RectRenderer;
 import engine.core.GameObject;
 import engine.core.Scene;
 import engine.math.Vector2i;
+import engine.physics.AABBCollider;
 import engine.rendering.Window;
 import engine.utility.Log;
 import fizzion.tenebrae.entity.Player;
@@ -58,14 +59,42 @@ public class Dungeon extends Scene
 		player.getTransform().setPosition(Window.getWidth() / 2 - 32, Window.getHeight() / 2 - 32);
 	}
 	
-	public void input()
-	{	
-		
-	}
-	
 	public void lateUpdate()
 	{
 		currentRoom.resolveCollisions(player);
+		
+		Vector2i pos = player.getTransform().getGlobalPosition();
+		AABBCollider col = (AABBCollider)player.getCollider();
+		
+		Room nextRoom = null;
+		Vector2i startPos = new Vector2i();
+		
+		if (pos.getY() < 0)
+		{
+			nextRoom = currentRoom.getAbove();
+			startPos = new Vector2i(Window.getWidth() / 2 - 32, Window.getHeight() - 64 - 20);
+		}
+		else if (pos.getY() + col.getSize().getY() > Window.getHeight())
+		{
+			nextRoom = currentRoom.getBelow();
+			startPos = new Vector2i(Window.getWidth() / 2 - 32, 20);
+		}
+		else if (pos.getX() < 0)
+		{
+			nextRoom = currentRoom.getLeft();
+			startPos = new Vector2i(Window.getWidth() - 64 - 20, Window.getHeight() / 2 - 32);
+		}
+		else if (pos.getX() + col.getSize().getX() > Window.getWidth())
+		{
+			nextRoom = currentRoom.getRight();
+			startPos = new Vector2i(20, Window.getHeight() / 2 - 32);
+		}
+		
+		if (nextRoom != null)
+		{
+			setCurrentRoom(nextRoom);
+			player.getTransform().setPosition(startPos);
+		}
 	}
 	
 	public String getName()
@@ -87,7 +116,6 @@ public class Dungeon extends Scene
 	{
 		this.currentRoom = room;
 		roomRenderer.setTexture(room.getRoomTexture());
-		Log.info("" + currentRoom.getRoomTexture().getID());
 	}
 	
 	public Room getCurrentRoom()

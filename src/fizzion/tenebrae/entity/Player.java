@@ -13,7 +13,6 @@ public class Player extends Entity
 {
 
 	private Vector2i velocity;
-	private AABBCollider c;
 	
 	public Player()
 	{
@@ -31,7 +30,7 @@ public class Player extends Entity
 			}
 		});
 		
-		c = new AABBCollider(new Vector2i(64, 64));
+		AABBCollider c = new AABBCollider(new Vector2i(64, 64));
 		setCollider(c);
 		addAllComponents(player, c);
 		velocity = new Vector2i();

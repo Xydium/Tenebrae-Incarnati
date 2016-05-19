@@ -108,7 +108,7 @@ public class MainMenu extends Scene
 			
 			Texture obetext = new Texture("backgrounds/menu_background_obetext.png");
 			
-			RectRenderer obetextRect = new RectRenderer(new Vector2i(1024, 576), obetext);
+			final RectRenderer obetextRect = new RectRenderer(new Vector2i(1024, 576), obetext);
 			obetextRect.setTag("obetextRect");
 			
 			clearShader = new Shader("color-shader");
@@ -177,7 +177,7 @@ public class MainMenu extends Scene
 			distortionShader = new Shader("distort-shader");
 			clearShader = new Shader("color-shader");
 			clearShader.setUniform("color", new Color(0, 0, 0, 0));
-			RectRenderer eyesRect = new RectRenderer(new Vector2i(1024, 576), eyes);
+			final RectRenderer eyesRect = new RectRenderer(new Vector2i(1024, 576), eyes);
 			eyesRect.setTag("eyesRect");
 			eyesRect.setShader(clearShader);
 			
