@@ -40,30 +40,27 @@ public class Dungeon extends Scene
 	public void load()
 	{
 		GameObject rrObj = new GameObject();
-		roomRenderer = new RectRenderer(new Vector2i(Window.getWidth(), Window.getHeight()), currentRoom.getRoomTexture());
+		roomRenderer = new RectRenderer(new Vector2i(Window.getWidth(), Window.getHeight()), null);
 		rrObj.addComponent(roomRenderer);
 		
 		player = new Player(this);
 		addAll(rrObj, player);
 		
-		for (Room r : rooms)
+		/*for (Room r : rooms)
 		{
-			for (GameObject o : r.getTileObjects())
-			{
-				add(o);
-			}
 			
-			for (Enemy e : r.getEnemies())
-			{
-				add(e);
-			}
-		}
+		}*/
 	}
 	
 	public void activate()
 	{
 		setCurrentRoom(rooms[0]);
 		player.getTransform().setPosition(Window.getWidth() / 2 - 32, Window.getHeight() / 2 - 32);
+	}
+	
+	public void deactivate()
+	{
+		
 	}
 	
 	public void lateUpdate()
@@ -129,8 +126,14 @@ public class Dungeon extends Scene
 	
 	public void setCurrentRoom(Room room)
 	{
+		if (currentRoom != null)
+		{
+			currentRoom.removeObjectsFromDungeon();
+		}
+		
 		this.currentRoom = room;
 		roomRenderer.setTexture(room.getRoomTexture());
+		currentRoom.addObjectsToDungeon();
 	}
 	
 	public Room getCurrentRoom()
@@ -233,7 +236,7 @@ public class Dungeon extends Scene
 				rooms[i] = r;
 			}
 
-			currentRoom = rooms[0];
+			//currentRoom = rooms[0];
 		}
 		catch (IOException e)
 		{
