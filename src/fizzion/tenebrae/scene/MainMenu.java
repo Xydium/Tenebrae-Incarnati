@@ -1,5 +1,7 @@
 package fizzion.tenebrae.scene;
 
+import java.awt.Font;
+
 import engine.audio.GlobalAudio;
 import engine.components.RectRenderer;
 import engine.components.RectRenderer.UniformConfig;
@@ -25,8 +27,8 @@ public class MainMenu extends Scene
 		Background background = new Background();
 		ObeliskText obeliskText = new ObeliskText();
 		Skull skull = new Skull();
-		Message m = new Message("PLAY", "Papyrus", 64, new Color(.75f, .3f, 1, 0.7f), new Vector2i(430, 320));
-		Message m2 = new Message("QUIT", "Papyrus", 32, new Color(.75f, .3f, 1, 0.4f), new Vector2i(633, 450));
+		Message m = new Message("PLAY", new Font("Papyrus", Font.PLAIN, 64), new Color(.75f, .3f, 1, 0.7f), new Vector2i(430, 320));
+		Message m2 = new Message("QUIT", new Font("Papyrus", Font.PLAIN, 24), new Color(.75f, .3f, 1, 0.4f), new Vector2i(633, 450));
 		
 		getRootObject().addAllChildren(background, obeliskText, obeliskText.play, skull, skull.quit, m, m2);
 		
