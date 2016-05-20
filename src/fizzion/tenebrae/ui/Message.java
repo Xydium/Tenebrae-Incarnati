@@ -51,7 +51,15 @@ public class Message extends GameObject
 	public Message(String message, String font, int size, Color color, Vector2i loc) {
 		this.message = message;
 		this.loc = loc;
+		this.color = color;
 		loadFont(font, size);
+		BufferedImage img = combineLetters();
+		Texture texture = new Texture(img);
+		RectRenderer renderer = new RectRenderer(new Vector2i(img.getWidth(), img.getHeight()), texture);
+		renderer.setShader(new Shader("texture-shader"));
+		renderer.setAllowLighting(false);
+		addComponent(renderer);
+		getTransform().setPosition(loc);
 	}
 
 	private BufferedImage combineLetters()
@@ -75,13 +83,13 @@ public class Message extends GameObject
 	private void loadFont(String font, int size) {
 		try {
 			InputStream stream = getClass().getResourceAsStream("/assets/fonts/" + font + ".ttf");
-			Font fnt = Font.createFont(Font.PLAIN, stream);
+			Font fnt = Font.createFont(Font.TRUETYPE_FONT, stream);
 			fnt = fnt.deriveFont(size);
 			this.font = fnt;
 		} catch (FontFormatException e) {
-			Log.error("Invalid FFT file: " + font + ".fft");
+			Log.error("Invalid ttf file: " + font + ".ttf");
 		} catch (IOException e) {
-			Log.error("Could not find fft file: " + font + ".fft");
+			Log.error("Could not find ttf file: " + font + ".ttf");
 		}
 	}
 
@@ -101,8 +109,9 @@ public class Message extends GameObject
 			BufferedImage img = new BufferedImage(1,1, BufferedImage.TYPE_INT_ARGB);
 			Graphics2D g2d = img.createGraphics();
 			g2d.setFont(font);
-			FontMetrics fm = g2d.getFontMetrics();
-			int width = fm.stringWidth(String.valueOf(letter));
+			FontMetrics fm = g2d.getFontMetrics(font);
+			Log.info(fm.toString());
+			int width = fm.stringWidth("" + letter);
 			int height = fm.getHeight();
 			g2d.dispose();
 
@@ -117,7 +126,7 @@ public class Message extends GameObject
 			g2d.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
 			g2d.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
 			g2d.setFont(font);
-			fm = g2d.getFontMetrics();
+			fm = g2d.getFontMetrics(font);
 			g2d.setColor(Util.colorToAwt(color));
 			g2d.drawString(String.valueOf(letter), 0, fm.getAscent());
 			g2d.dispose();
