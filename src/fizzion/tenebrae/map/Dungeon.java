@@ -6,12 +6,14 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import engine.collisions.AABBCollider;
+import engine.collisions.Collider;
 import engine.components.RectRenderer;
 import engine.core.GameObject;
 import engine.core.Scene;
 import engine.math.Vector2i;
 import engine.rendering.Window;
 import engine.utility.Log;
+import fizzion.tenebrae.entities.CollisionListener;
 import fizzion.tenebrae.entities.Enemy;
 import fizzion.tenebrae.entities.Player;
 import fizzion.tenebrae.objects.ObjectLoader;
@@ -40,24 +42,24 @@ public class Dungeon extends Scene
 	public void load()
 	{
 		GameObject rrObj = new GameObject();
-		roomRenderer = new RectRenderer(new Vector2i(Window.getWidth(), Window.getHeight()), currentRoom.getRoomTexture());
+		roomRenderer = new RectRenderer(new Vector2i(Window.getWidth(), Window.getHeight()), null);
 		rrObj.addComponent(roomRenderer);
 		
 		player = new Player(this);
 		addAll(rrObj, player);
 		
-		for (Room r : rooms)
-		{
-			for (GameObject o : r.getTileObjects())
-			{
-				add(o);
+		player.addCollisionListener(new CollisionListener(){
+
+			public void onCollision(Collider other) {
+				player.collidedWith(other);
 			}
 			
-			for (Enemy e : r.getEnemies())
-			{
-				add(e);
-			}
-		}
+		});
+		
+		/*for (Room r : rooms)
+		{
+			
+		}*/
 	}
 	
 	public void activate()
@@ -70,13 +72,20 @@ public class Dungeon extends Scene
 	{
 		currentRoom.resolveCollisions(player);
 		
+		ArrayList<Collider> hitColliders = new ArrayList<Collider>();
+		
 		for (Enemy e : currentRoom.getEnemies())
 		{
 			if (player.getCollider().collidesWith(e.getCollider()))
 			{
-				player.getCollider().resolveCollision(e.getCollider());
+				hitColliders.add(e.getCollider());
+				e.invokeCollisionEvent(player.getCollider());
 			}
 		}
+		
+		Collider[] cArray = new Collider[hitColliders.size()];
+		hitColliders.toArray(cArray);
+		player.invokeCollisionEvent(cArray);
 		
 		Vector2i pos = player.getTransform().getGlobalPosition();
 		AABBCollider col = (AABBCollider)player.getCollider();
@@ -129,8 +138,14 @@ public class Dungeon extends Scene
 	
 	public void setCurrentRoom(Room room)
 	{
+		if (currentRoom != null)
+		{
+			currentRoom.removeObjectsFromDungeon();
+		}
+		
 		this.currentRoom = room;
 		roomRenderer.setTexture(room.getRoomTexture());
+		currentRoom.addObjectsToDungeon();
 	}
 	
 	public Room getCurrentRoom()
@@ -233,7 +248,7 @@ public class Dungeon extends Scene
 				rooms[i] = r;
 			}
 
-			currentRoom = rooms[0];
+			//currentRoom = rooms[0];
 		}
 		catch (IOException e)
 		{

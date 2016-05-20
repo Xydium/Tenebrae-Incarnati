@@ -1,6 +1,7 @@
 package fizzion.tenebrae.entities;
 
 import engine.collisions.AABBCollider;
+import engine.collisions.Collider;
 import engine.components.RectRenderer;
 import engine.components.RectRenderer.UniformConfig;
 import engine.core.Input;
@@ -14,6 +15,8 @@ import fizzion.tenebrae.map.Dungeon;
 public class Player extends Entity
 {
 	private static final float OVERLAY_REFRESH_SPEED = 5;
+	private static final int MOVE_SPEED = 5;
+	private static final int CHARGE_SPEED = 20;
 	
 	private Vector2i velocity;
 	
@@ -47,23 +50,44 @@ public class Player extends Entity
 		input.addKey("move_right", Input.KEY_RIGHT, Input.KEY_D);
 		input.addKey("move_up", Input.KEY_UP, Input.KEY_W);
 		input.addKey("move_down", Input.KEY_DOWN, Input.KEY_S);
+		input.addKey("charge", Input.KEY_SPACE);
 		
 		overlayPercent = 0.f;
 	}
 	
+	private int movementState;
+	static final int IDLE = 0, MOVING = 1, CHARGING = 2;
 	public void input()
 	{
-		readMovement();
-		
-		if (Input.getMouseDown(Input.MOUSE_LEFT))
+		switch(movementState)
 		{
-			overlayPercent += 0.25f;
+		case IDLE:
+			readMovement();
+			break;
+		case MOVING:
+			readMovement();
+			break;
+		case CHARGING:
+			if(input.getKeyDown("charge") || overlayPercent > 1) movementState = IDLE;
+			break;
 		}
 	}
 	
 	public void update()
 	{
-		getTransform().translateBy(velocity);
+		switch(movementState)
+		{
+		case IDLE:
+			break;
+		case MOVING:
+			getTransform().setPosition(getTransform().getPosition().add(velocity));
+			break;
+		case CHARGING:
+			overlayPercent += 0.01;
+			getTransform().translateBy(new Vector2i(0, CHARGE_SPEED));
+			break;
+		}
+		
 		getApplication().getRenderingEngine().setOverlayBrightness(1.f - overlayPercent);
 		
 		if (overlayPercent >= OVERLAY_REFRESH_SPEED * getApplication().getDeltaTime())
@@ -91,11 +115,11 @@ public class Player extends Entity
 		
 		if(left || (stillLeft && !stillRight))
 		{
-			velocity.setX(-5);
+			velocity.setX(-MOVE_SPEED);
 		}
 		if(right || (stillRight && !stillLeft))
 		{
-			velocity.setX(5);
+			velocity.setX(MOVE_SPEED);
 		}
 		if(!stillLeft && !stillRight)
 		{
@@ -104,16 +128,38 @@ public class Player extends Entity
 		
 		if(up || (stillUp && !stillDown))
 		{
-			velocity.setY(-5);
+			velocity.setY(-MOVE_SPEED);
 		}
 		if(down || (stillDown && !stillUp))
 		{
-			velocity.setY(5);
+			velocity.setY(MOVE_SPEED);
 		}
 		if(!stillUp && !stillDown) 
 		{
 			velocity.setY(0);
 		}
+		
+		getTransform().lookAt(velocity.add(getTransform().getGlobalPosition()));
+		
+		if(input.getKeyDown("charge") && !velocity.equals(new Vector2i(0, 0))) {
+			movementState = CHARGING;
+		} else if(velocity.equals(new Vector2i(0, 0))) {
+			movementState = IDLE;
+		} else {
+			movementState = MOVING;
+		}
+	}
+	
+	public void collidedWith(Collider other) {
+		if(movementState == CHARGING) {
+			if(other.getParent() instanceof Enemy) {
+				getDungeon().getCurrentRoom().getEnemies().remove(other.getParent());
+				getDungeon().remove(other.getParent());
+				overlayPercent += .25;
+			}
+			movementState = IDLE;
+		}
+		getCollider().resolveCollision(other);
 	}
 	
 }

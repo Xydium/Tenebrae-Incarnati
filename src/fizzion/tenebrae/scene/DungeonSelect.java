@@ -114,7 +114,7 @@ public class DungeonSelect extends Scene
 		Button selectButton = new Button(1024 - 384, Window.getHeight() - 15 - 96, 384, 96, select);
 		selectButton.addListener(selectCall);
 		
-		Message title = new Message("D U N G E O N       S E L E C T", new Font("Papyrus", Font.PLAIN, 72), new Color(.85f, .4f, 1, 1f), new Vector2i(30, 10));
+		Message title = new Message("D U N G E O N       S E L E C T", new Font("Papyrus", Font.PLAIN, 60), new Color(.85f, .4f, 1, 1f), new Vector2i(30, 10));
 
 		getRootObject().addAllChildren(go, selectButton, title);
 	}

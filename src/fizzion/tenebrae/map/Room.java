@@ -108,6 +108,32 @@ public class Room
 		return enemies;
 	}
 	
+	public void addObjectsToDungeon()
+	{
+		for (GameObject o : tileObjects)
+		{
+			dungeon.add(o);
+		}
+		
+		for (Enemy e : enemies)
+		{
+			dungeon.add(e);
+		}
+	}
+	
+	public void removeObjectsFromDungeon()
+	{
+		for (GameObject o : tileObjects)
+		{
+			dungeon.remove(o);
+		}
+		
+		for (Enemy e : enemies)
+		{
+			dungeon.remove(e);
+		}
+	}
+	
 	public void genTexture(int roomNumber)
 	{
 		try
