@@ -47,13 +47,26 @@ public class Player extends Entity
 		input.addKey("move_right", Input.KEY_RIGHT, Input.KEY_D);
 		input.addKey("move_up", Input.KEY_UP, Input.KEY_W);
 		input.addKey("move_down", Input.KEY_DOWN, Input.KEY_S);
+		input.addKey("charge", Input.KEY_SPACE);
 		
 		overlayPercent = 0.f;
 	}
 	
+	private int movementState;
+	static final int IDLE = 0, MOVING = 1, CHARGING = 2;
 	public void input()
 	{
-		readMovement();
+		switch(movementState)
+		{
+		case IDLE:
+			readMovement();
+			break;
+		case MOVING:
+			readMovement();
+			break;
+		case CHARGING:
+			break;
+		}
 		
 		if (Input.getMouseDown(Input.MOUSE_LEFT))
 		{
@@ -63,7 +76,18 @@ public class Player extends Entity
 	
 	public void update()
 	{
-		getTransform().translateBy(velocity);
+		switch(movementState)
+		{
+		case IDLE:
+			break;
+		case MOVING:
+			getTransform().translateBy(velocity);
+			break;
+		case CHARGING:
+			getTransform().translateBy(new Vector2i(0, 10));
+			break;
+		}
+		
 		getApplication().getRenderingEngine().setOverlayBrightness(1.f - overlayPercent);
 		
 		if (overlayPercent >= OVERLAY_REFRESH_SPEED * getApplication().getDeltaTime())
@@ -113,6 +137,14 @@ public class Player extends Entity
 		if(!stillUp && !stillDown) 
 		{
 			velocity.setY(0);
+		}
+		
+		if(input.getKeyDown("charge")) {
+			movementState = CHARGING;
+		} else if(velocity.equals(new Vector2i(0, 0))) {
+			movementState = IDLE;
+		} else {
+			movementState = MOVING;
 		}
 	}
 	
