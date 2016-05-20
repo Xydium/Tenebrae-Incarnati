@@ -2,12 +2,9 @@ package fizzion.tenebrae.objects;
 
 //import engine.components.RectRenderer;
 //import engine.components.RectRenderer.UniformConfig;
+import engine.collisions.AABBCollider;
 import engine.core.GameObject;
 import engine.math.Vector2i;
-import engine.physics.AABBCollider;
-//import engine.rendering.Color;
-//import engine.rendering.Shader;
-//import engine.rendering.Texture;
 
 public class TileCollider extends GameObject
 {

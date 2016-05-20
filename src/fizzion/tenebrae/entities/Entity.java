@@ -1,7 +1,7 @@
-package fizzion.tenebrae.entity;
+package fizzion.tenebrae.entities;
 
+import engine.collisions.Collider;
 import engine.core.GameObject;
-import engine.physics.Collider;
 import fizzion.tenebrae.map.Dungeon;
 
 public abstract class Entity extends GameObject

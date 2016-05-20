@@ -1,4 +1,4 @@
-package fizzion.tenebrae.entity;
+package fizzion.tenebrae.entities;
 
 import fizzion.tenebrae.map.Dungeon;
 

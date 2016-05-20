@@ -1,11 +1,11 @@
-package fizzion.tenebrae.entity;
+package fizzion.tenebrae.entities;
 
+import engine.collisions.AABBCollider;
 import engine.components.RectRenderer;
 import engine.components.RectRenderer.UniformConfig;
 import engine.core.Input;
 import engine.core.InputMap;
 import engine.math.Vector2i;
-import engine.physics.AABBCollider;
 import engine.rendering.Color;
 import engine.rendering.Shader;
 import engine.rendering.Texture;
@@ -13,10 +13,13 @@ import fizzion.tenebrae.map.Dungeon;
 
 public class Player extends Entity
 {
-
+	private static final float OVERLAY_REFRESH_SPEED = 5;
+	
 	private Vector2i velocity;
 	
 	private InputMap input;
+	
+	private float overlayPercent;
 	
 	public Player(Dungeon dungeon)
 	{
@@ -25,7 +28,7 @@ public class Player extends Entity
 		Texture t = new Texture("tiles/001.png");
 		
 		RectRenderer player = new RectRenderer(new Vector2i(64, 64), t);
-		player.setAllowLighting(false);
+		//player.setAllowLighting(false);
 		Shader s = new Shader("color-shader");
 		player.setShader(s);
 		player.setUniformConfig(new UniformConfig() {
@@ -44,16 +47,33 @@ public class Player extends Entity
 		input.addKey("move_right", Input.KEY_RIGHT, Input.KEY_D);
 		input.addKey("move_up", Input.KEY_UP, Input.KEY_W);
 		input.addKey("move_down", Input.KEY_DOWN, Input.KEY_S);
+		
+		overlayPercent = 0.f;
 	}
 	
 	public void input()
 	{
 		readMovement();
+		
+		if (Input.getMouseDown(Input.MOUSE_LEFT))
+		{
+			overlayPercent += 0.25f;
+		}
 	}
 	
 	public void update()
 	{
 		getTransform().translateBy(velocity);
+		getApplication().getRenderingEngine().setOverlayBrightness(1.f - overlayPercent);
+		
+		if (overlayPercent >= OVERLAY_REFRESH_SPEED * getApplication().getDeltaTime())
+		{
+			overlayPercent -= OVERLAY_REFRESH_SPEED * (float)getApplication().getDeltaTime();
+		}
+		else
+		{
+			overlayPercent = 0.f;
+		}
 	}
 	
 	private boolean left, right, up, down, stillLeft, stillRight, stillUp, stillDown;

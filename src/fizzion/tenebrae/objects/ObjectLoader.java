@@ -1,8 +1,8 @@
 package fizzion.tenebrae.objects;
 
 import engine.core.GameObject;
-import fizzion.tenebrae.entity.Enemy;
-import fizzion.tenebrae.entity.TestEnemy;
+import fizzion.tenebrae.entities.Enemy;
+import fizzion.tenebrae.entities.TestEnemy;
 import fizzion.tenebrae.map.Dungeon;
 
 public class ObjectLoader

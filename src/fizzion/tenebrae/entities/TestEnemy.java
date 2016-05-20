@@ -1,8 +1,8 @@
-package fizzion.tenebrae.entity;
+package fizzion.tenebrae.entities;
 
+import engine.collisions.AABBCollider;
 import engine.components.RectRenderer;
 import engine.math.Vector2i;
-import engine.physics.AABBCollider;
 import engine.rendering.Texture;
 import fizzion.tenebrae.map.Dungeon;
 
@@ -13,7 +13,7 @@ public class TestEnemy extends Enemy
 	{
 		super(200, dungeon);
 		
-		RectRenderer rr = new RectRenderer(new Vector2i(64, 64), new Texture("tiles/252.png"));
+		RectRenderer rr = new RectRenderer(new Vector2i(64, 64), new Texture("entities/knight1.png"));
 		addComponent(rr);
 		
 		AABBCollider c = new AABBCollider(new Vector2i(64, 64));

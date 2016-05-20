@@ -5,15 +5,15 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import engine.collisions.AABBCollider;
 import engine.components.RectRenderer;
 import engine.core.GameObject;
 import engine.core.Scene;
 import engine.math.Vector2i;
-import engine.physics.AABBCollider;
 import engine.rendering.Window;
 import engine.utility.Log;
-import fizzion.tenebrae.entity.Enemy;
-import fizzion.tenebrae.entity.Player;
+import fizzion.tenebrae.entities.Enemy;
+import fizzion.tenebrae.entities.Player;
 import fizzion.tenebrae.objects.ObjectLoader;
 
 public class Dungeon extends Scene

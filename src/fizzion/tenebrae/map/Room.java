@@ -7,11 +7,11 @@ import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 
+import engine.collisions.AABBCollider;
 import engine.core.GameObject;
-import engine.physics.AABBCollider;
 import engine.rendering.Texture;
-import fizzion.tenebrae.entity.Enemy;
-import fizzion.tenebrae.entity.Entity;
+import fizzion.tenebrae.entities.Enemy;
+import fizzion.tenebrae.entities.Entity;
 import fizzion.tenebrae.objects.ObjectLoader;
 import fizzion.tenebrae.objects.TileCollider;
 
