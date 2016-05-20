@@ -12,6 +12,9 @@ h 9
 
 r 1 2 $ 3
 e TestEnemy 100 100
+e TestEnemy 200 100
+e TestEnemy 50 150
+e TestEnemy 300 400
 r $ 0 $ $
 r 0 $ $ $
 r 4 $ 0 $
