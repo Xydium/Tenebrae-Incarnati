@@ -21,11 +21,11 @@ import fizzion.tenebrae.ui.Button;
 import fizzion.tenebrae.ui.ClickZoneListener;
 import fizzion.tenebrae.ui.Message;
 
-public class DungeonSelect extends Scene 
+public class DungeonSelect extends Scene
 {
 	private DungeonSelection currentSelection;
 	private HashMap<DungeonSelection, Dungeon> loadedDungeons;
-	
+
 	private enum DungeonSelection
 	{
 		CASTLE("castle"),
@@ -33,19 +33,19 @@ public class DungeonSelect extends Scene
 		UNDERWATER("underwater"),
 		SKY("sky"),
 		DREAM("dream");
-		
+
 		public String tag;
-		
+
 		private DungeonSelection(String tag)
 		{
 			this.tag = tag;
 		}
 	}
-	
+
 	public void load()
 	{
 		loadedDungeons = new HashMap<DungeonSelection, Dungeon>();
-		
+
 		RectRenderer background = new RectRenderer(new Vector2i(1024, 576));
 		Shader s = new Shader("sinc-shader");
 		s.setUniform("color", new Color(.75f, .3f, 1, 1f));
@@ -56,10 +56,10 @@ public class DungeonSelect extends Scene
 			}
 		});
 		background.setShader(s);
-		
+
 		GameObject go = new GameObject();
 		go.addComponent(background);
-		
+
 		GlobalAudio.playMusic("menu");
 		currentSelection = DungeonSelection.CASTLE;
 		final int startX = 32;
@@ -70,18 +70,18 @@ public class DungeonSelect extends Scene
 			b.addListener(choose);
 			getRootObject().addChild(b);
 		}
-		
+
 		Texture back = new Texture("ui/select_back_to_menu.png");
 		ClickZoneListener backCall = new ClickZoneListener() {
 			@Override
 			public void onMouseEnter() {
 				// TODO Auto-generated method stub
-				
+
 			}
 			@Override
 			public void onMouseLeave() {
 				// TODO Auto-generated method stub
-				
+
 			}
 			@Override
 			public void onMouseClicked() {
@@ -98,12 +98,12 @@ public class DungeonSelect extends Scene
 			@Override
 			public void onMouseEnter() {
 				// TODO Auto-generated method stub
-				
+
 			}
 			@Override
 			public void onMouseLeave() {
 				// TODO Auto-generated method stub
-				
+
 			}
 			@Override
 			public void onMouseClicked() {
@@ -113,35 +113,35 @@ public class DungeonSelect extends Scene
 		};
 		Button selectButton = new Button(1024 - 384, Window.getHeight() - 15 - 96, 384, 96, select);
 		selectButton.addListener(selectCall);
-		
-		Message title = new Message("D U N G E O N       S E L E C T", new Font("Papyrus", Font.PLAIN, 60), new Color(.85f, .4f, 1, 1f), new Vector2i(30, 10));
+
+		Message title = new Message("D U N G E O N       S E L E C T", "Papyrus", 60, new Color(.85f, .4f, 1, 1f), new Vector2i(TenebraeIncarnati.WIDTH/2, 75), Message.Placement.CENTER);
 
 		getRootObject().addAllChildren(go, selectButton, title);
 	}
-	
+
 	public void activate()
 	{
 		currentSelection = DungeonSelection.CASTLE;
 	}
-	
+
 	private void loadDungeon(DungeonSelection dSel)
 	{
 		Dungeon dungeon = loadedDungeons.get(dSel);
-		
+
 		if (dungeon == null)
 		{
 			dungeon = new Dungeon(dSel.tag);
 			loadedDungeons.put(dSel, dungeon);
 		}
-		
+
 		TenebraeIncarnati ti = (TenebraeIncarnati)getApplication().getGame();
 		ti.setScene(dungeon);
 	}
-	
+
 	private class SelectionListener implements ClickZoneListener
 	{
 		private int i;
-		
+
 		public SelectionListener(int i)
 		{
 			this.i = i;
@@ -150,13 +150,13 @@ public class DungeonSelect extends Scene
 		@Override
 		public void onMouseEnter() {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
 		public void onMouseLeave() {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
@@ -165,5 +165,5 @@ public class DungeonSelect extends Scene
 			Log.info(currentSelection.name());
 		}
 	}
-	
+
 }

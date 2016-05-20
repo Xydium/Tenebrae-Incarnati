@@ -14,30 +14,33 @@ import fizzion.tenebrae.scene.MainMenu;
 
 public class TenebraeIncarnati extends Game
 {
-	
+
 	public static WindowFlags flags;
-	
+
 	private HashMap<String, Scene> scenes;
-	
+
+	public final static int WIDTH = 512 * 2;
+	public final static int HEIGHT = 288 * 2;
+
 	public void start()
 	{
 		scenes = new HashMap<String, Scene>();
 		scenes.put("MainMenu", new MainMenu());
 		scenes.put("DungeonSelect", new DungeonSelect());
-		
+
 		setScene(scenes.get("MainMenu"));
 	}
-	
+
 	public static void main(String[] args)
 	{
 		try
 		{
-			flags = new WindowFlags("Tenebrae Incarnati", 512 * 2, 288 * 2);
+			flags = new WindowFlags("Tenebrae Incarnati", WIDTH, HEIGHT);
 			Log.setLogLevel(LogLevel.INTERNAL);
 			Log.setWindowEnabled(true);
-			
+
 			flags.setIconFiles("", "");
-			
+
 			Application app = new Application(new TenebraeIncarnati(), 60.0, flags);
 			app.start();
 		}
@@ -47,13 +50,13 @@ public class TenebraeIncarnati extends Game
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void input()
 	{
 		if (Input.getKeyDown(Input.KEY_ESCAPE))
 		{
 			String name = getApplication().getGame().getScene().getClass().getSimpleName();
-			
+
 			if(name.equals("MainMenu"))
 			{
 				getApplication().stop();
@@ -68,12 +71,12 @@ public class TenebraeIncarnati extends Game
 			}
 		}
 	}
-	
+
 	public void addScene(String name, Scene scene)
 	{
 		scenes.put(name, scene);
 	}
-	
+
 	public Scene getScene(String name)
 	{
 		return scenes.get(name);

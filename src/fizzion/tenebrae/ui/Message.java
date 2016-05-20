@@ -32,34 +32,47 @@ public class Message extends GameObject
 	private Font font;
 	private Vector2i loc;
 	private Color color;
+	private Placement placement;
 
-	public Message(String message, Font font, Color color, Vector2i loc) {
+	public enum Placement {
+		CENTER(),
+		BOTTOM_LEFT()
+	};
+
+	public Message(String message, Font font, Color color, Vector2i loc, Placement placement) {
+		this.placement = placement;
 		this.message = message;
 		this.font = font;
 		this.color = color;
 		this.loc = loc;
-		BufferedImage img = combineLetters();
-		Texture texture = new Texture(img);
-		RectRenderer renderer = new RectRenderer(new Vector2i(img.getWidth(), img.getHeight()), texture);
-		renderer.setShader(new Shader("texture-shader"));
-		renderer.setAllowLighting(false);
-		addComponent(renderer);
-		getTransform().setPosition(loc);
-		Log.info(this.toString());
+		draw();
 	}
 
-	public Message(String message, String font, int size, Color color, Vector2i loc) {
+	public Message(String message, String font, int size, Color color, Vector2i loc, Placement placement) {
+		this.placement = placement;
 		this.message = message;
 		this.loc = loc;
 		this.color = color;
 		loadFont(font, size);
+		draw();
+	}
+
+	private void draw() {
 		BufferedImage img = combineLetters();
 		Texture texture = new Texture(img);
 		RectRenderer renderer = new RectRenderer(new Vector2i(img.getWidth(), img.getHeight()), texture);
 		renderer.setShader(new Shader("texture-shader"));
 		renderer.setAllowLighting(false);
 		addComponent(renderer);
+		if(placement == Placement.CENTER) {
+			int width = renderer.getSize().getX();
+			int height = renderer.getSize().getY();
+
+			this.loc = new Vector2i(loc.getX() - width/2, loc.getY() - height/2 );
+		}
 		getTransform().setPosition(loc);
+
+		Log.info(this.toString());
 	}
 
 	private BufferedImage combineLetters()
@@ -82,10 +95,11 @@ public class Message extends GameObject
 
 	private void loadFont(String font, int size) {
 		try {
-			InputStream stream = getClass().getResourceAsStream("/assets/fonts/" + font + ".ttf");
+			InputStream stream = getClass().getResourceAsStream("/assets/fonts/" + font + ".TTF");
 			Font fnt = Font.createFont(Font.TRUETYPE_FONT, stream);
-			fnt = fnt.deriveFont(size);
+			fnt = fnt.deriveFont(Font.PLAIN, size);
 			this.font = fnt;
+			Log.info("Loaded Font From File: " + fnt);
 		} catch (FontFormatException e) {
 			Log.error("Invalid ttf file: " + font + ".ttf");
 		} catch (IOException e) {

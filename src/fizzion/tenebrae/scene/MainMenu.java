@@ -16,6 +16,7 @@ import fizzion.tenebrae.launch.TenebraeIncarnati;
 import fizzion.tenebrae.ui.Button;
 import fizzion.tenebrae.ui.ClickZoneListener;
 import fizzion.tenebrae.ui.Message;
+import fizzion.tenebrae.ui.Message.Placement;
 
 public class MainMenu extends Scene 
 {
@@ -27,8 +28,8 @@ public class MainMenu extends Scene
 		Background background = new Background();
 		ObeliskText obeliskText = new ObeliskText();
 		Skull skull = new Skull();
-		Message m = new Message("PLAY", new Font("Papyrus", Font.PLAIN, 64), new Color(.75f, .3f, 1, 0.7f), new Vector2i(430, 320));
-		Message m2 = new Message("QUIT", new Font("Papyrus", Font.PLAIN, 24), new Color(.75f, .3f, 1, 0.4f), new Vector2i(633, 450));
+		Message m = new Message("PLAY", new Font("Papyrus", Font.PLAIN, 64), new Color(.75f, .3f, 1, 0.7f), new Vector2i(TenebraeIncarnati.WIDTH/2, 360), Placement.CENTER);
+		Message m2 = new Message("QUIT", new Font("Papyrus", Font.PLAIN, 24), new Color(.75f, .3f, 1, 0.4f), new Vector2i(633, 450), Placement.BOTTOM_LEFT);
 		
 		getRootObject().addAllChildren(background, obeliskText, obeliskText.play, skull, skull.quit, m, m2);
 		
