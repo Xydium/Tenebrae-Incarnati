@@ -1,7 +1,5 @@
 package fizzion.tenebrae.scene;
 
-import java.awt.Font;
-
 import engine.audio.GlobalAudio;
 import engine.components.RectRenderer;
 import engine.components.RectRenderer.UniformConfig;
@@ -9,13 +7,13 @@ import engine.core.GameObject;
 import engine.core.Scene;
 import engine.math.Vector2i;
 import engine.rendering.Color;
-import engine.rendering.Message;
 import engine.rendering.Shader;
 import engine.rendering.Texture;
 import engine.rendering.Window;
 import fizzion.tenebrae.launch.TenebraeIncarnati;
 import fizzion.tenebrae.ui.Button;
 import fizzion.tenebrae.ui.ClickZoneListener;
+import fizzion.tenebrae.ui.Message;
 
 public class MainMenu extends Scene 
 {
@@ -27,8 +25,8 @@ public class MainMenu extends Scene
 		Background background = new Background();
 		ObeliskText obeliskText = new ObeliskText();
 		Skull skull = new Skull();
-		Message m = new Message("PLAY", new Font("Papyrus", Font.PLAIN, 64), new Color(.75f, .3f, 1, 0.7f), new Vector2i(430, 320));
-		Message m2 = new Message("QUIT", new Font("Papyrus", Font.PLAIN, 24), new Color(.75f, .3f, 1, 0.4f), new Vector2i(633, 450));
+		Message m = new Message("PLAY", "PAPYRUS", 64, new Color(.75f, .3f, 1, 0.7f), new Vector2i(430, 320));
+		Message m2 = new Message("QUIT", "PAPYRUS", 32, new Color(.75f, .3f, 1, 0.4f), new Vector2i(633, 450));
 		
 		getRootObject().addAllChildren(background, obeliskText, obeliskText.play, skull, skull.quit, m, m2);
 		

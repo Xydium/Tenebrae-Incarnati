@@ -10,7 +10,6 @@ import engine.core.GameObject;
 import engine.core.Scene;
 import engine.math.Vector2i;
 import engine.rendering.Color;
-import engine.rendering.Message;
 import engine.rendering.Shader;
 import engine.rendering.Texture;
 import engine.rendering.Window;
@@ -20,6 +19,7 @@ import fizzion.tenebrae.launch.TenebraeIncarnati;
 import fizzion.tenebrae.map.Dungeon;
 import fizzion.tenebrae.ui.Button;
 import fizzion.tenebrae.ui.ClickZoneListener;
+import fizzion.tenebrae.ui.Message;
 
 public class DungeonSelect extends Scene 
 {

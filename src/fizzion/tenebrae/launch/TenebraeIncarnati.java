@@ -36,6 +36,8 @@ public class TenebraeIncarnati extends Game
 			Log.setLogLevel(LogLevel.INTERNAL);
 			Log.setWindowEnabled(true);
 			
+			flags.setIconFiles("", "");
+			
 			Application app = new Application(new TenebraeIncarnati(), 60.0, flags);
 			app.start();
 		}
