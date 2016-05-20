@@ -110,7 +110,6 @@ public class Message extends GameObject
 			Graphics2D g2d = img.createGraphics();
 			g2d.setFont(font);
 			FontMetrics fm = g2d.getFontMetrics(font);
-			Log.info(fm.toString());
 			int width = fm.stringWidth("" + letter);
 			int height = fm.getHeight();
 			g2d.dispose();
