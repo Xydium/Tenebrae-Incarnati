@@ -46,6 +46,7 @@ public class Message extends GameObject
 		renderer.setAllowLighting(false);
 		addComponent(renderer);
 		getTransform().setPosition(loc);
+		Log.info(this.toString());
 	}
 
 	public Message(String message, String font, int size, Color color, Vector2i loc) {
@@ -79,7 +80,7 @@ public class Message extends GameObject
 		}
 		return result;
 	}
-	
+
 	private void loadFont(String font, int size) {
 		try {
 			InputStream stream = getClass().getResourceAsStream("/assets/fonts/" + font + ".ttf");
@@ -110,7 +111,8 @@ public class Message extends GameObject
 			Graphics2D g2d = img.createGraphics();
 			g2d.setFont(font);
 			FontMetrics fm = g2d.getFontMetrics(font);
-			int width = fm.stringWidth("" + letter);
+
+			int width = Math.max(1, fm.stringWidth("" + letter));
 			int height = fm.getHeight();
 			g2d.dispose();
 
@@ -136,25 +138,6 @@ public class Message extends GameObject
 	}
 
 	/**
-	 * @deprecated
-	 */
-	public List<BufferedImage> getRectangles(Shader texShader) {
-		List<BufferedImage> textures = getLettersTextures();
-		List<RectRenderer> rectangles = new ArrayList<RectRenderer>();
-
-		int x = 0;
-		for(BufferedImage bi : textures) {
-			Texture texture = new Texture(bi);
-			//RectRenderer rec = new RectRenderer(new Vector2(this.loc.getX() + x, this.loc.getY()), texture);
-			//rec.setShader(texShader);
-			//rectangles.add(rec);
-			System.out.println(bi);
-			x += bi.getWidth();
-		}
-		return null;
-	}
-
-	/**
 	 * @return the message
 	 */
 	public String getMessage() {
@@ -166,5 +149,13 @@ public class Message extends GameObject
 	 */
 	public Font getFont() {
 		return font;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Message [message=" + message + ", font=" + font + ", loc=" + loc + ", color=" + color + "]";
 	}
 }
