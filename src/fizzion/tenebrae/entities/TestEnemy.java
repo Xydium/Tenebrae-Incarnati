@@ -26,6 +26,6 @@ public class TestEnemy extends Enemy
 	public void update()
 	{
 		getTransform().lookAt(getDungeon().getPlayer().getTransform().getGlobalPosition());
-		getTransform().translateBy(new Vector2i(0, 2));
+		getTransform().translateBy(new Vector2i(0, 4));
 	}
 }

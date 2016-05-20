@@ -1,5 +1,7 @@
 package fizzion.tenebrae.entities;
 
+import java.util.ArrayList;
+
 import engine.collisions.Collider;
 import engine.core.GameObject;
 import fizzion.tenebrae.map.Dungeon;
@@ -13,12 +15,32 @@ public abstract class Entity extends GameObject
 	
 	private Dungeon dungeon;
 	
+	private ArrayList<CollisionListener> collListeners;
+	
 	public Entity(float health, Dungeon dungeon)
 	{
 		this.health = health;
 		this.maxHealth = health;
 		this.collider = null;
 		this.dungeon = dungeon;
+		
+		collListeners = new ArrayList<CollisionListener>();
+	}
+	
+	public void addCollisionListener(CollisionListener cListener)
+	{
+		collListeners.add(cListener);
+	}
+	
+	public void invokeCollisionEvent(Collider... others)
+	{
+		for (CollisionListener cl : collListeners)
+		{
+			for (Collider c : others)
+			{
+				cl.onCollision(c);
+			}
+		}
 	}
 	
 	public void setHealth(float health)

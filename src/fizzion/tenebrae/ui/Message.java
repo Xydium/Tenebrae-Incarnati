@@ -13,7 +13,6 @@ import java.util.List;
 
 import engine.components.RectRenderer;
 import engine.core.GameObject;
-import engine.math.Vector2;
 import engine.math.Vector2i;
 import engine.rendering.Color;
 import engine.rendering.Shader;
