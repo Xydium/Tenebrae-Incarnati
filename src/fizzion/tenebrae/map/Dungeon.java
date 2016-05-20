@@ -50,9 +50,8 @@ public class Dungeon extends Scene
 		
 		player.addCollisionListener(new CollisionListener(){
 
-			@Override
 			public void onCollision(Collider other) {
-				System.out.println("memes - the dna of the soul");
+				player.collidedWith(other);
 			}
 			
 		});
