@@ -62,14 +62,11 @@ public class DungeonSelect extends Scene
 
 		GlobalAudio.playMusic("menu");
 		currentSelection = DungeonSelection.CASTLE;
-		final int startX = 32;
-		for (int i = 0; i < 5; i++) {
-			Texture castle = new Texture("ui/select_castle_icon.png");
-			ClickZoneListener choose = new SelectionListener(i);
-			Button b = new Button(startX + i * 192, Window.getHeight() / 2 - 192 / 2 - 30, 192, 192, castle);
-			b.addListener(choose);
-			getRootObject().addChild(b);
-		}
+		Texture castle = new Texture("ui/select_castle_icon.png");
+		ClickZoneListener choose = new SelectionListener(0);
+		Button b = new Button(512 - 192 / 2, Window.getHeight() / 2 - 192 / 2, 192, 192, castle);
+		b.addListener(choose);
+		getRootObject().addChild(b);
 
 		Texture back = new Texture("ui/select_back_to_menu.png");
 		ClickZoneListener backCall = new ClickZoneListener() {

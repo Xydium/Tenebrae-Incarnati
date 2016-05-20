@@ -10,6 +10,7 @@ import engine.math.Vector2i;
 import engine.rendering.Color;
 import engine.rendering.Shader;
 import engine.rendering.Texture;
+import engine.utility.Time;
 import fizzion.tenebrae.map.Dungeon;
 
 public class Player extends Entity
@@ -57,6 +58,7 @@ public class Player extends Entity
 	
 	private int movementState;
 	static final int IDLE = 0, MOVING = 1, CHARGING = 2;
+	private double chargeStart;
 	public void input()
 	{
 		switch(movementState)
@@ -68,7 +70,7 @@ public class Player extends Entity
 			readMovement();
 			break;
 		case CHARGING:
-			if(input.getKeyDown("charge") || overlayPercent > 1) movementState = IDLE;
+			if(input.getKeyDown("charge") || overlayPercent > 1 || Time.getTime() - chargeStart > 0.5) movementState = IDLE;
 			break;
 		}
 	}
@@ -143,6 +145,7 @@ public class Player extends Entity
 		
 		if(input.getKeyDown("charge") && !velocity.equals(new Vector2i(0, 0))) {
 			movementState = CHARGING;
+			chargeStart = Time.getTime();
 		} else if(velocity.equals(new Vector2i(0, 0))) {
 			movementState = IDLE;
 		} else {

@@ -81,6 +81,7 @@ public class Dungeon extends Scene
 				hitColliders.add(e.getCollider());
 				e.invokeCollisionEvent(player.getCollider());
 			}
+			currentRoom.resolveCollisions(e);
 		}
 		
 		Collider[] cArray = new Collider[hitColliders.size()];

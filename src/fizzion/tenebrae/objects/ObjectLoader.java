@@ -2,7 +2,7 @@ package fizzion.tenebrae.objects;
 
 import engine.core.GameObject;
 import fizzion.tenebrae.entities.Enemy;
-import fizzion.tenebrae.entities.TestEnemy;
+import fizzion.tenebrae.entities.Knight;
 import fizzion.tenebrae.map.Dungeon;
 
 public class ObjectLoader
@@ -22,7 +22,7 @@ public class ObjectLoader
 	{
 		if (name.equals("TestEnemy"))
 		{
-			return new TestEnemy(x, y, dungeon);
+			return new Knight(x, y, dungeon);
 		}
 		
 		return null;

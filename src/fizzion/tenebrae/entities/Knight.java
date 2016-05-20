@@ -4,16 +4,17 @@ import java.util.Random;
 
 import engine.collisions.AABBCollider;
 import engine.components.RectRenderer;
+import engine.math.Transform;
 import engine.math.Vector2i;
 import engine.rendering.Texture;
 import fizzion.tenebrae.map.Dungeon;
 
-public class TestEnemy extends Enemy
+public class Knight extends Enemy
 {
-
-	private boolean follow;
 	
-	public TestEnemy(int x, int y, Dungeon dungeon)
+	private static final int TRACKING_DISTANCE = 250;
+	
+	public Knight(int x, int y, Dungeon dungeon)
 	{
 		super(200, dungeon);
 		
@@ -24,21 +25,23 @@ public class TestEnemy extends Enemy
 		setCollider(c);
 		addComponent(c);
 		
-		getTransform().setGlobalPosition(x, y);
+		r = new Random();
 		
-		follow = (r = new Random()).nextBoolean();
+		getTransform().setGlobalPosition(x, y);
 	}
 
 	private Random r;
 	public void update()
 	{
-		if(follow) {
+		Transform p = getDungeon().getPlayer().getTransform();
+		if(p.distanceTo(getTransform()) < TRACKING_DISTANCE) {
 			getTransform().lookAt(getDungeon().getPlayer().getTransform().getGlobalPosition());
+			getTransform().translateBy(new Vector2i(0, 6));
 		} else {
-			if(Math.random() == 0) {
-				getTransform().lookAt(new Vector2i(r.nextInt(1024), r.nextInt(576)));
+			if(Math.random() <= 0.01) {
+				getTransform().lookAt(new Vector2i(r.nextInt(1024 - 256) + 128, r.nextInt(576 - 256) + 128));
 			}
+			getTransform().translateBy(new Vector2i(0, 4));
 		}
-		getTransform().translateBy(new Vector2i(0, 4));
 	}
 }
