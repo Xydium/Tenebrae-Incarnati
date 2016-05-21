@@ -50,19 +50,23 @@ public class DungeonSelect extends Scene
 	{
 		loadedDungeons = new HashMap<DungeonSelection, Dungeon>();
 
-		RectRenderer background = new RectRenderer(new Vector2i(1024, 576));
-		Shader s = new Shader("sinc-shader");
-		s.setUniform("color", new Color(.75f, .3f, 1, 1f));
+		Texture bg = new Texture("backgrounds/select_blur.png");
+		RectRenderer background = new RectRenderer(new Vector2i(1024 + 256, 576 + 256), bg);
+		background.setAllowLighting(false);
+		Shader s = new Shader("distort-shader");
 		background.setUniformConfig(new UniformConfig() {
 			public void setUniforms(Shader s)
 			{
-				s.setUniform("deg", (int) Time.getTime() % 360);
+				s.setUniform("time", (float) Time.getTime());
+				s.setUniform("frequency", 0.5f);
+				s.setUniform("amplitude", 0.1f);
 			}
 		});
 		background.setShader(s);
 
 		GameObject go = new GameObject();
 		go.addComponent(background);
+		go.getTransform().setGlobalPosition(new Vector2i(-128, -128));
 
 		GlobalAudio.playMusic("menu");
 		currentSelection = DungeonSelection.CASTLE;
@@ -70,7 +74,6 @@ public class DungeonSelect extends Scene
 		ClickZoneListener choose = new SelectionListener(0);
 		Button b = new Button(512 - 192 / 2, Window.getHeight() / 2 - 192 / 2, 192, 192, castle);
 		b.addListener(choose);
-		getRootObject().addChild(b);
 
 		Texture back = new Texture("ui/select_back_to_menu.png");
 		ClickZoneListener backCall = new ClickZoneListener() {
@@ -93,7 +96,6 @@ public class DungeonSelect extends Scene
 		};
 		Button backButton = new Button(15, Window.getHeight() - 15 - 96, 384, 96, back);
 		backButton.addListener(backCall);
-		getRootObject().addChild(backButton);
 		Texture select = new Texture("ui/select_choose_dungeon.png");
 		ClickZoneListener selectCall = new ClickZoneListener() {
 			@Override
@@ -117,7 +119,7 @@ public class DungeonSelect extends Scene
 
 		Message title = new Message("D U N G E O N       S E L E C T", "Papyrus", 60, new Color(.85f, .4f, 1, 1f), new Vector2i(TenebraeIncarnati.WIDTH/2, 75), Message.Placement.CENTER);
 
-		getRootObject().addAllChildren(go, selectButton, title);
+		getRootObject().addAllChildren(go, b, backButton, selectButton, title);
 	}
 
 	public void reloadCurrentDungeon()

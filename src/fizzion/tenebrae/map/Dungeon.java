@@ -19,6 +19,7 @@ import fizzion.tenebrae.launch.TenebraeIncarnati;
 import fizzion.tenebrae.objects.ObjectLoader;
 import fizzion.tenebrae.scene.DungeonSelect;
 import fizzion.tenebrae.ui.HealthBar;
+import fizzion.tenebrae.ui.LightBar;
 
 /**
  * 
@@ -63,9 +64,14 @@ public class Dungeon extends Scene
 		player = new Player(this);
 		addAll(rrObj, player);
 		
-		HealthBar healthBar = new HealthBar(player, new Vector2i(200, 20));
-		healthBar.getTransform().setPosition(64, Window.getHeight() - 42);
+		HealthBar healthBar = new HealthBar(player, new Vector2i(256 + 128, 20));
+		healthBar.getTransform().setPosition(32, Window.getHeight() - 42);
 		add(healthBar);
+		
+		
+		LightBar lightBar = new LightBar(new Vector2i(256 + 128, 20));
+		lightBar.getTransform().setPosition(1024 - 256 - 128 - 32, Window.getHeight() - 42);
+		add(lightBar);
 	}
 	
 	public void activate()

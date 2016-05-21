@@ -101,7 +101,7 @@ public class Player extends Entity
 			readMovement();
 			break;
 		case CHARGING:
-			if (input.getKeyDown("charge") || overlayPercent > 1 || Time.getTime() - chargeStart > 0.5)
+			if (input.getKeyDown("charge") || overlayPercent > 1 || Time.getTime() - chargeStart > 0.2)
 			{
 				movementState = IDLE;
 			}
@@ -126,7 +126,6 @@ public class Player extends Entity
 		switch(movementState)
 		{
 			case IDLE:
-				setHealth(getHealth() - 0.01f);
 				break;
 			case MOVING:
 				getTransform().setPosition(getTransform().getPosition().add(velocity));
@@ -136,6 +135,8 @@ public class Player extends Entity
 				getTransform().translateBy(new Vector2i(0, CHARGE_SPEED));
 				break;
 		}
+		
+		if(Time.getTime() - lastAttacked > 5) setHealth(getHealth() + 1f);
 		
 		getApplication().getRenderingEngine().setOverlayBrightness(1.f - overlayPercent);
 		
@@ -204,6 +205,12 @@ public class Player extends Entity
 	public int getMovementState()
 	{
 		return movementState;
+	}
+	
+	private double lastAttacked = Time.getTime();
+	public void setHealth(float health) {
+		super.setHealth(health);
+		lastAttacked = Time.getTime();
 	}
 	
 }
