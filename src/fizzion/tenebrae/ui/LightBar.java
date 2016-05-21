@@ -7,7 +7,6 @@ import engine.math.Mathf;
 import engine.math.Vector2i;
 import engine.rendering.Color;
 import engine.rendering.Shader;
-import fizzion.tenebrae.entities.Entity;
 
 /**
  * 
