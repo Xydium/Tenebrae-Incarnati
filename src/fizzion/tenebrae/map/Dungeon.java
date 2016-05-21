@@ -62,7 +62,7 @@ public class Dungeon extends Scene
 		addAll(rrObj, player);
 		
 		HealthBar healthBar = new HealthBar(player, new Vector2i(200, 20));
-		healthBar.getTransform().setPosition(60, Window.getHeight() - 50);
+		healthBar.getTransform().setPosition(64, Window.getHeight() - 42);
 		add(healthBar);
 	}
 	

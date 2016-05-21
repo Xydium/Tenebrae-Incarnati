@@ -37,7 +37,7 @@ public class Knight extends Enemy
 		{
 			public void onCollision(Collider other)
 			{
-				if (other.getParent() instanceof Player)
+				if (other.getParent() instanceof Player && ((Player) other.getParent()).getMovementState() != Player.CHARGING)
 				{
 					if (Time.getTime() - lastAttacked >= DAMAGE_COOLDOWN)
 					{

@@ -20,7 +20,7 @@ public class ObjectLoader
 	
 	public static Enemy loadEnemy(String name, int x, int y, Dungeon dungeon)
 	{
-		if (name.equals("TestEnemy"))
+		if (name.equals("Knight"))
 		{
 			return new Knight(x, y, dungeon);
 		}

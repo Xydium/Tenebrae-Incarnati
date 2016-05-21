@@ -15,7 +15,7 @@ import fizzion.tenebrae.map.Dungeon;
 
 public class Player extends Entity
 {
-	private static final float OVERLAY_REFRESH_SPEED = 5;
+	private static final float OVERLAY_REFRESH_SPEED = 1;
 	private static final int MOVE_SPEED = 5;
 	private static final int CHARGE_SPEED = 20;
 	
@@ -32,7 +32,6 @@ public class Player extends Entity
 		Texture t = new Texture("tiles/001.png");
 		
 		RectRenderer player = new RectRenderer(new Vector2i(64, 64), t);
-		//player.setAllowLighting(false);
 		Shader s = new Shader("color-shader");
 		player.setShader(s);
 		
@@ -52,7 +51,15 @@ public class Player extends Entity
 		{
 			public void onCollision(Collider other)
 			{
-				collidedWith(other);
+				if(movementState == CHARGING) {
+					if(other.getParent() instanceof Enemy) {
+						getDungeon().getCurrentRoom().getEnemies().remove(other.getParent());
+						getDungeon().remove(other.getParent());
+						overlayPercent += .25;
+					}
+					movementState = IDLE;
+				}
+				other.resolveCollision(getCollider());
 			}
 			
 		});
@@ -83,7 +90,7 @@ public class Player extends Entity
 			readMovement();
 			break;
 		case CHARGING:
-			if(input.getKeyDown("charge") || overlayPercent > 1 || Time.getTime() - chargeStart > 0.5) movementState = IDLE;
+			if(input.getKeyDown("charge") || Time.getTime() - chargeStart > 0.5) movementState = IDLE;
 			break;
 		}
 	}
@@ -93,12 +100,13 @@ public class Player extends Entity
 		switch(movementState)
 		{
 		case IDLE:
+			setHealth(getHealth() - 0.01f);
 			break;
 		case MOVING:
 			getTransform().setPosition(getTransform().getPosition().add(velocity));
 			break;
 		case CHARGING:
-			overlayPercent += 0.01;
+			overlayPercent += 0.005;
 			getTransform().translateBy(new Vector2i(0, CHARGE_SPEED));
 			break;
 		}
@@ -118,6 +126,7 @@ public class Player extends Entity
 	private boolean left, right, up, down, stillLeft, stillRight, stillUp, stillDown;
 	private void readMovement()
 	{
+		if(overlayPercent > 1) return;
 		left = input.getKeyDown("move_left");
 		right = input.getKeyDown("move_right");
 		up = input.getKeyDown("move_up");
@@ -166,16 +175,9 @@ public class Player extends Entity
 		}
 	}
 	
-	public void collidedWith(Collider other) {
-		if(movementState == CHARGING) {
-			if(other.getParent() instanceof Enemy) {
-				getDungeon().getCurrentRoom().getEnemies().remove(other.getParent());
-				getDungeon().remove(other.getParent());
-				overlayPercent += .25;
-			}
-			movementState = IDLE;
-		}
-		other.resolveCollision(getCollider());
+	public int getMovementState()
+	{
+		return movementState;
 	}
 	
 }
