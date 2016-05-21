@@ -1,6 +1,5 @@
 package fizzion.tenebrae.scene;
 
-import java.awt.Font;
 import java.util.HashMap;
 
 import engine.audio.GlobalAudio;

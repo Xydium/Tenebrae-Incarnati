@@ -35,8 +35,11 @@ public class Player extends Entity
 		//player.setAllowLighting(false);
 		Shader s = new Shader("color-shader");
 		player.setShader(s);
-		player.setUniformConfig(new UniformConfig() {
-			public void setUniforms(Shader s) {
+		
+		player.setUniformConfig(new UniformConfig()
+		{
+			public void setUniforms(Shader s)
+			{
 				s.setUniform("color", new Color(1.0f, 0.0f, 0.0f, 1.0f));
 			}
 		});
@@ -44,6 +47,16 @@ public class Player extends Entity
 		AABBCollider c = new AABBCollider(new Vector2i(64, 64));
 		setCollider(c);
 		addAllComponents(player, c);
+		
+		addCollisionListener(new CollisionListener()
+		{
+			public void onCollision(Collider other)
+			{
+				collidedWith(other);
+			}
+			
+		});
+		
 		velocity = new Vector2i();
 		
 		input = new InputMap();
@@ -162,7 +175,7 @@ public class Player extends Entity
 			}
 			movementState = IDLE;
 		}
-		getCollider().resolveCollision(other);
+		other.resolveCollision(getCollider());
 	}
 	
 }

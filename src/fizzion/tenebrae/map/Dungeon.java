@@ -6,14 +6,12 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import engine.collisions.AABBCollider;
-import engine.collisions.Collider;
 import engine.components.RectRenderer;
 import engine.core.GameObject;
 import engine.core.Scene;
 import engine.math.Vector2i;
 import engine.rendering.Window;
 import engine.utility.Log;
-import fizzion.tenebrae.entities.CollisionListener;
 import fizzion.tenebrae.entities.Enemy;
 import fizzion.tenebrae.entities.Player;
 import fizzion.tenebrae.objects.ObjectLoader;
@@ -47,19 +45,6 @@ public class Dungeon extends Scene
 		
 		player = new Player(this);
 		addAll(rrObj, player);
-		
-		player.addCollisionListener(new CollisionListener(){
-
-			public void onCollision(Collider other) {
-				player.collidedWith(other);
-			}
-			
-		});
-		
-		/*for (Room r : rooms)
-		{
-			
-		}*/
 	}
 	
 	public void activate()
@@ -70,23 +55,7 @@ public class Dungeon extends Scene
 	
 	public void lateUpdate()
 	{
-		currentRoom.resolveCollisions(player);
-		
-		ArrayList<Collider> hitColliders = new ArrayList<Collider>();
-		
-		for (Enemy e : currentRoom.getEnemies())
-		{
-			if (player.getCollider().collidesWith(e.getCollider()))
-			{
-				hitColliders.add(e.getCollider());
-				e.invokeCollisionEvent(player.getCollider());
-			}
-			currentRoom.resolveCollisions(e);
-		}
-		
-		Collider[] cArray = new Collider[hitColliders.size()];
-		hitColliders.toArray(cArray);
-		player.invokeCollisionEvent(cArray);
+		currentRoom.resolveCollisions();
 		
 		Vector2i pos = player.getTransform().getGlobalPosition();
 		AABBCollider col = (AABBCollider)player.getCollider();

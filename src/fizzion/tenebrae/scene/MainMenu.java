@@ -1,7 +1,5 @@
 package fizzion.tenebrae.scene;
 
-import java.awt.Font;
-
 import engine.audio.GlobalAudio;
 import engine.components.RectRenderer;
 import engine.components.RectRenderer.UniformConfig;

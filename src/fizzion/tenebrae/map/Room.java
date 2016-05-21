@@ -8,6 +8,7 @@ import java.util.HashMap;
 import javax.imageio.ImageIO;
 
 import engine.collisions.AABBCollider;
+import engine.collisions.Collider;
 import engine.core.GameObject;
 import engine.rendering.Texture;
 import fizzion.tenebrae.entities.Enemy;
@@ -87,7 +88,37 @@ public class Room
 		return tileObjects;
 	}
 	
-	public void resolveCollisions(Entity entity)
+	public void resolveCollisions()
+	{
+		resolveEntityCollisions(dungeon.getPlayer());
+		
+		ArrayList<Collider> hitColliders = new ArrayList<Collider>();
+		
+		for (Enemy e : enemies)
+		{
+			if (dungeon.getPlayer().getCollider().collidesWith(e.getCollider()))
+			{
+				hitColliders.add(e.getCollider());
+				e.invokeCollisionEvent(dungeon.getPlayer().getCollider());
+			}
+			
+			for (Enemy e2 : enemies)
+			{
+				if (e != e2 && e.getCollider().collidesWith(e2.getCollider()))
+				{
+					e.getCollider().resolveCollision(e2.getCollider());
+				}
+			}
+			
+			resolveEntityCollisions(e);
+		}
+		
+		Collider[] cArray = new Collider[hitColliders.size()];
+		hitColliders.toArray(cArray);
+		dungeon.getPlayer().invokeCollisionEvent(cArray);
+	}
+	
+	public void resolveEntityCollisions(Entity entity)
 	{
 		for (AABBCollider c : colliders)
 		{
