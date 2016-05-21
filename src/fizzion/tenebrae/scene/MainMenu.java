@@ -14,8 +14,6 @@ import engine.rendering.Window;
 import fizzion.tenebrae.launch.TenebraeIncarnati;
 import fizzion.tenebrae.ui.Button;
 import fizzion.tenebrae.ui.ClickZoneListener;
-import fizzion.tenebrae.ui.Message;
-import fizzion.tenebrae.ui.Message.Placement;
 
 /**
  * 

@@ -53,7 +53,7 @@ public class DeathScreen extends GameObject
 		
 		GameObject youDied = new GameObject();
 		youDied.setTag("youDied");
-		youDied.addComponent(new TextRenderer(DEATH_MESSAGES[(int)(DEATH_MESSAGES.length * Math.random())], "PAPYRUS", 64, new Color(0.7f, 0, 0)));
+		youDied.addComponent(new TextRenderer(DEATH_MESSAGES[(int)(DEATH_MESSAGES.length * Math.random())], "Comic Sans MS", 64, new Color(0.7f, 0, 0)));
 		youDied.getComponents().get(0).setTag("text");
 		youDied.getTransform().setGlobalPosition(new Vector2i(Window.getWidth() / 2, Window.getHeight() / 2));
 		addChild(youDied);
