@@ -12,6 +12,7 @@ import engine.rendering.Shader;
 import engine.rendering.Texture;
 import engine.utility.Time;
 import fizzion.tenebrae.map.Dungeon;
+import fizzion.tenebrae.ui.DeathScreen;
 
 public class Player extends Entity
 {
@@ -25,9 +26,13 @@ public class Player extends Entity
 	
 	private float overlayPercent;
 	
+	private boolean died;
+	
 	public Player(Dungeon dungeon)
 	{
 		super(100, dungeon);
+		
+		died = false;
 		
 		Texture t = new Texture("tiles/001.png");
 		
@@ -83,24 +88,39 @@ public class Player extends Entity
 			readMovement();
 			break;
 		case CHARGING:
-			if(input.getKeyDown("charge") || overlayPercent > 1 || Time.getTime() - chargeStart > 0.5) movementState = IDLE;
+			if (input.getKeyDown("charge") || overlayPercent > 1 || Time.getTime() - chargeStart > 0.5)
+			{
+				movementState = IDLE;
+			}
+			
 			break;
 		}
 	}
 	
 	public void update()
 	{
+		if (getHealth() <= 0.0001f && !died)
+		{
+			died = true;
+			getDungeon().getRootObject().addChildSafely(new DeathScreen(getDungeon()));
+		}
+		
+		if (died)
+		{
+			return;
+		}
+		
 		switch(movementState)
 		{
-		case IDLE:
-			break;
-		case MOVING:
-			getTransform().setPosition(getTransform().getPosition().add(velocity));
-			break;
-		case CHARGING:
-			overlayPercent += 0.01;
-			getTransform().translateBy(new Vector2i(0, CHARGE_SPEED));
-			break;
+			case IDLE:
+				break;
+			case MOVING:
+				getTransform().setPosition(getTransform().getPosition().add(velocity));
+				break;
+			case CHARGING:
+				overlayPercent += 0.01;
+				getTransform().translateBy(new Vector2i(0, CHARGE_SPEED));
+				break;
 		}
 		
 		getApplication().getRenderingEngine().setOverlayBrightness(1.f - overlayPercent);

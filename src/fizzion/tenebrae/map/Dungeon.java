@@ -45,10 +45,7 @@ public class Dungeon extends Scene
 	{
 		if (Input.getKeyDown(Input.KEY_R))
 		{
-			TenebraeIncarnati ti = (TenebraeIncarnati)getApplication().getGame();
-			DungeonSelect ds = (DungeonSelect)ti.getScene("DungeonSelect");
-			
-			ds.regenCurrentDungeon();
+			reload();
 		}
 	}
 	
@@ -108,6 +105,14 @@ public class Dungeon extends Scene
 			setCurrentRoom(nextRoom);
 			player.getTransform().setPosition(startPos);
 		}
+	}
+	
+	public void reload()
+	{
+		TenebraeIncarnati ti = (TenebraeIncarnati)getApplication().getGame();
+		DungeonSelect ds = (DungeonSelect)ti.getScene("DungeonSelect");
+		
+		ds.reloadCurrentDungeon();
 	}
 	
 	public String getName()

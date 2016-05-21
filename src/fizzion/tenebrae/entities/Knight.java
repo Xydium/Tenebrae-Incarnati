@@ -15,7 +15,7 @@ public class Knight extends Enemy
 {
 	
 	private static final int TRACKING_DISTANCE = 250;
-	private static final int BASE_DAMAGE = 10;
+	private static final int BASE_DAMAGE = 30;
 	private static final double DAMAGE_COOLDOWN = 5.0;
 	
 	private double lastAttacked;

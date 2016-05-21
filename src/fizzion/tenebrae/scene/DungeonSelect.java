@@ -115,7 +115,7 @@ public class DungeonSelect extends Scene
 		getRootObject().addAllChildren(go, selectButton, title);
 	}
 
-	public void regenCurrentDungeon()
+	public void reloadCurrentDungeon()
 	{
 		loadedDungeons.put(currentSelection, new Dungeon(currentSelection.tag));
 		TenebraeIncarnati ti = (TenebraeIncarnati)getApplication().getGame();
