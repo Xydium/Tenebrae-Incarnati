@@ -9,6 +9,7 @@ import engine.core.Scene;
 import engine.rendering.WindowFlags;
 import engine.utility.Log;
 import engine.utility.Log.LogLevel;
+import fizzion.tenebrae.scene.DebugSplash;
 import fizzion.tenebrae.scene.DungeonSelect;
 import fizzion.tenebrae.scene.MainMenu;
 
@@ -25,10 +26,11 @@ public class TenebraeIncarnati extends Game
 	public void start()
 	{
 		scenes = new HashMap<String, Scene>();
+		scenes.put("DebugSplash", new DebugSplash());
 		scenes.put("MainMenu", new MainMenu());
 		scenes.put("DungeonSelect", new DungeonSelect());
 
-		setScene(scenes.get("MainMenu"));
+		setScene(scenes.get("DebugSplash"));
 	}
 
 	public static void main(String[] args)
