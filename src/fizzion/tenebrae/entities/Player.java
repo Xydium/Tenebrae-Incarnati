@@ -136,7 +136,7 @@ public class Player extends Entity
 				break;
 		}
 		
-		if(Time.getTime() - lastAttacked > 5) setHealth(getHealth() + 1f);
+		if(Time.getTime() - lastAttacked > 5) setHealth(getHealth() + 10f);
 		
 		getApplication().getRenderingEngine().setOverlayBrightness(1.f - overlayPercent);
 		

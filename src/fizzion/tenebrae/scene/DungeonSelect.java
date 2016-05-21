@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import engine.audio.GlobalAudio;
 import engine.components.RectRenderer;
+import engine.components.TextRenderer;
 import engine.components.UniformConfig;
 import engine.core.GameObject;
 import engine.core.Scene;
@@ -18,7 +19,6 @@ import fizzion.tenebrae.launch.TenebraeIncarnati;
 import fizzion.tenebrae.map.Dungeon;
 import fizzion.tenebrae.ui.Button;
 import fizzion.tenebrae.ui.ClickZoneListener;
-import fizzion.tenebrae.ui.Message;
 
 /**
  * 
@@ -117,9 +117,12 @@ public class DungeonSelect extends Scene
 		Button selectButton = new Button(1024 - 384, Window.getHeight() - 15 - 96, 384, 96, select);
 		selectButton.addListener(selectCall);
 
-		Message title = new Message("D U N G E O N       S E L E C T", "Papyrus", 60, new Color(.85f, .4f, 1, 1f), new Vector2i(TenebraeIncarnati.WIDTH/2, 75), Message.Placement.CENTER);
-
-		getRootObject().addAllChildren(go, b, backButton, selectButton, title);
+		GameObject titleOb = new GameObject();
+		TextRenderer title = new TextRenderer("D U N G E O N       S E L E C T", "PAPYRUS", 60, new Color(.85f, .4f, 1, 1f));
+		titleOb.addComponent(title);
+		title.getTransform().setPosition(new Vector2i(512, 80));
+		
+		getRootObject().addAllChildren(go, b, backButton, selectButton, titleOb);
 	}
 
 	public void reloadCurrentDungeon()
@@ -146,6 +149,7 @@ public class DungeonSelect extends Scene
 
 		TenebraeIncarnati ti = (TenebraeIncarnati)getApplication().getGame();
 		ti.setScene(dungeon);
+		reloadCurrentDungeon();
 	}
 
 	private class SelectionListener implements ClickZoneListener

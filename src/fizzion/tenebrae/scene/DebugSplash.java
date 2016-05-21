@@ -33,7 +33,7 @@ public class DebugSplash extends Scene
 	
 	public void input()
 	{
-		if (Input.getMouseDown(Input.MOUSE_LEFT) || Input.getKeyDown(Input.KEY_ESCAPE))
+		if (Input.getKeyDown(Input.KEY_ESCAPE))
 		{
 			TenebraeIncarnati ti = (TenebraeIncarnati)getApplication().getGame();
 			ti.setScene(ti.getScene("MainMenu"));
