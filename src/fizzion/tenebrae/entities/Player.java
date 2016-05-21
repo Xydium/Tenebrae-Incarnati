@@ -3,7 +3,7 @@ package fizzion.tenebrae.entities;
 import engine.collisions.AABBCollider;
 import engine.collisions.Collider;
 import engine.components.RectRenderer;
-import engine.components.RectRenderer.UniformConfig;
+import engine.components.UniformConfig;
 import engine.core.Input;
 import engine.core.InputMap;
 import engine.math.Vector2i;

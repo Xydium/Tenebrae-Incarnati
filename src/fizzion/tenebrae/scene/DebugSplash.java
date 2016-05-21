@@ -1,7 +1,7 @@
 package fizzion.tenebrae.scene;
 
 import engine.components.RectRenderer;
-import engine.components.RectRenderer.UniformConfig;
+import engine.components.UniformConfig;
 import engine.core.GameObject;
 import engine.core.Input;
 import engine.core.Scene;

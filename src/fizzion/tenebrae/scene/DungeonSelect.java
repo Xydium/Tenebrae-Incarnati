@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 import engine.audio.GlobalAudio;
 import engine.components.RectRenderer;
-import engine.components.RectRenderer.UniformConfig;
+import engine.components.UniformConfig;
 import engine.core.GameObject;
 import engine.core.Scene;
 import engine.math.Vector2i;

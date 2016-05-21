@@ -1,8 +1,8 @@
-package fizzion.tenebrae.scene;
+	package fizzion.tenebrae.scene;
 
 import engine.audio.GlobalAudio;
 import engine.components.RectRenderer;
-import engine.components.RectRenderer.UniformConfig;
+import engine.components.UniformConfig;
 import engine.core.GameObject;
 import engine.core.Scene;
 import engine.math.Vector2i;

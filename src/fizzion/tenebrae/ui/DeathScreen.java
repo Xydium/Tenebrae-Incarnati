@@ -1,7 +1,7 @@
 package fizzion.tenebrae.ui;
 
 import engine.components.RectRenderer;
-import engine.components.RectRenderer.UniformConfig;
+import engine.components.UniformConfig;
 import engine.core.GameObject;
 import engine.rendering.Color;
 import engine.rendering.Shader;
