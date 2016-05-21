@@ -60,6 +60,7 @@ public class LightBar extends GameObject
 	{
 		goalSize = getApplication().getRenderingEngine().getOverlayBrightness() / 1.0f * size.getX();
 		if(goalSize > size.getX()) goalSize = size.getX();
+		if(goalSize < 0) goalSize = 0;
 		currentSize = Mathf.lerp(currentSize, goalSize, LERP_RATE);
 		
 		if (Mathf.abs(goalSize - currentSize) > 0.01f)

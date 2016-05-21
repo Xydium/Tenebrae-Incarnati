@@ -2,6 +2,7 @@
 
 import engine.audio.GlobalAudio;
 import engine.components.RectRenderer;
+import engine.components.TextRenderer;
 import engine.components.UniformConfig;
 import engine.core.GameObject;
 import engine.core.Scene;
@@ -31,10 +32,18 @@ public class MainMenu extends Scene
 		Background background = new Background();
 		ObeliskText obeliskText = new ObeliskText();
 		Skull skull = new Skull();
-		Message m = new Message("PLAY", "Papyrus", 48, new Color(.75f, .3f, 1, 0.7f), new Vector2i(TenebraeIncarnati.WIDTH/2, 360), Placement.CENTER);
-		Message m2 = new Message("QUIT", "Papyrus", 24, new Color(.75f, .3f, 1, 0.4f), new Vector2i(633, 450), Placement.BOTTOM_LEFT);
 		
-		getRootObject().addAllChildren(background, obeliskText, obeliskText.play, skull, skull.quit, m, m2);
+		GameObject play = new GameObject();
+		TextRenderer playRen = new TextRenderer("PLAY", "PAPYRUS", 48, new Color(.75f, .3f, 1, 0.7f));
+		play.addComponent(playRen);
+		play.getTransform().setGlobalPosition(new Vector2i(TenebraeIncarnati.WIDTH / 2, 385));
+		
+		GameObject quit = new GameObject();
+		TextRenderer quitRen = new TextRenderer("QUIT", "PAPYRUS", 24, new Color(.75f, .3f, 1f, 0.4f));
+		quit.addComponent(quitRen);
+		quit.getTransform().setGlobalPosition(new Vector2i(663, 475));
+		
+		getRootObject().addAllChildren(background, obeliskText, obeliskText.play, skull, skull.quit, play, quit);
 		
 		GlobalAudio.addMusic("menu", "assets/music/menu_loop_2.wav");
 		GlobalAudio.loopMusic("menu", 0.25);

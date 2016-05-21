@@ -1,14 +1,15 @@
 package fizzion.tenebrae.ui;
 
 import engine.components.RectRenderer;
+import engine.components.TextRenderer;
 import engine.components.UniformConfig;
 import engine.core.GameObject;
+import engine.math.Vector2i;
 import engine.rendering.Color;
 import engine.rendering.Shader;
 import engine.rendering.Window;
 import engine.utility.Time;
 import fizzion.tenebrae.map.Dungeon;
-import fizzion.tenebrae.ui.Message.Placement;
 
 /**
  * 
@@ -44,7 +45,12 @@ public class DeathScreen extends GameObject
 		
 		addComponent(bg);
 		
-		addChild(new Message("YOU DIED", "Papyrus", 64, new Color(1, 0, 0), Window.getSize().div(2), Placement.CENTER));
+		GameObject youDied = new GameObject();
+		youDied.setTag("youDied");
+		youDied.addComponent(new TextRenderer("YOU DIED", "PAPYRUS", 64, new Color(0.7f, 0, 0)));
+		youDied.getComponents().get(0).setTag("text");
+		youDied.getTransform().setGlobalPosition(new Vector2i(Window.getWidth() / 2, Window.getHeight() / 2));
+		addChild(youDied);
 	}
 	
 	public void update()
@@ -54,6 +60,16 @@ public class DeathScreen extends GameObject
 		if (passedTime >= DURATION)
 		{
 			dungeon.reload();
+		}
+		
+		if(passedTime >= 1 && Math.random() < 0.05)
+		{
+			String text = "";
+			for(int i = 0; i < 8; i++)
+			{
+				text += (char) (Math.random() * (126 - 33) + 33);
+			}
+			((TextRenderer) getChildWithTag("youDied").getComponentWithTag("text")).setText(text);
 		}
 	}
 }
