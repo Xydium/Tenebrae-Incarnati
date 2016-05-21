@@ -25,6 +25,12 @@ public class DeathScreen extends GameObject
 	private double startTime;
 	private double passedTime;
 	
+	private static final String[] DEATH_MESSAGES = {
+		"YOU DIED", "YOU SUCK", "BETTER LUCK NEXT TIME",
+		"AT LEAST YOU TRIED", "GIT GUD", "CASUL",
+		"THANKS OBAMA"
+	};
+	
 	public DeathScreen(Dungeon dungeon)
 	{
 		this.dungeon = dungeon;
@@ -47,7 +53,7 @@ public class DeathScreen extends GameObject
 		
 		GameObject youDied = new GameObject();
 		youDied.setTag("youDied");
-		youDied.addComponent(new TextRenderer("YOU DIED", "PAPYRUS", 64, new Color(0.7f, 0, 0)));
+		youDied.addComponent(new TextRenderer(DEATH_MESSAGES[(int)(DEATH_MESSAGES.length * Math.random())], "PAPYRUS", 64, new Color(0.7f, 0, 0)));
 		youDied.getComponents().get(0).setTag("text");
 		youDied.getTransform().setGlobalPosition(new Vector2i(Window.getWidth() / 2, Window.getHeight() / 2));
 		addChild(youDied);
@@ -62,7 +68,7 @@ public class DeathScreen extends GameObject
 			dungeon.reload();
 		}
 		
-		if(passedTime >= 1 && Math.random() < 0.05)
+		/*if(passedTime >= 1 && Math.random() < 0.05)
 		{
 			String text = "";
 			for(int i = 0; i < 8; i++)
@@ -70,6 +76,6 @@ public class DeathScreen extends GameObject
 				text += (char) (Math.random() * (126 - 33) + 33);
 			}
 			((TextRenderer) getChildWithTag("youDied").getComponentWithTag("text")).setText(text);
-		}
+		}*/
 	}
 }
