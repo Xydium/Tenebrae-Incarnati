@@ -205,7 +205,7 @@ public class MainMenu extends Scene
 			
 			addComponent(eyesRect);
 			
-			quit = new Button(570, Window.getHeight() - 130, 50, 50);
+			quit = new Button(570, Window.getHeight() - 130, 150, 50);
 			
 			quit.addListener(new ClickZoneListener()
 			{
