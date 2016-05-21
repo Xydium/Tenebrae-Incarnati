@@ -115,6 +115,13 @@ public class DungeonSelect extends Scene
 		getRootObject().addAllChildren(go, selectButton, title);
 	}
 
+	public void regenCurrentDungeon()
+	{
+		loadedDungeons.put(currentSelection, new Dungeon(currentSelection.tag));
+		TenebraeIncarnati ti = (TenebraeIncarnati)getApplication().getGame();
+		ti.setScene(loadedDungeons.get(currentSelection));
+	}
+	
 	public void activate()
 	{
 		currentSelection = DungeonSelection.CASTLE;

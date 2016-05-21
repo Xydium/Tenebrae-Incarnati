@@ -8,13 +8,16 @@ import java.util.ArrayList;
 import engine.collisions.AABBCollider;
 import engine.components.RectRenderer;
 import engine.core.GameObject;
+import engine.core.Input;
 import engine.core.Scene;
 import engine.math.Vector2i;
 import engine.rendering.Window;
 import engine.utility.Log;
 import fizzion.tenebrae.entities.Enemy;
 import fizzion.tenebrae.entities.Player;
+import fizzion.tenebrae.launch.TenebraeIncarnati;
 import fizzion.tenebrae.objects.ObjectLoader;
+import fizzion.tenebrae.scene.DungeonSelect;
 import fizzion.tenebrae.ui.HealthBar;
 
 public class Dungeon extends Scene
@@ -36,6 +39,17 @@ public class Dungeon extends Scene
 	{
 		this.name = name;
 		loadDungeon();
+	}
+	
+	public void input()
+	{
+		if (Input.getKeyDown(Input.KEY_R))
+		{
+			TenebraeIncarnati ti = (TenebraeIncarnati)getApplication().getGame();
+			DungeonSelect ds = (DungeonSelect)ti.getScene("DungeonSelect");
+			
+			ds.regenCurrentDungeon();
+		}
 	}
 	
 	public void load()
