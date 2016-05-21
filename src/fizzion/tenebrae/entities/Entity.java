@@ -43,9 +43,26 @@ public abstract class Entity extends GameObject
 		}
 	}
 	
+	/**
+	 * Sets the health of the entity, performs a check
+	 * to see whether the given health is 0 < health < maxHealth
+	 * 
+	 * @param health the health to set to
+	 */
 	public void setHealth(float health)
 	{
-		this.health = health;
+		if (health < 0)
+		{
+			this.health = 0;
+		}
+		else if (health > maxHealth)
+		{
+			this.health = maxHealth;
+		}
+		else
+		{
+			this.health = health;
+		}
 	}
 	
 	public void setMaxHealth(float maxHealth)

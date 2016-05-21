@@ -15,6 +15,7 @@ import engine.utility.Log;
 import fizzion.tenebrae.entities.Enemy;
 import fizzion.tenebrae.entities.Player;
 import fizzion.tenebrae.objects.ObjectLoader;
+import fizzion.tenebrae.ui.HealthBar;
 
 public class Dungeon extends Scene
 {
@@ -45,6 +46,10 @@ public class Dungeon extends Scene
 		
 		player = new Player(this);
 		addAll(rrObj, player);
+		
+		HealthBar healthBar = new HealthBar(player, new Vector2i(200, 20));
+		healthBar.getTransform().setPosition(60, Window.getHeight() - 50);
+		add(healthBar);
 	}
 	
 	public void activate()
