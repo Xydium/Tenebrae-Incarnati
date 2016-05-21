@@ -11,6 +11,7 @@ h 9
 # Room links. start with r
 
 r $ 9 $ 1
+e Knight 100 100
 r $ $ 0 $
 r $ $ $ $
 r $ $ $ $

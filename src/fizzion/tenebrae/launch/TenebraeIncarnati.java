@@ -89,4 +89,15 @@ public class TenebraeIncarnati extends Game
 	{
 		return scenes.get(name);
 	}
+	
+	@Override
+	public void setScene(Scene scene) {
+		super.setScene(scene);
+		if(!scene.getClass().getSimpleName().equals("Dungeon")) {
+			try {
+				getApplication().getRenderingEngine().setOverlayBrightness(1);
+			} catch(Exception e) {}
+		}
+	}
+	
 }
