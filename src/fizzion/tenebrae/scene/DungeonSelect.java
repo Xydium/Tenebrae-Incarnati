@@ -20,6 +20,11 @@ import fizzion.tenebrae.ui.Button;
 import fizzion.tenebrae.ui.ClickZoneListener;
 import fizzion.tenebrae.ui.Message;
 
+/**
+ * 
+ * @author Tim Hornick
+ *
+ */
 public class DungeonSelect extends Scene
 {
 	private DungeonSelection currentSelection;

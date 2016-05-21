@@ -6,6 +6,11 @@ import engine.collisions.Collider;
 import engine.core.GameObject;
 import fizzion.tenebrae.map.Dungeon;
 
+/**
+ * 
+ * @author Lenny Litvak
+ *
+ */
 public abstract class Entity extends GameObject
 {
 	private float health;

@@ -20,6 +20,11 @@ import fizzion.tenebrae.objects.ObjectLoader;
 import fizzion.tenebrae.scene.DungeonSelect;
 import fizzion.tenebrae.ui.HealthBar;
 
+/**
+ * 
+ * @author Lenny Litvak
+ *
+ */
 public class Dungeon extends Scene
 {
 	public static final int TILE_SIZE_PIXELS = 32;

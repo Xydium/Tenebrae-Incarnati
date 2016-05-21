@@ -1,5 +1,10 @@
 package fizzion.tenebrae.ui;
 
+/**
+ * 
+ * @author Lenny Litvak
+ *
+ */
 public interface ClickZoneListener
 {
 	public void onMouseEnter();

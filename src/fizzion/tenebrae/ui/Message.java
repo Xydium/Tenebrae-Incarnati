@@ -22,8 +22,8 @@ import engine.utility.Util;
 
 /**
  * A message to display on the screen
+ * 
  * @author Chris Jerrett
- * @version Alpha
  */
 public class Message extends GameObject
 {

@@ -5,6 +5,11 @@ import fizzion.tenebrae.entities.Enemy;
 import fizzion.tenebrae.entities.Knight;
 import fizzion.tenebrae.map.Dungeon;
 
+/**
+ * 
+ * @author Lenny Litvak
+ *
+ */
 public class ObjectLoader
 {
 	public static GameObject load(int num, int x, int y)

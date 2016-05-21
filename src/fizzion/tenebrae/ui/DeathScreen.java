@@ -10,6 +10,11 @@ import engine.utility.Time;
 import fizzion.tenebrae.map.Dungeon;
 import fizzion.tenebrae.ui.Message.Placement;
 
+/**
+ * 
+ * @author Lenny Litvak
+ *
+ */
 public class DeathScreen extends GameObject
 {
 	private static final float DURATION = 4.f;

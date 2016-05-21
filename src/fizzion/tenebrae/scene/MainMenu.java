@@ -16,6 +16,11 @@ import fizzion.tenebrae.ui.ClickZoneListener;
 import fizzion.tenebrae.ui.Message;
 import fizzion.tenebrae.ui.Message.Placement;
 
+/**
+ * 
+ * @author Tim Hornick
+ *
+ */
 public class MainMenu extends Scene 
 {
 	

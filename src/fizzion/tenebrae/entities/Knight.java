@@ -11,6 +11,12 @@ import engine.rendering.Texture;
 import engine.utility.Time;
 import fizzion.tenebrae.map.Dungeon;
 
+/**
+ * 
+ * @author Tim Hornick
+ * @author Lenny Litvak
+ *
+ */
 public class Knight extends Enemy
 {
 	

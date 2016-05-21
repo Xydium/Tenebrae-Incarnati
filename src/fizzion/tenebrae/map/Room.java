@@ -16,6 +16,11 @@ import fizzion.tenebrae.entities.Entity;
 import fizzion.tenebrae.objects.ObjectLoader;
 import fizzion.tenebrae.objects.TileCollider;
 
+/**
+ * 
+ * @author Lenny Litvak
+ *
+ */
 public class Room
 {
 	private Dungeon dungeon;

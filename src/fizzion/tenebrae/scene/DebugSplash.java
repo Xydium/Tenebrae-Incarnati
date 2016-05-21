@@ -3,13 +3,20 @@ package fizzion.tenebrae.scene;
 import engine.components.RectRenderer;
 import engine.components.RectRenderer.UniformConfig;
 import engine.core.GameObject;
+import engine.core.Input;
 import engine.core.Scene;
 import engine.math.Vector2i;
 import engine.rendering.Color;
 import engine.rendering.Shader;
 import engine.rendering.Texture;
 import engine.utility.Time;
+import fizzion.tenebrae.launch.TenebraeIncarnati;
 
+/**
+ * 
+ * @author Tim Hornick
+ *
+ */
 public class DebugSplash extends Scene 
 {
 	
@@ -24,11 +31,21 @@ public class DebugSplash extends Scene
 		startTime = Time.getTime();
 	}
 	
+	public void input()
+	{
+		if (Input.getMouseDown(Input.MOUSE_LEFT) || Input.getKeyDown(Input.KEY_ESCAPE))
+		{
+			TenebraeIncarnati ti = (TenebraeIncarnati)getApplication().getGame();
+			ti.setScene(ti.getScene("MainMenu"));
+		}
+	}
+	
 	public void update()
 	{
 		if(Time.getTime() - startTime > 10)
 		{
-			getApplication().getGame().setScene(new MainMenu());
+			TenebraeIncarnati ti = (TenebraeIncarnati)getApplication().getGame();
+			ti.setScene(ti.getScene("MainMenu"));
 		}
 	}
 	

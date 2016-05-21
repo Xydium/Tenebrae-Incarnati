@@ -13,6 +13,12 @@ import fizzion.tenebrae.scene.DebugSplash;
 import fizzion.tenebrae.scene.DungeonSelect;
 import fizzion.tenebrae.scene.MainMenu;
 
+/**
+ * 
+ * @author Tim Hornick
+ * @author Lenny Litvak
+ *
+ */
 public class TenebraeIncarnati extends Game
 {
 

@@ -14,6 +14,12 @@ import engine.utility.Time;
 import fizzion.tenebrae.map.Dungeon;
 import fizzion.tenebrae.ui.DeathScreen;
 
+/**
+ * 
+ * @author Lenny Litvak
+ * @author Tim Hornick
+ *
+ */
 public class Player extends Entity
 {
 	private static final float OVERLAY_REFRESH_SPEED = 1;

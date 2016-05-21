@@ -9,6 +9,11 @@ import engine.rendering.Color;
 import engine.rendering.Shader;
 import fizzion.tenebrae.entities.Entity;
 
+/**
+ * 
+ * @author Lenny Litvak
+ *
+ */
 public class HealthBar extends GameObject
 {
 	private static final float LERP_RATE = 0.2f;
