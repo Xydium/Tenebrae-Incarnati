@@ -58,8 +58,8 @@ public class DungeonSelect extends Scene
 			public void setUniforms(Shader s)
 			{
 				s.setUniform("time", (float) Time.getTime());
-				s.setUniform("frequency", 0.5f);
-				s.setUniform("amplitude", 0.1f);
+				s.setUniform("frequency", 1f);
+				s.setUniform("amplitude", 0.01f);
 			}
 		});
 		background.setShader(s);
