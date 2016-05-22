@@ -1,15 +1,20 @@
 package fizzion.tenebrae.entities;
 
+import java.util.ArrayList;
+
 import engine.collisions.AABBCollider;
 import engine.collisions.Collider;
 import engine.components.RectRenderer;
 import engine.components.UniformConfig;
 import engine.core.Input;
 import engine.core.InputMap;
+import engine.math.Mathf;
+import engine.math.Transform;
 import engine.math.Vector2i;
 import engine.rendering.Color;
 import engine.rendering.Shader;
 import engine.rendering.Texture;
+import engine.utility.Log;
 import engine.utility.Time;
 import fizzion.tenebrae.map.Dungeon;
 import fizzion.tenebrae.ui.DeathScreen;
@@ -25,6 +30,8 @@ public class Player extends Entity
 	private static final float OVERLAY_REFRESH_SPEED = 1;
 	private static final int MOVE_SPEED = 5;
 	private static final int CHARGE_SPEED = 20;
+	private static final int MELEE_RANGE = 100;
+	private static final int TARGETING_ARC_SIZE = 60;
 	
 	private Vector2i velocity;
 	
@@ -83,6 +90,7 @@ public class Player extends Entity
 		input.addKey("move_up", Input.KEY_UP, Input.KEY_W);
 		input.addKey("move_down", Input.KEY_DOWN, Input.KEY_S);
 		input.addKey("charge", Input.KEY_SPACE);
+		input.addKey("melee", Input.KEY_LSHIFT);
 		
 		overlayPercent = 0.f;
 	}
@@ -96,9 +104,11 @@ public class Player extends Entity
 		{
 		case IDLE:
 			readMovement();
+			attemptAttack();
 			break;
 		case MOVING:
 			readMovement();
+			attemptAttack();
 			break;
 		case CHARGING:
 			if (input.getKeyDown("charge") || overlayPercent > 1 || Time.getTime() - chargeStart > 0.2)
@@ -211,6 +221,23 @@ public class Player extends Entity
 	public void setHealth(float health) {
 		super.setHealth(health);
 		lastAttacked = Time.getTime();
+	}
+	
+	private void attemptAttack()
+	{
+		if(!input.getKeyDown("melee")) return;
+		ArrayList<Enemy> enemies = getDungeon().getCurrentRoom().getEnemies();
+		for(Enemy e : enemies)
+		{
+			Transform et = e.getTransform();
+			Transform pt = getTransform();
+			float dAngle = Mathf.abs(pt.angleTo(et.getGlobalPosition()) - pt.getRotation());
+			Log.debug("" + dAngle);
+			if(pt.distanceTo(et) < MELEE_RANGE && dAngle < TARGETING_ARC_SIZE) {
+				e.setHealth(e.getHealth() - 25);
+				break;
+			}
+		}
 	}
 	
 }
