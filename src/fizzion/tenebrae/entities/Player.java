@@ -2,6 +2,7 @@ package fizzion.tenebrae.entities;
 
 import java.util.ArrayList;
 
+import engine.audio.GlobalAudio;
 import engine.collisions.AABBCollider;
 import engine.collisions.Collider;
 import engine.components.RectRenderer;
@@ -125,6 +126,7 @@ public class Player extends Entity
 		if (getHealth() <= 0.0001f && !died)
 		{
 			died = true;
+			//GlobalAudio.playSound("death_player");
 			getDungeon().getRootObject().addChildSafely(new DeathScreen(getDungeon()));
 		}
 		

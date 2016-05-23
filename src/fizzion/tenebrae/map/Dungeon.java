@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import engine.audio.GlobalAudio;
 import engine.collisions.AABBCollider;
 import engine.components.RectRenderer;
 import engine.core.GameObject;
@@ -72,6 +73,8 @@ public class Dungeon extends Scene
 		LightBar lightBar = new LightBar(new Vector2i(256 + 128, 20));
 		lightBar.getTransform().setPosition(1024 - 256 - 128 - 32, Window.getHeight() - 42);
 		add(lightBar);
+		
+		//GlobalAudio.addSound("death_player", "assets/sfx/death.wav");
 	}
 	
 	public void activate()
