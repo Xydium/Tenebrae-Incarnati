@@ -155,6 +155,20 @@ public class Dungeon extends Scene
 		this.currentRoom = room;
 		roomRenderer.setTexture(room.getRoomTexture());
 		currentRoom.addObjectsToDungeon();
+		Log.debug("Changed room to: " + getRoomNumber(room));
+	}
+	
+	private int getRoomNumber(Room room)
+	{
+		for (int i = 0; i < rooms.length; i++)
+		{
+			if (rooms[i] == room)
+			{
+				return i;
+			}
+		}
+		
+		return -1;
 	}
 	
 	public Room getCurrentRoom()

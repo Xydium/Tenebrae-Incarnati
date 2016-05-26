@@ -11,16 +11,19 @@ h 9
 # Room links. start with r
 
 r $ 9 $ 1
-e Knight 100 100
-e Knight 400 100
-e Knight 300 100
-e Knight 200 100
+e Bat 100 100
 r $ $ 0 $
+e Knight 100 100
+e Knight 200 100
 r $ $ $ $
 r $ $ $ $
 r $ $ $ $
 r $ $ $ $
 r $ $ $ $
 r $ $ $ $
-r 0 $ $ 9
-r 0 $ $ $
+r $ $ 9 $
+e Knight 100 100
+e Knight 200 100
+r 0 $ $ 8
+e Knight 100 100
+e Knight 200 100

@@ -130,6 +130,7 @@ public class Room
 			if (c.collidesWith(entity.getCollider()))
 			{
 				entity.getCollider().resolveCollision(c);
+				entity.invokeCollisionEvent(c);
 			}
 		}
 	}

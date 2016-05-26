@@ -18,7 +18,7 @@ import fizzion.tenebrae.map.Dungeon;
  */
 public class DeathScreen extends GameObject
 {
-	private static final float DURATION = 4.f;
+	private static final float DURATION = 6.f;
 	
 	private Dungeon dungeon;
 	
@@ -28,7 +28,8 @@ public class DeathScreen extends GameObject
 	private static final String[] DEATH_MESSAGES = {
 		"YOU DIED", "YOU SUCK", "BETTER LUCK NEXT TIME",
 		"AT LEAST YOU TRIED", "GIT GUD", "CASUL",
-		"THANKS OBAMA"
+		"THANKS OBAMA", "THIS IS WHY I NEED FEMINISM",
+		"INSERT COIN TO CONTINUE", "THIS IS WHY I NEED COMMUNISM"
 	};
 	
 	public DeathScreen(Dungeon dungeon)
