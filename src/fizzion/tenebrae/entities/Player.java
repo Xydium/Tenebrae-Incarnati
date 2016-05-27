@@ -48,19 +48,11 @@ public class Player extends Entity
 		
 		died = false;
 		
-		Texture t = new Texture("tiles/001.png");
+		Texture t = new Texture("entities/Player.png");
 		
 		RectRenderer player = new RectRenderer(new Vector2i(64, 64), t);
-		Shader s = new Shader("color-shader");
+		Shader s = new Shader("texture-shader");
 		player.setShader(s);
-		
-		player.setUniformConfig(new UniformConfig()
-		{
-			public void setUniforms(Shader s)
-			{
-				s.setUniform("color", new Color(1.0f, 0.0f, 0.0f, 1.0f));
-			}
-		});
 		
 		AABBCollider c = new AABBCollider(new Vector2i(64, 64));
 		setCollider(c);
@@ -144,7 +136,7 @@ public class Player extends Entity
 				break;
 			case CHARGING:
 				overlayPercent += 0.01;
-				getTransform().translateBy(new Vector2i(0, CHARGE_SPEED));
+				getTransform().translateBy(velocity.div(MOVE_SPEED).mul(CHARGE_SPEED));
 				break;
 		}
 		
@@ -201,8 +193,6 @@ public class Player extends Entity
 		{
 			velocity.setY(0);
 		}
-		
-		getTransform().lookAt(velocity.add(getTransform().getGlobalPosition()));
 		
 		if(input.getKeyDown("charge") && !velocity.equals(new Vector2i(0, 0))) {
 			movementState = CHARGING;
