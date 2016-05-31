@@ -28,8 +28,8 @@ public class DeathScreen extends GameObject
 	private static final String[] DEATH_MESSAGES = {
 		"YOU DIED", "YOU SUCK", "BETTER LUCK NEXT TIME",
 		"AT LEAST YOU TRIED", "GIT GUD", "CASUL",
-		"THANKS OBAMA", "THIS IS WHY I NEED FEMINISM",
-		"INSERT COIN TO CONTINUE", "THIS IS WHY I NEED COMMUNISM"
+		"THANKS OBAMA", "THIS IS WHY I \n NEED FEMINISM",
+		"INSERT COIN TO CONTINUE", "THIS IS WHY I \n NEED COMMUNISM"
 	};
 	
 	public DeathScreen(Dungeon dungeon)

@@ -63,6 +63,8 @@ public class Knight extends Enemy
 	private Random r;
 	public void update()
 	{
+		super.update();
+		
 		Transform p = getDungeon().getPlayer().getTransform();
 		
 		if (p.distanceTo(getTransform()) < TRACKING_DISTANCE)

@@ -13,6 +13,7 @@ import engine.core.GameObject;
 import engine.rendering.Texture;
 import fizzion.tenebrae.entities.Enemy;
 import fizzion.tenebrae.entities.Entity;
+import fizzion.tenebrae.entities.Player;
 import fizzion.tenebrae.objects.ObjectLoader;
 import fizzion.tenebrae.objects.TileCollider;
 
@@ -130,7 +131,10 @@ public class Room
 			if (c.collidesWith(entity.getCollider()))
 			{
 				entity.getCollider().resolveCollision(c);
-				entity.invokeCollisionEvent(c);
+				if(!(entity instanceof Player))
+				{
+					entity.invokeCollisionEvent(c);
+				}
 			}
 		}
 	}

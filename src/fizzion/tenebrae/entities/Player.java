@@ -2,17 +2,15 @@ package fizzion.tenebrae.entities;
 
 import java.util.ArrayList;
 
-import engine.audio.GlobalAudio;
 import engine.collisions.AABBCollider;
 import engine.collisions.Collider;
 import engine.components.RectRenderer;
-import engine.components.UniformConfig;
 import engine.core.Input;
 import engine.core.InputMap;
 import engine.math.Mathf;
 import engine.math.Transform;
+import engine.math.Vector2f;
 import engine.math.Vector2i;
-import engine.rendering.Color;
 import engine.rendering.Shader;
 import engine.rendering.Texture;
 import engine.utility.Log;
@@ -31,10 +29,11 @@ public class Player extends Entity
 	private static final float OVERLAY_REFRESH_SPEED = 1;
 	private static final int MOVE_SPEED = 5;
 	private static final int CHARGE_SPEED = 20;
-	private static final int MELEE_RANGE = 100;
-	private static final int TARGETING_ARC_SIZE = 60;
+	private static final int MELEE_RANGE = 200;
+	private static final float TARGETING_ARC_SIZE = (float) Math.PI / 3;
 	
 	private Vector2i velocity;
+	private Vector2f lastNonZeroVel;
 	
 	private InputMap input;
 	
@@ -201,6 +200,7 @@ public class Player extends Entity
 			movementState = IDLE;
 		} else {
 			movementState = MOVING;
+			lastNonZeroVel = new Vector2f(velocity);
 		}
 	}
 	
@@ -223,10 +223,16 @@ public class Player extends Entity
 		{
 			Transform et = e.getTransform();
 			Transform pt = getTransform();
-			float dAngle = Mathf.abs(pt.angleTo(et.getGlobalPosition()) - pt.getRotation());
-			Log.debug("" + dAngle);
-			if(pt.distanceTo(et) < MELEE_RANGE && dAngle < TARGETING_ARC_SIZE) {
-				e.setHealth(e.getHealth() - 25);
+			
+			Vector2f lookVec = new Vector2f(et.getGlobalPosition()).sub(new Vector2f(pt.getGlobalPosition()));
+			Vector2f normalizedVelocity = lastNonZeroVel.getUnit();
+			
+			float diffAngle = (float)Math.abs(Math.acos(lookVec.getUnit().dot(normalizedVelocity)));
+			//Log.debug("diffAngle = " + Math.toDegrees(diffAngle));
+			
+			if (diffAngle <= TARGETING_ARC_SIZE && pt.distanceTo(et) < MELEE_RANGE)
+			{
+				e.setHealth(e.getHealth() - 75);
 				break;
 			}
 		}

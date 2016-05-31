@@ -53,7 +53,9 @@ public class Skeleton extends Enemy {
 	private Random r;
 	public void update()
 	{
-		if(r.nextInt(200) == 0)
+		super.update();
+		
+		if(r.nextInt(400) == 0)
 		{
 			getTransform().setGlobalPosition(r.nextInt(Window.getWidth() - 128) + 64, r.nextInt(Window.getHeight() - 128) + 64);
 		}

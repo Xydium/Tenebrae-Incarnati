@@ -13,4 +13,17 @@ public class Enemy extends Entity
 	{
 		super(health, dungeon);
 	}
+	
+	public void update()
+	{
+		if (getHealth() <= 0)
+		{
+			if (getCollider() != null)
+			{
+				getDungeon().getCurrentRoom().getEnemies().remove(this);
+			}
+			
+			getDungeon().remove(this);
+		}
+	}
 }

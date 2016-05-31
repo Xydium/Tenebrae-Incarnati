@@ -24,8 +24,6 @@ public class Bat extends Enemy {
 		setCollider(c);
 		addComponent(c);
 		
-		final Bat thing = this;
-		
 		addCollisionListener(new CollisionListener()
 		{
 			public void onCollision(Collider other)
@@ -35,10 +33,9 @@ public class Bat extends Enemy {
 					Player p = (Player)(other.getParent());
 					p.setHealth(p.getHealth() - BASE_DAMAGE);
 					removed = true;
-					getDungeon().remove(thing);
+				} else {
+					getTransform().rotateBy((float) Math.PI * 2.0f / 3.0f);
 				}
-				getTransform().rotateBy((float) Math.PI * 2.0f / 3.0f);
-				Log.error(getTransform().getParent().getClass().getSimpleName());
 			}
 		});
 		
@@ -46,7 +43,8 @@ public class Bat extends Enemy {
 	}
 	
 	public void update() {
-		if(removed) { getDungeon().getCurrentRoom().getEnemies().remove(this); }
+		super.update();
+		if(removed) { getDungeon().getCurrentRoom().getEnemies().remove(this); getDungeon().remove(this); }
 		getTransform().translateBy(new Vector2i(0, 5));
 	}
 
