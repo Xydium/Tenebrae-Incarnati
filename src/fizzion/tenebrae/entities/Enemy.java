@@ -12,6 +12,8 @@ public class Enemy extends Entity
 	public Enemy(float health, Dungeon dungeon)
 	{
 		super(health, dungeon);
+		
+		addChild(new EntityHealthBar(this));
 	}
 	
 	public void update()
