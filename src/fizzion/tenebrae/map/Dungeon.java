@@ -73,12 +73,16 @@ public class Dungeon extends Scene
 		LightBar lightBar = new LightBar(new Vector2i(256 + 128, 20));
 		lightBar.getTransform().setPosition(1024 - 256 - 128 - 32, Window.getHeight() - 42);
 		add(lightBar);
+		
+		GlobalAudio.addMusic("castle_loop", "assets/music/castle_loop.wav");
 	}
 	
 	public void activate()
 	{	
 		setCurrentRoom(rooms[0]);
 		player.getTransform().setPosition(Window.getWidth() / 2 - 32, Window.getHeight() / 2 - 32);
+		
+		GlobalAudio.loopMusic("castle_loop", 0.25);
 	}
 	
 	public void lateUpdate()

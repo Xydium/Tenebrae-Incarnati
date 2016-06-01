@@ -65,7 +65,8 @@ public class Player extends Entity
 			{
 				if(movementState == CHARGING) {
 					if(other.getParent() instanceof Enemy) {
-						((Enemy) other.getParent()).setHealth(0);;
+						Enemy e = ((Enemy) other.getParent()); 
+						e.setHealth(e.getHealth() - 200);
 						overlayPercent += .25;
 					}
 					movementState = IDLE;

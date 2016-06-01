@@ -3,6 +3,7 @@ package fizzion.tenebrae.objects;
 import engine.core.GameObject;
 import fizzion.tenebrae.entities.Bat;
 import fizzion.tenebrae.entities.Enemy;
+import fizzion.tenebrae.entities.Inquisitor;
 import fizzion.tenebrae.entities.Knight;
 import fizzion.tenebrae.entities.Skeleton;
 import fizzion.tenebrae.map.Dungeon;
@@ -40,6 +41,11 @@ public class ObjectLoader
 		if(name.equals("Skeleton"))
 		{
 			return new Skeleton(x, y, dungeon);
+		}
+		
+		if(name.equals("Inquisitor"))
+		{
+			return new Inquisitor(x, y, dungeon);
 		}
 		
 		return null;
