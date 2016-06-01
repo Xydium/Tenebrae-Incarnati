@@ -84,7 +84,6 @@ public class Player extends Entity
 		input.addKey("move_up", Input.KEY_UP, Input.KEY_W);
 		input.addKey("move_down", Input.KEY_DOWN, Input.KEY_S);
 		input.addKey("charge", Input.KEY_SPACE);
-		input.addKey("melee", Input.KEY_LSHIFT);
 		
 		overlayPercent = 0.f;
 		
@@ -241,7 +240,7 @@ public class Player extends Entity
 	
 	private void attemptAttack()
 	{
-		if(!input.getKeyDown("melee")) return;
+		if(!Input.getMouseDown(Input.MOUSE_LEFT) || lastNonZeroVel == null) return;
 		ArrayList<Enemy> enemies = getDungeon().getCurrentRoom().getEnemies();
 		for(Enemy e : enemies)
 		{
