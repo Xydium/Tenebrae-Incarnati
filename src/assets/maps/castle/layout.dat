@@ -10,19 +10,73 @@ h 9
 # The first room number is 0
 # Room links. start with r
 
-r $ 9 $ 1
+r 1 $ $ $
+r 2 0 $ $
+e Knight 200 200
+r 3 1 $ $
+e Knight 200 200
+e Knight 600 200
+r 4 2 $ $
+e Skeleton 100 100
+e Skeleton 400 400
+r $ 3 9 5
 e Bat 100 100
-r $ $ 0 $
-e Knight 100 100
-e Knight 200 100
-r $ $ $ $
-r $ $ $ $
-r $ $ $ $
-r $ $ $ $
-r $ $ $ $
-r $ $ $ $
-r $ $ 9 $
-e Knight 100 100
-e Skeleton 200 100
-r 0 $ $ 8
-e Inquisitor 100 100
+e Bat 600 300
+r $ $ 4 6
+e Bat 100 200
+e Bat 300 400
+e Bat 700 300
+e Bat 200 200
+r 7 8 5 $
+e Knight 46 30
+r $ 6 $ $
+e Knight 89 90
+e Knight 6 64
+e Skeleton 67 32
+r 6 20 $ $
+e Skeleton 65 95
+e Skeleton 90 12
+r $ $ 10 4
+e Bat 4 1
+e Knight 58 45
+r 11 12 $ 9
+e Skeleton 5 47
+e Skeleton 52 94
+e Skeleton 65 59
+r $ 10 $ $
+e Bat 77 50
+e Bat 42 2
+r 10 13 $ $
+e Knight 61 11
+e Knight 63 90
+r 12 14 16 $
+e Skeleton 1 85
+e Knight 89 14
+e Skeleton 32 93
+e Knight 9 13
+r 13 15 $ $
+e Skeleton 70 16
+e Skeleton 67 16
+e Bat 95 64
+e Bat 49 40
+r 14 $ $ $
+e Knight 45 19
+e Knight 8 79
+r $ $ 17 13
+r 18 19 $ 16
+e Knight 39 69
+e Knight 25 94
+e Knight 35 51
+r $ 17 $ $
+e Bat 56 62
+e Bat 39 19
+e Bat 28 76
+e Inquisitor 53 0
+r 17 $ $ $
+e Bat 75 16
+e Bat 59 79
+e Bat 10 31
+e Bat 94 67
+r 8 $ $ $
+e Skeleton 47 68
+e Skeleton 30 89

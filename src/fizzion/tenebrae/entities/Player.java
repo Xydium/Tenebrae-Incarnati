@@ -242,6 +242,7 @@ public class Player extends Entity
 	{
 		if(!Input.getMouseDown(Input.MOUSE_LEFT) || lastNonZeroVel == null) return;
 		ArrayList<Enemy> enemies = getDungeon().getCurrentRoom().getEnemies();
+		overlayPercent += 0.03;
 		for(Enemy e : enemies)
 		{
 			Transform et = e.getTransform();
@@ -255,7 +256,7 @@ public class Player extends Entity
 			if (diffAngle <= TARGETING_ARC_SIZE && pt.distanceTo(et) < MELEE_RANGE)
 			{
 				GlobalAudio.playSound("attack_hit");
-				e.setHealth(e.getHealth() - 50);
+				e.setHealth(e.getHealth() - (50 + 50 * overlayPercent));
 				break;
 			}
 		}
