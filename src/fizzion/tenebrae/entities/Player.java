@@ -128,6 +128,7 @@ public class Player extends Entity
 		if (getHealth() <= 0.0001f && !died)
 		{
 			died = true;
+			GlobalAudio.playSound("player_death");
 			getDungeon().getRootObject().addChildSafely(new DeathScreen(getDungeon()));
 		}
 		
@@ -258,6 +259,10 @@ public class Player extends Entity
 				break;
 			}
 		}
+	}
+	
+	public boolean isDead() {
+		return died;
 	}
 	
 }

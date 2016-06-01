@@ -76,8 +76,7 @@ public class Dungeon extends Scene
 	}
 	
 	public void activate()
-	{
-		
+	{	
 		setCurrentRoom(rooms[0]);
 		player.getTransform().setPosition(Window.getWidth() / 2 - 32, Window.getHeight() / 2 - 32);
 	}
