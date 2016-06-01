@@ -2,18 +2,17 @@ package fizzion.tenebrae.entities;
 
 import java.util.ArrayList;
 
+import engine.audio.GlobalAudio;
 import engine.collisions.AABBCollider;
 import engine.collisions.Collider;
 import engine.components.RectRenderer;
 import engine.core.Input;
 import engine.core.InputMap;
-import engine.math.Mathf;
 import engine.math.Transform;
 import engine.math.Vector2f;
 import engine.math.Vector2i;
 import engine.rendering.Shader;
 import engine.rendering.Texture;
-import engine.utility.Log;
 import engine.utility.Time;
 import fizzion.tenebrae.map.Dungeon;
 import fizzion.tenebrae.ui.DeathScreen;
@@ -31,6 +30,7 @@ public class Player extends Entity
 	private static final int CHARGE_SPEED = 20;
 	private static final int MELEE_RANGE = 200;
 	private static final float TARGETING_ARC_SIZE = (float) Math.PI / 3;
+	private static final int CHARGE_RECOVERY_TIME = 10;
 	
 	private Vector2i velocity;
 	private Vector2f lastNonZeroVel;
@@ -40,6 +40,8 @@ public class Player extends Entity
 	private float overlayPercent;
 	
 	private boolean died;
+	
+	private double lastChargeTime;
 	
 	public Player(Dungeon dungeon)
 	{
@@ -63,8 +65,7 @@ public class Player extends Entity
 			{
 				if(movementState == CHARGING) {
 					if(other.getParent() instanceof Enemy) {
-						getDungeon().getCurrentRoom().getEnemies().remove(other.getParent());
-						getDungeon().remove(other.getParent());
+						((Enemy) other.getParent()).setHealth(0);;
 						overlayPercent += .25;
 					}
 					movementState = IDLE;
@@ -85,6 +86,14 @@ public class Player extends Entity
 		input.addKey("melee", Input.KEY_LSHIFT);
 		
 		overlayPercent = 0.f;
+		
+		GlobalAudio.addSound("attack_hit", "assets/sfx/player_attack.wav");
+		GlobalAudio.addSound("enemy_hit", "assets/sfx/player_hit.wav");
+		GlobalAudio.addSound("failed_action", "assets/sfx/failed_action.wav");
+		GlobalAudio.addSound("charge", "assets/sfx/player_charge.wav");
+		GlobalAudio.addSound("footstep", "assets/sfx/player_footstep.wav");
+		GlobalAudio.addSound("enemy_death", "assets/sfx/enemy_death.wav");
+		GlobalAudio.addSound("player_death", "assets/sfx/player_death.wav");
 	}
 	
 	private int movementState;
@@ -112,12 +121,13 @@ public class Player extends Entity
 		}
 	}
 	
+	private int tickCount;
 	public void update()
 	{
+		tickCount++;
 		if (getHealth() <= 0.0001f && !died)
 		{
 			died = true;
-			//GlobalAudio.playSound("death_player");
 			getDungeon().getRootObject().addChildSafely(new DeathScreen(getDungeon()));
 		}
 		
@@ -132,6 +142,9 @@ public class Player extends Entity
 				break;
 			case MOVING:
 				getTransform().setPosition(getTransform().getPosition().add(velocity));
+				if(tickCount % 20 == 0) {
+					GlobalAudio.playSound("footstep", 0.1);
+				}
 				break;
 			case CHARGING:
 				overlayPercent += 0.01;
@@ -139,7 +152,7 @@ public class Player extends Entity
 				break;
 		}
 		
-		if(Time.getTime() - lastAttacked > 5) setHealth(getHealth() + 10f);
+		if(Time.getTime() - lastAttacked > 5) setHealth(getHealth() + 0.05f);
 		
 		getApplication().getRenderingEngine().setOverlayBrightness(1.f - overlayPercent);
 		
@@ -194,8 +207,14 @@ public class Player extends Entity
 		}
 		
 		if(input.getKeyDown("charge") && !velocity.equals(new Vector2i(0, 0))) {
-			movementState = CHARGING;
-			chargeStart = Time.getTime();
+			if(Time.getTime() - lastChargeTime > CHARGE_RECOVERY_TIME) {
+				lastChargeTime = Time.getTime();
+				movementState = CHARGING;
+				chargeStart = Time.getTime();
+				GlobalAudio.playSound("charge");
+			} else {
+				GlobalAudio.playSound("failed_action");
+			}
 		} else if(velocity.equals(new Vector2i(0, 0))) {
 			movementState = IDLE;
 		} else {
@@ -211,8 +230,11 @@ public class Player extends Entity
 	
 	private double lastAttacked = Time.getTime();
 	public void setHealth(float health) {
+		if(health < getHealth()) {
+			GlobalAudio.playSound("enemy_hit");
+			lastAttacked = Time.getTime();
+		}
 		super.setHealth(health);
-		lastAttacked = Time.getTime();
 	}
 	
 	private void attemptAttack()
@@ -228,11 +250,11 @@ public class Player extends Entity
 			Vector2f normalizedVelocity = lastNonZeroVel.getUnit();
 			
 			float diffAngle = (float)Math.abs(Math.acos(lookVec.getUnit().dot(normalizedVelocity)));
-			//Log.debug("diffAngle = " + Math.toDegrees(diffAngle));
 			
 			if (diffAngle <= TARGETING_ARC_SIZE && pt.distanceTo(et) < MELEE_RANGE)
 			{
-				e.setHealth(e.getHealth() - 75);
+				GlobalAudio.playSound("attack_hit");
+				e.setHealth(e.getHealth() - 50);
 				break;
 			}
 		}

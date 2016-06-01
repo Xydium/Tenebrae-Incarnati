@@ -2,6 +2,7 @@ package fizzion.tenebrae.launch;
 
 import java.util.HashMap;
 
+import engine.audio.GlobalAudio;
 import engine.core.Application;
 import engine.core.Game;
 import engine.core.Input;
@@ -37,6 +38,8 @@ public class TenebraeIncarnati extends Game
 		scenes.put("DungeonSelect", new DungeonSelect());
 
 		setScene(scenes.get("DebugSplash"));
+		
+		GlobalAudio.addSound("button_click", "assets/sfx/button_click.wav");
 	}
 
 	public static void main(String[] args)

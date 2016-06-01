@@ -1,5 +1,6 @@
 package fizzion.tenebrae.entities;
 
+import engine.audio.GlobalAudio;
 import fizzion.tenebrae.map.Dungeon;
 
 /**
@@ -26,6 +27,8 @@ public class Enemy extends Entity
 			}
 			
 			getDungeon().remove(this);
+			
+			GlobalAudio.playSound("enemy_death", 0.25);
 		}
 	}
 }

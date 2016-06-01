@@ -89,7 +89,7 @@ public class DungeonSelect extends Scene
 			}
 			@Override
 			public void onMouseClicked() {
-				// TODO Auto-generated method stub
+				GlobalAudio.playSound("button_click", 0.15);
 				TenebraeIncarnati ti = (TenebraeIncarnati)getApplication().getGame();
 				ti.setScene(ti.getScene("MainMenu"));
 			}
@@ -110,6 +110,7 @@ public class DungeonSelect extends Scene
 			}
 			@Override
 			public void onMouseClicked() {
+				GlobalAudio.playSound("button_click", 0.15);
 				GlobalAudio.stopMusic("menu");
 				loadDungeon(currentSelection);
 			}
@@ -175,6 +176,7 @@ public class DungeonSelect extends Scene
 
 		@Override
 		public void onMouseClicked() {
+			GlobalAudio.playSound("button_click", 0.15);
 			currentSelection = DungeonSelection.values()[i];
 			Log.info(currentSelection.name());
 		}

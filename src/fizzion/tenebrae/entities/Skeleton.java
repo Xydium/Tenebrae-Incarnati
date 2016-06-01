@@ -2,6 +2,7 @@ package fizzion.tenebrae.entities;
 
 import java.util.Random;
 
+import engine.audio.GlobalAudio;
 import engine.collisions.AABBCollider;
 import engine.collisions.Collider;
 import engine.components.RectRenderer;
@@ -19,7 +20,7 @@ public class Skeleton extends Enemy {
 	private double lastAttacked;
 	
 	public Skeleton(int x, int y, Dungeon dungeon) {
-		super(75, dungeon);
+		super(125, dungeon);
 
 		lastAttacked = 0.0;
 		
@@ -48,6 +49,8 @@ public class Skeleton extends Enemy {
 		
 		r = new Random();
 		getTransform().setGlobalPosition(x, y);
+		
+		GlobalAudio.addSound("teleport", "assets/sfx/skeleton_teleport.wav");
 	}
 	
 	private Random r;
@@ -57,6 +60,7 @@ public class Skeleton extends Enemy {
 		
 		if(r.nextInt(400) == 0)
 		{
+			GlobalAudio.playSound("teleport");
 			getTransform().setGlobalPosition(r.nextInt(Window.getWidth() - 128) + 64, r.nextInt(Window.getHeight() - 128) + 64);
 		}
 	}

@@ -165,6 +165,7 @@ public class MainMenu extends Scene
 
 				public void onMouseClicked()
 				{
+					GlobalAudio.playSound("button_click", 0.15);
 					TenebraeIncarnati ti = (TenebraeIncarnati)getApplication().getGame();
 					ti.setScene(ti.getScene("DungeonSelect"));
 				}
@@ -228,6 +229,7 @@ public class MainMenu extends Scene
 
 				public void onMouseClicked()
 				{
+					GlobalAudio.playSound("button_click", 0.15);
 					getApplication().stop();
 				}
 			});
