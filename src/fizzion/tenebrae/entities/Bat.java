@@ -5,7 +5,6 @@ import engine.collisions.Collider;
 import engine.components.RectRenderer;
 import engine.math.Vector2i;
 import engine.rendering.Texture;
-import engine.utility.Log;
 import fizzion.tenebrae.map.Dungeon;
 
 public class Bat extends Enemy {

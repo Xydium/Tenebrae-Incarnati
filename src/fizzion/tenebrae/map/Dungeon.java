@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-import engine.audio.GlobalAudio;
 import engine.collisions.AABBCollider;
 import engine.components.RectRenderer;
 import engine.core.GameObject;

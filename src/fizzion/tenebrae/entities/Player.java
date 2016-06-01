@@ -16,6 +16,7 @@ import engine.rendering.Texture;
 import engine.utility.Time;
 import fizzion.tenebrae.map.Dungeon;
 import fizzion.tenebrae.ui.DeathScreen;
+import fizzion.tenebrae.ui.WinScreen;
 
 /**
  * 
@@ -40,14 +41,20 @@ public class Player extends Entity
 	private float overlayPercent;
 	
 	private boolean died;
+	private boolean won;
 	
 	private double lastChargeTime;
+
+	private double lastAttacked;
 	
 	public Player(Dungeon dungeon)
 	{
 		super(100, dungeon);
 		
+		lastAttacked = Time.getTime();
+		
 		died = false;
+		won = false;
 		
 		Texture t = new Texture("entities/Player.png");
 		
@@ -63,13 +70,17 @@ public class Player extends Entity
 		{
 			public void onCollision(Collider other)
 			{
-				if(movementState == CHARGING) {
-					if(other.getParent() instanceof Enemy) {
+				if (movementState == CHARGING)
+				{
+					if (other.getParent() instanceof Enemy)
+					{
 						((Enemy) other.getParent()).setHealth(0);;
 						overlayPercent += .25;
 					}
+					
 					movementState = IDLE;
 				}
+				
 				other.resolveCollision(getCollider());
 			}
 			
@@ -101,23 +112,31 @@ public class Player extends Entity
 	private double chargeStart;
 	public void input()
 	{
+		if (Input.getKeyDown(Input.KEY_N))
+		{
+			winGame();
+		}
+		
 		switch(movementState)
 		{
-		case IDLE:
-			readMovement();
-			attemptAttack();
-			break;
-		case MOVING:
-			readMovement();
-			attemptAttack();
-			break;
-		case CHARGING:
-			if (input.getKeyDown("charge") || overlayPercent > 1 || Time.getTime() - chargeStart > 0.2)
-			{
-				movementState = IDLE;
-			}
-			if(input.getKeyDown("charge") || Time.getTime() - chargeStart > 0.5) movementState = IDLE;
-			break;
+			case IDLE:
+				readMovement();
+				attemptAttack();
+				break;
+			case MOVING:
+				readMovement();
+				attemptAttack();
+				break;
+			case CHARGING:
+				if (input.getKeyDown("charge") || overlayPercent > 1 || Time.getTime() - chargeStart > 0.2)
+				{
+					movementState = IDLE;
+				}
+				if (input.getKeyDown("charge") || Time.getTime() - chargeStart > 0.5)
+				{
+					movementState = IDLE;
+				}
+				break;
 		}
 	}
 	
@@ -153,7 +172,10 @@ public class Player extends Entity
 				break;
 		}
 		
-		if(Time.getTime() - lastAttacked > 5) setHealth(getHealth() + 0.05f);
+		if (Time.getTime() - lastAttacked > 5)
+		{
+			setHealth(getHealth() + 0.05f);
+		}
 		
 		getApplication().getRenderingEngine().setOverlayBrightness(1.f - overlayPercent);
 		
@@ -208,17 +230,23 @@ public class Player extends Entity
 		}
 		
 		if(input.getKeyDown("charge") && !velocity.equals(new Vector2i(0, 0))) {
-			if(Time.getTime() - lastChargeTime > CHARGE_RECOVERY_TIME) {
+			if (Time.getTime() - lastChargeTime > CHARGE_RECOVERY_TIME) {
 				lastChargeTime = Time.getTime();
 				movementState = CHARGING;
 				chargeStart = Time.getTime();
 				GlobalAudio.playSound("charge");
-			} else {
+			}
+			else
+			{
 				GlobalAudio.playSound("failed_action");
 			}
-		} else if(velocity.equals(new Vector2i(0, 0))) {
+		}
+		else if (velocity.equals(new Vector2i(0, 0)))
+		{
 			movementState = IDLE;
-		} else {
+		}
+		else
+		{
 			movementState = MOVING;
 			lastNonZeroVel = new Vector2f(velocity);
 		}
@@ -229,20 +257,28 @@ public class Player extends Entity
 		return movementState;
 	}
 	
-	private double lastAttacked = Time.getTime();
-	public void setHealth(float health) {
-		if(health < getHealth()) {
+	public void setHealth(float health)
+	{
+		if (health < getHealth())
+		{
 			GlobalAudio.playSound("enemy_hit");
 			lastAttacked = Time.getTime();
 		}
+		
 		super.setHealth(health);
 	}
 	
 	private void attemptAttack()
 	{
-		if(!input.getKeyDown("melee")) return;
+		if (!input.getKeyDown("melee"))
+		{
+			return;
+		}
+		
+		GlobalAudio.playSound("attack_hit");
+		
 		ArrayList<Enemy> enemies = getDungeon().getCurrentRoom().getEnemies();
-		for(Enemy e : enemies)
+		for (Enemy e : enemies)
 		{
 			Transform et = e.getTransform();
 			Transform pt = getTransform();
@@ -254,15 +290,25 @@ public class Player extends Entity
 			
 			if (diffAngle <= TARGETING_ARC_SIZE && pt.distanceTo(et) < MELEE_RANGE)
 			{
-				GlobalAudio.playSound("attack_hit");
 				e.setHealth(e.getHealth() - 50);
 				break;
 			}
 		}
 	}
 	
-	public boolean isDead() {
-		return died;
+	public void winGame()
+	{
+		if (won)
+		{
+			return;
+		}
+		
+		won = true;
+		getDungeon().getRootObject().addChildSafely(new WinScreen());
 	}
 	
+	public boolean isDead()
+	{
+		return died;
+	}
 }
