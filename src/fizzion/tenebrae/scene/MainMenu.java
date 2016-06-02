@@ -32,12 +32,12 @@ public class MainMenu extends Scene
 		Skull skull = new Skull();
 		
 		GameObject play = new GameObject();
-		TextRenderer playRen = new TextRenderer("PLAY", "PAPYRUS", 48, new Color(.75f, .3f, 1, 0.7f));
+		TextRenderer playRen = new TextRenderer("PLAY", "Papyrus", 48, new Color(.75f, .3f, 1, 0.7f));
 		play.addComponent(playRen);
 		play.getTransform().setGlobalPosition(new Vector2i(TenebraeIncarnati.WIDTH / 2, 385));
 		
 		GameObject quit = new GameObject();
-		TextRenderer quitRen = new TextRenderer("QUIT", "PAPYRUS", 24, new Color(.75f, .3f, 1f, 0.4f));
+		TextRenderer quitRen = new TextRenderer("QUIT", "Papyrus", 24, new Color(.75f, .3f, 1f, 0.4f));
 		quit.addComponent(quitRen);
 		quit.getTransform().setGlobalPosition(new Vector2i(663, 475));
 		

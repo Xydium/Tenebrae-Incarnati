@@ -119,7 +119,7 @@ public class DungeonSelect extends Scene
 		selectButton.addListener(selectCall);
 
 		GameObject titleOb = new GameObject();
-		TextRenderer title = new TextRenderer("D U N G E O N       S E L E C T", "PAPYRUS", 60, new Color(.85f, .4f, 1, 1f));
+		TextRenderer title = new TextRenderer("D U N G E O N       S E L E C T", "Papyrus", 60, new Color(.85f, .4f, 1, 1f));
 		titleOb.addComponent(title);
 		title.getTransform().setPosition(new Vector2i(512, 80));
 		
