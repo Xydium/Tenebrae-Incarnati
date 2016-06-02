@@ -30,7 +30,8 @@ public class Player extends Entity
 	private static final int CHARGE_SPEED = 20;
 	private static final int MELEE_RANGE = 200;
 	private static final float TARGETING_ARC_SIZE = (float) Math.PI / 3;
-	private static final int CHARGE_RECOVERY_TIME = 10;
+	private static final float MELEE_RECOVERY_TIME = 0.3f;
+	private static final int CHARGE_RECOVERY_TIME = 4;
 	
 	private Vector2i velocity;
 	private Vector2f lastNonZeroVel;
@@ -42,6 +43,7 @@ public class Player extends Entity
 	private boolean died;
 	
 	private double lastChargeTime;
+	private double lastMeleeTime;
 	
 	public Player(Dungeon dungeon)
 	{
@@ -94,6 +96,7 @@ public class Player extends Entity
 		GlobalAudio.addSound("footstep", "assets/sfx/player_footstep.wav");
 		GlobalAudio.addSound("enemy_death", "assets/sfx/enemy_death.wav");
 		GlobalAudio.addSound("player_death", "assets/sfx/player_death.wav");
+		GlobalAudio.addSound("player_whiff", "assets/sfx/player_whiff.wav");
 	}
 	
 	private int movementState;
@@ -101,6 +104,7 @@ public class Player extends Entity
 	private double chargeStart;
 	public void input()
 	{
+		if(died) return;
 		switch(movementState)
 		{
 		case IDLE:
@@ -240,7 +244,8 @@ public class Player extends Entity
 	
 	private void attemptAttack()
 	{
-		if(!Input.getMouseDown(Input.MOUSE_LEFT) || lastNonZeroVel == null) return;
+		if(!Input.getMouseDown(Input.MOUSE_LEFT) || lastNonZeroVel == null || Time.getTime() - lastMeleeTime < MELEE_RECOVERY_TIME) return;
+		lastMeleeTime = Time.getTime();
 		ArrayList<Enemy> enemies = getDungeon().getCurrentRoom().getEnemies();
 		overlayPercent += 0.03;
 		for(Enemy e : enemies)
@@ -257,9 +262,10 @@ public class Player extends Entity
 			{
 				GlobalAudio.playSound("attack_hit");
 				e.setHealth(e.getHealth() - (50 + 50 * overlayPercent));
-				break;
+				return;
 			}
 		}
+		GlobalAudio.playSound("player_whiff", 0.1);
 	}
 	
 	public boolean isDead() {

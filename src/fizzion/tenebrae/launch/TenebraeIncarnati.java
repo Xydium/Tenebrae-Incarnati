@@ -48,7 +48,7 @@ public class TenebraeIncarnati extends Game
 		{
 			flags = new WindowFlags("Tenebrae Incarnati", WIDTH, HEIGHT);
 			Log.setLogLevel(LogLevel.INTERNAL);
-			Log.setWindowEnabled(true);
+			Log.setWindowEnabled(false);
 
 			flags.setIconFiles("", "");
 
@@ -99,6 +99,7 @@ public class TenebraeIncarnati extends Game
 		if(!scene.getClass().getSimpleName().equals("Dungeon")) {
 			try {
 				getApplication().getRenderingEngine().setOverlayBrightness(1);
+				GlobalAudio.stopMusic("castle_loop");
 			} catch(Exception e) {}
 		}
 	}

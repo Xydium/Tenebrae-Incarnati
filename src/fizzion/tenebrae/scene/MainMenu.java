@@ -44,6 +44,10 @@ public class MainMenu extends Scene
 		getRootObject().addAllChildren(background, obeliskText, obeliskText.play, skull, skull.quit, play, quit);
 		
 		GlobalAudio.addMusic("menu", "assets/music/menu_loop_2.wav");
+	}
+	
+	public void activate() 
+	{
 		GlobalAudio.loopMusic("menu", 0.25);
 	}
 	
