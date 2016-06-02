@@ -42,7 +42,7 @@ public class DebugSplash extends Scene
 	
 	public void update()
 	{
-		if(Time.getTime() - startTime > 10)
+		if(Time.getTime() - startTime > 5.5)
 		{
 			TenebraeIncarnati ti = (TenebraeIncarnati)getApplication().getGame();
 			ti.setScene(ti.getScene("MainMenu"));
@@ -83,13 +83,13 @@ public class DebugSplash extends Scene
 		private float calculateAlpha() 
 		{
 			float timeDif = (float) (Time.getTime() - startTime);
-			if(timeDif <= 3) 
+			if(timeDif <= 1.5f) 
 			{
-				return 1.0f - (timeDif / 3);
+				return 1.0f - (timeDif / 1.5f);
 			} 
-			else if(timeDif >= 7) 
+			else if(timeDif >= 4f) 
 			{
-				return (timeDif - 7) / 3;
+				return (timeDif - 4f) / 1.5f;
 			}
 			return 0.0f;
 		}
